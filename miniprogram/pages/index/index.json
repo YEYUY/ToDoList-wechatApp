@@ -1,0 +1,13 @@
+{
+  "usingComponents": {
+    "l-slide-view":"../../miniprogram_npm/lin-ui/slide-view/index",
+    "l-icon":"../../miniprogram_npm/lin-ui/icon/index",
+    "l-button":"../../miniprogram_npm/lin-ui/button/index",
+    "l-popup":"../../miniprogram_npm/lin-ui/popup/index",
+    "l-arc-popup":"../../miniprogram_npm/lin-ui/arc-popup/index"
+  },
+  "navigationBarBackgroundColor": "#FFFFFF",
+  "backgroundColorTop": "#FFFFFF",
+  "backgroundColorBottom": "#FFFFFF",
+  "navigationBarTitleText": "今日"
+}

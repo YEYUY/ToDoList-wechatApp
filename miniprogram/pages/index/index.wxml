@@ -1,0 +1,73 @@
+<view class="top-Area">
+  <view class="tA-title">我的一天</view>
+  <view class="tA-date">5月22日 星期二</view>
+</view>
+
+<view class="task-Area">
+  <block wx:for="{{tasks}}" wx:key="index">
+
+    <l-slide-view height="100" width="750" slide-width="140">
+
+      <view slot="left" class="left">
+        <view class="tA-row">
+          <view class="tA-row-topArea">
+            <image class="tA-row-icon" src="../../icons/circle.png" mode="widthFix"></image>
+            <view class="tA-row-title">{{item.title}}</view>
+          </view>
+          <view class="tA-row-bottom">
+            <view class="tA-row-date">
+              <image src="../../icons/endTime.png" mode="widthFix" style="width:30rpx;"></image>
+              <view class="tA-row-endDate">{{item.end_date}}</view>
+              <view class="tA-row-endWeek">{{item.end_week}}</view>
+            </view>
+            <view class="tA-row-listName">
+              {{item.list}}
+            </view>
+          </view>
+        </view>
+      </view>
+
+      <view slot="right" class="right">
+        <view class="tA-row-delete">
+          <image src="../../icons/delete.png" mode="widthFix" style="width:40rpx;"></image>
+        </view>
+      </view>
+
+    </l-slide-view>
+
+
+
+
+
+  </block>
+</view>
+
+<!-- 底部固定添加任务栏 -->
+<view class="fixedBottom">
+  <view class="fB-area" bindtap="tapAddTask">
+    <image src="../../icons/add.png" mode="widthFix" class="add_icon"></image>
+    <view>添加任务</view>
+  </view>
+</view>
+
+
+<!-- 底部弹出窗 -->
+<l-popup show="{{isShowPop}}" content-align="bottom">
+  <view class="pp-Area">
+    <view class="pA-topRow">
+      <image class="pA-topRow-icon" src="../../icons/circle.png" mode="widthFix"></image>
+      <input type="text" placeholder="准备做什么" adjust-position="false" cursor-spacing="50" hold-keyboard="true" />
+    </view>
+    <view class="pA-bottomRow">
+      <view class="pA-bottomRow-item">
+        <image src="../../icons/endTime2.png" class="pA-bottom-icon" mode="widthFix"></image>
+        <view>今天</view>
+      </view>
+      <view class="pA-bottomRow-item">
+        <image src="../../icons/tag.png" class="pA-bottom-icon" mode="widthFix"></image>
+        <view>数学</view>
+      </view>
+      <image src="../../icons/submit.png" class="pA-bottom-submitIcon" mode="widthFix"></image>
+    </view>
+  </view>
+</l-popup>
