@@ -4,7 +4,8 @@
     "l-icon":"../../miniprogram_npm/lin-ui/icon/index",
     "l-button":"../../miniprogram_npm/lin-ui/button/index",
     "l-popup":"../../miniprogram_npm/lin-ui/popup/index",
-    "l-arc-popup":"../../miniprogram_npm/lin-ui/arc-popup/index"
+    "l-arc-popup":"../../miniprogram_npm/lin-ui/arc-popup/index",
+    "l-calendar":"../../miniprogram_npm/lin-ui/calendar/index"
   },
   "navigationBarBackgroundColor": "#FFFFFF",
   "backgroundColorTop": "#FFFFFF",

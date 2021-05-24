@@ -6,7 +6,8 @@
 <view class="task-Area">
   <block wx:for="{{tasks}}" wx:key="index">
 
-    <l-slide-view height="100" width="750" slide-width="140">
+    <l-slide-view height="100" width="750" slide-width="140" auto-close="true" close="{{isCloseSlide}}"
+      bindtap="tapTask">
 
       <view slot="left" class="left">
         <view class="tA-row">
@@ -28,7 +29,7 @@
       </view>
 
       <view slot="right" class="right">
-        <view class="tA-row-delete">
+        <view class="tA-row-delete" bindtap="tapDelete">
           <image src="../../icons/delete.png" mode="widthFix" style="width:40rpx;"></image>
         </view>
       </view>
@@ -52,22 +53,28 @@
 
 
 <!-- 底部弹出窗 -->
-<l-popup show="{{isShowPop}}" content-align="bottom">
+<l-popup show="{{isShowPop}}" content-align="bottom" bind:lintap="tapBackground">
   <view class="pp-Area">
     <view class="pA-topRow">
       <image class="pA-topRow-icon" src="../../icons/circle.png" mode="widthFix"></image>
-      <input type="text" placeholder="准备做什么" adjust-position="false" cursor-spacing="50" hold-keyboard="true" />
+      <input type="text" placeholder="准备做什么" focus="{{iShowKeyboard}}" adjust-position="true" hold-keyboard="true" bindblur="input_text" />
     </view>
     <view class="pA-bottomRow">
-      <view class="pA-bottomRow-item">
-        <image src="../../icons/endTime2.png" class="pA-bottom-icon" mode="widthFix"></image>
-        <view>今天</view>
+      <view class="pA-bottomRow-left">
+        <view class="pA-bottomRow-item" bindtap="tapChooseDate">
+          <image src="../../icons/endTime2.png" class="pA-bottom-icon" mode="widthFix"></image>
+          <view>{{chooseDate}}</view>
+        </view>
+        <view class="pA-bottomRow-item">
+          <image src="../../icons/tag.png" class="pA-bottom-icon" mode="widthFix"></image>
+          <view>数学</view>
+        </view>
       </view>
-      <view class="pA-bottomRow-item">
-        <image src="../../icons/tag.png" class="pA-bottom-icon" mode="widthFix"></image>
-        <view>数学</view>
-      </view>
-      <image src="../../icons/submit.png" class="pA-bottom-submitIcon" mode="widthFix"></image>
+
+      <image src="../../icons/submit.png" class="pA-bottom-submitIcon" mode="widthFix" bindtap="submit"></image>
     </view>
   </view>
 </l-popup>
+
+<!-- 日历 -->
+<l-calendar show="{{isShowCalendar}}" show-subtitle="false" title="日期" bind:linconfirm="chooseDate"></l-calendar>
