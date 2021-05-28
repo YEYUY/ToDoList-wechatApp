@@ -1,47 +1,149 @@
 <view class="top-Area">
   <view class="tA-title">我的一天</view>
-  <view class="tA-date">5月22日 星期二</view>
+  <view class="tA-date">{{now_date}}</view>
 </view>
 
-<view class="task-Area">
-  <block wx:for="{{tasks}}" wx:key="index">
+<!-- 进行中 -->
+<view class="task-Area" name="isDoing">
+  <block wx:for="{{tasks_list}}" wx:key="index">
 
-    <l-slide-view height="100" width="750" slide-width="140" auto-close="true" close="{{isCloseSlide}}"
-      bindtap="tapTask">
+    <l-slide-view wx:if="{{item.isFinished!=1}}" height="100" width="750" slide-width="140" auto-close="true"
+      close="{{isCloseSlide}}">
 
-      <view slot="left" class="left">
+      <view slot="left" class="left " id="{{index}}" hover-class="hover">
         <view class="tA-row">
-          <view class="tA-row-topArea">
-            <image class="tA-row-icon" src="../../icons/circle.png" mode="widthFix"></image>
+
+          <view class="tA-row-leftArea">
+            <l-radio-group current="{{item.isFinished}}" placement="row" bind:linchange="tapFinish" id="{{index}}">
+              <l-radio key="1"></l-radio>
+            </l-radio-group>
+            <!-- <image class="tA-row-icon" src="../../icons/circle.png" mode="widthFix"></image> -->
+          </view>
+
+          <view class="tA-row-rightArea" bindtap="toTaskDetail" id="{{index}}">
             <view class="tA-row-title">{{item.title}}</view>
-          </view>
-          <view class="tA-row-bottom">
-            <view class="tA-row-date">
-              <image src="../../icons/endTime.png" mode="widthFix" style="width:30rpx;"></image>
-              <view class="tA-row-endDate">{{item.end_date}}</view>
-              <view class="tA-row-endWeek">{{item.end_week}}</view>
+
+            <view class="tA-row-bottom">
+              <view class="tA-row-date">
+                <image src="../../icons/endTime.png" mode="widthFix" style="width:30rpx;"></image>
+                <view class="tA-row-endDate">{{item.end_date}}</view>
+                <view class="tA-row-endWeek">{{item.end_week}}</view>
+              </view>
+              <view class="tA-row-listName">
+                {{item.list}}
+              </view>
             </view>
-            <view class="tA-row-listName">
-              {{item.list}}
-            </view>
+
           </view>
+
         </view>
       </view>
 
       <view slot="right" class="right">
-        <view class="tA-row-delete" bindtap="tapDelete">
+        <view class="tA-row-delete" bindtap="tapDelete" id="{{index}}">
           <image src="../../icons/delete.png" mode="widthFix" style="width:40rpx;"></image>
         </view>
       </view>
 
     </l-slide-view>
-
-
-
-
-
   </block>
 </view>
+
+<!-- 已完成 -->
+<l-collapse wx:if="{{isHaveFinished}}" type='accordion'>
+  <l-collapse-item title="已完成" >
+    <block wx:for="{{tasks_list}}" wx:key="index">
+      <l-slide-view wx:if="{{item.isFinished==1}}" height="100" width="750" slide-width="140" auto-close="true"
+        close="{{isCloseSlide}}">
+
+        <view slot="left" class="left " id="{{index}}" hover-class="hover">
+          <view class="tA-row">
+
+            <view class="tA-row-leftArea">
+              <l-radio-group current="{{item.isFinished}}" placement="row" bind:linchange="tapFinish" id="{{index}}">
+                <l-radio key="1"></l-radio>
+              </l-radio-group>
+              <!-- <image class="tA-row-icon" src="../../icons/circle.png" mode="widthFix"></image> -->
+            </view>
+
+            <view class="tA-row-rightArea" bindtap="toTaskDetail" id="{{index}}">
+              <view class="tA-row-title">{{item.title}}</view>
+
+              <view class="tA-row-bottom">
+                <view class="tA-row-date">
+                  <image src="../../icons/endTime.png" mode="widthFix" style="width:30rpx;"></image>
+                  <view class="tA-row-endDate">{{item.end_date}}</view>
+                  <view class="tA-row-endWeek">{{item.end_week}}</view>
+                </view>
+                <view class="tA-row-listName">
+                  {{item.list}}
+                </view>
+              </view>
+
+            </view>
+
+          </view>
+        </view>
+
+        <view slot="right" class="right">
+          <view class="tA-row-delete" bindtap="tapDelete" id="{{index}}">
+            <image src="../../icons/delete.png" mode="widthFix" style="width:40rpx;"></image>
+          </view>
+        </view>
+
+      </l-slide-view>
+    </block>
+  </l-collapse-item>
+</l-collapse>
+
+<!-- <view class="task-Area" name="haveFinished" wx:if="{{isHaveFinished}}">
+  <view class="haveFinished">
+
+  </view>
+  <block wx:for="{{tasks_list}}" wx:key="index">
+    <l-slide-view wx:if="{{item.isFinished==1}}" height="100" width="750" slide-width="140" auto-close="true"
+      close="{{isCloseSlide}}">
+
+      <view slot="left" class="left " id="{{index}}" hover-class="hover">
+        <view class="tA-row">
+
+          <view class="tA-row-leftArea">
+            <l-radio-group current="{{task.isFinished}}" placement="row" bind:linchange="tapFinish" id="{{index}}">
+              <l-radio key="1"></l-radio>
+            </l-radio-group>
+           <image class="tA-row-icon" src="../../icons/circle.png" mode="widthFix"></image>
+          </view>
+
+          <view class="tA-row-rightArea" bindtap="toTaskDetail" id="{{index}}">
+            <view class="tA-row-title">{{item.title}}</view>
+
+            <view class="tA-row-bottom">
+              <view class="tA-row-date">
+                <image src="../../icons/endTime.png" mode="widthFix" style="width:30rpx;"></image>
+                <view class="tA-row-endDate">{{item.end_date}}</view>
+                <view class="tA-row-endWeek">{{item.end_week}}</view>
+              </view>
+              <view class="tA-row-listName">
+                {{item.list}}
+              </view>
+            </view>
+
+          </view>
+
+        </view>
+      </view>
+
+      <view slot="right" class="right">
+        <view class="tA-row-delete" bindtap="tapDelete" id="{{index}}">
+          <image src="../../icons/delete.png" mode="widthFix" style="width:40rpx;"></image>
+        </view>
+      </view>
+
+    </l-slide-view>
+  </block>
+</view> -->
+
+
 
 <!-- 底部固定添加任务栏 -->
 <view class="fixedBottom">
@@ -57,13 +159,14 @@
   <view class="pp-Area">
     <view class="pA-topRow">
       <image class="pA-topRow-icon" src="../../icons/circle.png" mode="widthFix"></image>
-      <input type="text" placeholder="准备做什么" focus="{{iShowKeyboard}}" adjust-position="true" hold-keyboard="true" bindblur="input_text" />
+      <input class="pA-input" type="text" placeholder="准备做什么" cursor-spacing="50" focus="{{iShowKeyboard}}" hold-keyboard="true"
+        bindinput="input_text" value="{{task.title}}" />
     </view>
     <view class="pA-bottomRow">
       <view class="pA-bottomRow-left">
         <view class="pA-bottomRow-item" bindtap="tapChooseDate">
           <image src="../../icons/endTime2.png" class="pA-bottom-icon" mode="widthFix"></image>
-          <view>{{chooseDate}}</view>
+          <view>{{task.end_date}}</view>
         </view>
         <view class="pA-bottomRow-item">
           <image src="../../icons/tag.png" class="pA-bottom-icon" mode="widthFix"></image>
@@ -76,5 +179,18 @@
   </view>
 </l-popup>
 
-<!-- 日历 -->
-<l-calendar show="{{isShowCalendar}}" show-subtitle="false" title="日期" bind:linconfirm="chooseDate"></l-calendar>
+<!-- 日历-linui -->
+<!-- <l-calendar show="{{isShowCalendar}}" show-subtitle="false" title="日期" bind:linconfirm="chooseDate"></l-calendar> -->
+
+<!-- 日历弹出窗 -->
+<l-popup show="{{isShowCalendar}}">
+  <view class="popup">
+    <view class="pp-calendar">
+      <calendar calendarConfig="{{calendarConfig}}" bind:afterTapDay="afterTapDay" />
+    </view>
+    <view class="pp-row">
+      <view class="pp-cancel" bindtap="cancel_calendar">取消</view>
+      <view bindtap="confirm_calendar">确定</view>
+    </view>
+  </view>
+</l-popup>

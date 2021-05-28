@@ -3,6 +3,8 @@
     "pages/index/index",
     "pages/calendar/calendar",
     "pages/mine/mine",
+    "pages/taskDetail/taskDetail",
+
     "pages/index0/index0",
     "pages/userConsole/userConsole",
     "pages/storageConsole/storageConsole",
@@ -20,8 +22,8 @@
   "window": {
     "backgroundColor": "#F6F6F6",
     "backgroundTextStyle": "light",
-    "navigationBarBackgroundColor": "#F6F6F6",
-    "navigationBarTitleText": "云开发 QuickStart",
+    "navigationBarBackgroundColor": "#FFFFFF",
+    "navigationBarTitleText": "ToDo",
     "navigationBarTextStyle": "black"
   },
   "tabBar": {

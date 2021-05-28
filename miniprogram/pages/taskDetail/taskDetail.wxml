@@ -1,0 +1,64 @@
+<view class="top-area">
+  <image class="top-icon" src="../../icons/circle.png" mode="widthFix"></image>
+  <input type="text" value="{{task.title}}" bindblur="input_title" />
+</view>
+
+<view class="mid-area">
+  <view class="mid-area-row">
+    <view class="baoguoIcon">
+      <image class="mid-icon" mode="widthFix" src="../../icons/remind.png"></image>
+    </view>
+    <view bindtap="tapRemind">{{remind}}</view>
+  </view>
+  <view class="mid-area-row">
+    <view class="baoguoIcon">
+      <image class="mid-icon" mode="widthFix" src="../../icons/endTime.png"></image>
+    </view>
+    <view bindtap="tapEnd_date">{{task.end_date}}</view>
+  </view>
+  <view class="mid-area-row">
+    <view class="baoguoIcon">
+      <image class="mid-icon" mode="widthFix" src="../../icons/file.png"></image>
+    </view>
+    <view bindtap="tapAddFile">{{file}}</view>
+  </view>
+
+  <block wx:for="{{task.file}}" wx:key="index">
+    <view class="mid-area-row_file">
+      <view class="file-text" bindtap="tapFile" id="{{index}}">{{item.files_name}}</view>
+    </view>
+  </block>
+
+  <view class="mid-area-row">
+    <view class="baoguoIcon">
+      <image class="mid-icon" mode="widthFix" src="../../icons/picture.png"></image>
+    </view>
+    <view bindtap="tapPicture">{{picture}}</view>
+  </view>
+  <view class="mid-area-row_picture" wx:if="{{task.picture}}">
+    <l-album urls='{{task.picture}}'></l-album>
+  </view>
+</view>
+
+<view class="bottom-area">
+  <textarea name="content" id="" cols="30" rows="10" placeholder="描述" value="{{task.content}}"
+    bindblur="input_content"></textarea>
+</view>
+
+<View class="fixed-area">
+  <view class="fixed-area-text">创建于 {{task.creat_time}} </view>
+  <image class="fixed-area-icon" src="../../icons/delete0.png" mode="widthFix" bindtap="tapDelete"></image>
+</View>
+
+
+<l-popup show="{{isShowPopup}}">
+  <view class="popup">
+    <view class="pp-calendar">
+      <calendar calendarConfig="{{calendarConfig}}" bind:afterTapDay="afterTapDay" />
+    </view>
+    <view class="pp-row">
+      <view class="pp-cancel" bindtap="cancel">取消</view>
+      <view bindtap="confirmDate">确定</view>
+    </view>
+  </view>
+</l-popup>

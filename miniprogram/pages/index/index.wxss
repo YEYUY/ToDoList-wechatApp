@@ -18,31 +18,33 @@ page {
 
 .task-Area {
   margin-top: 20rpx;
+  display: flex;
+  flex-direction: column;
 }
+
+
 
 .tA-row {
-  height: 100rpx;
-  padding: 12rpx 14rpx 12rpx 30rpx;
-}
-
-.tA-row-topArea {
-  height: 55rpx;
+  padding: 12rpx 0rpx 18rpx 30rpx;
   display: flex;
   flex-direction: row;
-  align-items: center;
 }
 
 .tA-row-icon {
-  width: 40rpx;
-  margin-right: 20rpx;
+  width: 50rpx;
+  height: 40rpx;
+  margin-right: 0rpx;
 }
 
 .tA-row-bottom {
-  padding-left: 60rpx;
   display: flex;
   flex-direction: row;
   font-size: 24rpx;
   color: #8a8a8a;
+}
+
+.tA-row-rightArea{
+  padding-left: 0rpx;
 }
 
 .tA-row-date {
@@ -61,7 +63,7 @@ page {
 }
 
 .tA-row-listName {
-  width: 310rpx;
+  width: 330rpx;
   margin-left: 10rpx;
   text-align: right;
   color: #868686;
@@ -102,11 +104,12 @@ page {
   margin-left: 30rpx;
   margin-right: 26rpx;
   width: 38rpx;
+  height: 38rpx;
 }
 
 .pp-Area {
   height: 134rpx;
-  width: 750rpx;
+  /* width: 750rpx; */
   padding: 30rpx 10rpx 0 30rpx;
   border-top-left-radius:30rpx;
   border-top-right-radius: 30rpx;
@@ -125,6 +128,10 @@ page {
   margin-right: 10rpx;
 }
 
+.pA-input{
+  width: 100%;
+}
+
 .pA-bottomRow {
   margin-top: 20rpx;
   display: flex;
@@ -135,7 +142,7 @@ page {
 {
   display: flex;
   flex-direction: row;
-  width: 640rpx;
+  width: 650rpx;
 }
 
 .pA-bottomRow-item {
@@ -153,4 +160,36 @@ page {
 
 .pA-bottom-submitIcon {
   width: 44rpx;
+}
+
+
+/* 日历 */
+
+.popup{
+  height: 740rpx;
+  width: 660rpx;
+  background-color: white;
+  border-radius: 30rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.pp-calendar{
+  margin-top: 20rpx;
+  height: 600rpx;
+  width: 600rpx;
+}
+
+.pp-row{
+  background-color: white;
+  display: flex;
+  flex-direction: row;
+  height: 140rpx;
+  align-items: center;
+}
+
+
+.pp-cancel{
+  margin-right: 200rpx;
 }
