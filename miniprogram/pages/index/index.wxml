@@ -51,7 +51,7 @@
   </view>
 
   <!-- 已完成 -->
-  <l-collapse wx:if="{{isHaveFinished}}" type='accordion' class="l-collapse" bind:linexpand="expand_collapse"
+  <l-collapse wx:if="{{isHaveFinished}}" type='accordion' class="l-collapse" bind:linexpand="expand_collapse" 
     bind:linfold="fold_collapse">
     <l-collapse-item customTitle="{{true}}">
       <view class="collapse-rowTitle" slot="title">

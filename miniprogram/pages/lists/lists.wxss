@@ -5,8 +5,46 @@ page{
 .top-area{
   margin-left: 30rpx;
   margin-right: 30rpx;
+  margin-bottom: 10rpx;
   padding-bottom: 20rpx;
   padding-top: 20rpx;
+  border-bottom: 1rpx solid #e0e0e0;
+}
+
+.l-collapse{
+  margin-left: 20rpx;
+  margin-right: 20rpx;
+}
+
+.collapse-rowTitle{
+  height: 50rpx;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  font-size: 34rpx;
+  font-weight: bold;
+}
+
+/* .title_show{
+
+} */
+
+.collapse-icon{
+  width: 34rpx;
+  height: 34rpx;
+}
+
+.list_amount {
+  width: 100rpx;
+  text-align: right;
+  margin-left: 400rpx;
+  margin-right: 20rpx;
+  /* color: #8a8a8a; */
+}
+
+.list_area{
+  color: black;
+  padding-bottom: 20rpx;
   border-bottom: 1rpx solid #e0e0e0;
 }
 
@@ -35,16 +73,10 @@ page{
   width: 500rpx;
 }
 
-.list_amount{
+.task_amount{
   width: 100rpx;
   margin-left: 20rpx;
   text-align: right;
   color: #8a8a8a;
 }
 
-.title_show{
-  margin-left: 30rpx;
-  margin-top: 20rpx;
-  font-size: 34rpx;
-  font-weight: bold;
-}

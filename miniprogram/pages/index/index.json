@@ -12,9 +12,6 @@
     "l-collapse-item":"/miniprogram_npm/lin-ui/collapse-item/index",
     "calendar":"/miniprogram_npm/calendar_v1/index"
   },
-  "navigationBarBackgroundColor": "#FFFFFF",
-  "backgroundColorTop": "#FFFFFF",
-  "backgroundColorBottom": "#FFFFFF",
   "navigationBarTitleText": "今日",
   "enablePullDownRefresh": true,
   "backgroundTextStyle": "dark"

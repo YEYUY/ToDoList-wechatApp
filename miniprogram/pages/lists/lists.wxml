@@ -2,37 +2,93 @@
 <view class="top-area">
   <view class="row">
     <image class="icon" src="../../icons/allList_icon.png" mode="widthFix"></image>
-    <view class="list_name">全部清单</view>
-    <view class="list_amount">{{totalTasks_amount}}</view>
+    <view class="list_name">全部事项</view>
+    <view class="task_amount">{{totalTasks_amount}}</view>
   </view>
 
   <view class="row">
     <image class="icon" src="../../icons/today_icon.png" mode="widthFix"></image>
     <view class="list_name">我的一天</view>
-    <view class="list_amount">{{todayTasks_amount}}</view>
+    <view class="task_amount">{{todayTasks_amount}}</view>
+  </view>
+
+  <view class="row">
+    <image class="icon" src="../../icons/creat_list.png" mode="widthFix"></image>
+    <view class="list_name">创建清单</view>
+  </view>
+
+  <view class="row">
+    <image class="icon" src="../../icons/join.png" mode="widthFix"></image>
+    <view class="list_name">加入清单</view>
   </view>
 </view>
 
+
 <!-- 自己创建的清单 -->
-<view class="title_show">创建</view>
-<view class="mid-area">
-  <block wx:for="{{self_lists}}" wx:key="index">
-    <view class="row">
-      <image class="icon" src="../../icons/list_icon.png" mode="widthFix"></image>
-      <view class="list_name">{{item.name}}</view>
-      <view class="list_amount">{{item.amount}}</view>
+<l-collapse expand-item-id="{{[0]}}"  class="l-collapse" id="1" bind:linexpand="expand_collapse" bind:linfold="fold_collapse" >
+  <l-collapse-item customTitle="{{true}}">
+    <view class="collapse-rowTitle" slot="title" >
+      <view class="title_show">我的清单</view>
+      <view class="list_amount">{{myLists_amount}}</view>
+      <image wx:if="{{!isExpand_collapse_1}}" class="collapse-icon" src="../../icons/left.png" mode="widthFix"></image>
+      <image wx:if="{{isExpand_collapse_1}}" class="collapse-icon" src="../../icons/down.png" mode="widthFix"></image>
     </view>
-  </block>
-</view>
+
+    <view class="list_area" >
+      <block wx:for="{{self_lists}}" wx:key="index">
+        <view class="row">
+          <image class="icon" src="../../icons/list_icon.png" mode="widthFix"></image>
+          <view class="list_name">{{item.name}}</view>
+          <view class="task_amount">{{item.amount}}</view>
+        </view>
+      </block>
+    </view>
+  </l-collapse-item>
+</l-collapse>
 
 <!-- 加入的清单 -->
-<view class="title_show">加入</view>
+<l-collapse expand-item-id="{{[0]}}"  class="l-collapse" id="2" bind:linexpand="expand_collapse" bind:linfold="fold_collapse" >
+  <l-collapse-item customTitle="{{true}}">
+    <view class="collapse-rowTitle" slot="title" >
+      <view class="title_show">我的加入</view>
+      <view class="list_amount">{{myLists_amount}}</view>
+      <image wx:if="{{!isExpand_collapse_2}}" class="collapse-icon" src="../../icons/left.png" mode="widthFix"></image>
+      <image wx:if="{{isExpand_collapse_2}}" class="collapse-icon" src="../../icons/down.png" mode="widthFix"></image>
+    </view>
+
+    <view class="list_area" >
+      <block wx:for="{{self_lists}}" wx:key="index">
+        <view class="row">
+          <image class="icon" src="../../icons/list_icon2.png" mode="widthFix"></image>
+          <view class="list_name">{{item.name}}</view>
+          <view class="task_amount">{{item.amount}}</view>
+        </view>
+      </block>
+    </view>
+  </l-collapse-item>
+</l-collapse>
+
+
+<!-- 自己创建的清单 -->
+<!-- <view class="title_show">创建</view>
 <view class="mid-area">
   <block wx:for="{{self_lists}}" wx:key="index">
     <view class="row">
       <image class="icon" src="../../icons/list_icon.png" mode="widthFix"></image>
       <view class="list_name">{{item.name}}</view>
-      <view class="list_amount">{{item.amount}}</view>
+      <view class="task_amount">{{item.amount}}</view>
     </view>
   </block>
-</view>
+</view> -->
+
+<!-- 加入的清单 -->
+<!-- <view class="title_show">加入</view>
+<view class="mid-area">
+  <block wx:for="{{self_lists}}" wx:key="index">
+    <view class="row">
+      <image class="icon" src="../../icons/list_icon.png" mode="widthFix"></image>
+      <view class="list_name">{{item.name}}</view>
+      <view class="task_amount">{{item.amount}}</view>
+    </view>
+  </block>
+</view> -->
