@@ -1,23 +1,23 @@
 <!-- 顶部固定区域 -->
 <view class="top-area">
-  <view class="row">
+  <view class="row" bindtap="tapAllTasks">
     <image class="icon" src="../../icons/allList_icon.png" mode="widthFix"></image>
     <view class="list_name">全部事项</view>
     <view class="task_amount">{{totalTasks_amount}}</view>
   </view>
 
-  <view class="row">
+  <view class="row" bindtap="tapMyToday">
     <image class="icon" src="../../icons/today_icon.png" mode="widthFix"></image>
     <view class="list_name">我的一天</view>
     <view class="task_amount">{{todayTasks_amount}}</view>
   </view>
 
-  <view class="row">
+  <view class="row" bindtap="tapCreatList">
     <image class="icon" src="../../icons/creat_list.png" mode="widthFix"></image>
     <view class="list_name">创建清单</view>
   </view>
 
-  <view class="row">
+  <view class="row" bindtap="tapJoinList">
     <image class="icon" src="../../icons/join.png" mode="widthFix"></image>
     <view class="list_name">加入清单</view>
   </view>
@@ -25,18 +25,19 @@
 
 
 <!-- 自己创建的清单 -->
-<l-collapse expand-item-id="{{[0]}}"  class="l-collapse" id="1" bind:linexpand="expand_collapse" bind:linfold="fold_collapse" >
+<l-collapse expand-item-id="{{[0]}}" class="l-collapse" id="1" bind:linexpand="expand_collapse"
+  bind:linfold="fold_collapse">
   <l-collapse-item customTitle="{{true}}">
-    <view class="collapse-rowTitle" slot="title" >
+    <view class="collapse-rowTitle" slot="title">
       <view class="title_show">我的清单</view>
       <view class="list_amount">{{myLists_amount}}</view>
       <image wx:if="{{!isExpand_collapse_1}}" class="collapse-icon" src="../../icons/left.png" mode="widthFix"></image>
       <image wx:if="{{isExpand_collapse_1}}" class="collapse-icon" src="../../icons/down.png" mode="widthFix"></image>
     </view>
 
-    <view class="list_area" >
+    <view class="list_area">
       <block wx:for="{{self_lists}}" wx:key="index">
-        <view class="row">
+        <view class="row" bindtap="tapMyLists" id="{{index}}">
           <image class="icon" src="../../icons/list_icon.png" mode="widthFix"></image>
           <view class="list_name">{{item.name}}</view>
           <view class="task_amount">{{item.amount}}</view>
@@ -47,18 +48,19 @@
 </l-collapse>
 
 <!-- 加入的清单 -->
-<l-collapse expand-item-id="{{[0]}}"  class="l-collapse" id="2" bind:linexpand="expand_collapse" bind:linfold="fold_collapse" >
+<l-collapse expand-item-id="{{[0]}}" class="l-collapse" id="2" bind:linexpand="expand_collapse"
+  bind:linfold="fold_collapse">
   <l-collapse-item customTitle="{{true}}">
-    <view class="collapse-rowTitle" slot="title" >
+    <view class="collapse-rowTitle" slot="title">
       <view class="title_show">我的加入</view>
       <view class="list_amount">{{myLists_amount}}</view>
       <image wx:if="{{!isExpand_collapse_2}}" class="collapse-icon" src="../../icons/left.png" mode="widthFix"></image>
       <image wx:if="{{isExpand_collapse_2}}" class="collapse-icon" src="../../icons/down.png" mode="widthFix"></image>
     </view>
 
-    <view class="list_area" >
+    <view class="list_area">
       <block wx:for="{{self_lists}}" wx:key="index">
-        <view class="row">
+        <view class="row" bindtap="tapMyJoinLists" id="{{index}}">
           <image class="icon" src="../../icons/list_icon2.png" mode="widthFix"></image>
           <view class="list_name">{{item.name}}</view>
           <view class="task_amount">{{item.amount}}</view>
@@ -92,3 +94,19 @@
     </view>
   </block>
 </view> -->
+
+
+<l-popup show="{{isShowCreatPop}}" content-align="bottom" bind:lintap="tapBackground">
+  <view class="creatPop" wx:if="{{isShowCreatPop}}">
+    <view class="cP-topRow">
+      <view class="cP-cancel" bindtap="pop_cancel">取消</view>
+      <view class="cP-titleName">创建清单</view>
+      <view class="cP-confirm" style="color:{{isListName?'#5478c7':'#bfbfbf'}}" bindtap="pop_confirm">确定</view>
+    </view>
+    <view class="cP-inputRow">
+      <image src="../../icons/list_icon_creat.png" mode="widthFix" class="cP-list_icon"></image>
+      <input type="text" placeholder="名称" focus="{{true}}"  hold-keyboard="{{true}}" adjust-position="{{false}}"
+        bindinput="input_listName" />
+    </view>
+  </view>
+</l-popup>

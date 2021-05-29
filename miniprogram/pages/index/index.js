@@ -7,7 +7,7 @@ Page({
     now_date:"",
     isShowPop: false,
     isShowCalendar: false,
-    isshowKeyboard: true,
+    isshowKeyboard:true,
     isCloseSlide: false,
     isHaveFinished:false,
     isExpand_collapse:false,//折叠面板
@@ -140,10 +140,9 @@ Page({
     wx.hideTabBar()
     that.setData({
       isShowPop: true,
+     // isshowKeyboard: true
     })
-    that.setData({
-      iShowKeyboard: true
-    })
+
   }, 
 
   //点击日期
@@ -153,7 +152,7 @@ Page({
 
     that.setData({
       isShowCalendar: true,
-      iShowKeyboard: false
+     // isshowKeyboard: false
     })
   },
 
@@ -163,7 +162,7 @@ Page({
     that.setData({
       'task.end_date': that.data.task.end_date,
       isShowCalendar: false,
-      iShowKeyboard: true
+      isshowKeyboard: true
     })
   },
 
@@ -171,7 +170,7 @@ Page({
   cancel_calendar() {
     this.setData({
       isShowCalendar: false,
-      iShowKeyboard: true
+      isshowKeyboard: true
     })
   },
 
@@ -196,7 +195,6 @@ Page({
     }
     that.setData({
       isShowPop: false,
-      isshowKeyboard: false,
       task: task,
     })
     wx.showTabBar()
@@ -240,25 +238,34 @@ Page({
   //点击圆标完成
   async tapFinish(e) {
     var that = this
-    that.setData({
-      isCloseSlide:true
-    })
     let tap_id = e.currentTarget.id * 1
-    let tapTask = that.data.tasks_list[tap_id]
+    let tapTask = that.data.tasks_list[tap_id]  
     let data
     let finished_time = util.changeDate(new Date())
+    that.setData({
+      isCloseSlide:true,
+      // ['tasks_list[' + tap_id + '].isFinished']:1
+    })
     if(tapTask.isFinished==0)
     {
+      util.playAudio()
       data={
         isFinished:1,
         finished_time:finished_time
       }
-      util.playAudio()
+      // that.setData({
+      //   isCloseSlide:true,
+      //   ['tasks_list[' + tap_id + '].isFinished']:1
+      // })
     }else
     {
       data={
         isFinished:0,
       }
+      // that.setData({
+      //   isCloseSlide:true,
+      //   ['tasks_list[' + tap_id + '].isFinished']:0
+      // })
     }
     wx.vibrateShort({
       type: "heavy"

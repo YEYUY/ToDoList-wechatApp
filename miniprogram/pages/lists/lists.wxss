@@ -1,8 +1,8 @@
-page{
+page {
   background-color: white;
 }
 
-.top-area{
+.top-area {
   margin-left: 30rpx;
   margin-right: 30rpx;
   margin-bottom: 10rpx;
@@ -11,12 +11,12 @@ page{
   border-bottom: 1rpx solid #e0e0e0;
 }
 
-.l-collapse{
+.l-collapse {
   margin-left: 20rpx;
   margin-right: 20rpx;
 }
 
-.collapse-rowTitle{
+.collapse-rowTitle {
   height: 50rpx;
   display: flex;
   flex-direction: row;
@@ -29,26 +29,26 @@ page{
 
 } */
 
-.collapse-icon{
-  width: 34rpx;
-  height: 34rpx;
+.collapse-icon {
+  width: 30rpx;
+  height: 30rpx;
 }
 
 .list_amount {
   width: 100rpx;
   text-align: right;
-  margin-left: 400rpx;
+  margin-left: 404rpx;
   margin-right: 20rpx;
   /* color: #8a8a8a; */
 }
 
-.list_area{
+.list_area {
   color: black;
   padding-bottom: 20rpx;
   border-bottom: 1rpx solid #e0e0e0;
 }
 
-.mid-area{
+.mid-area {
   margin-left: 30rpx;
   margin-right: 30rpx;
   padding-bottom: 20rpx;
@@ -56,27 +56,81 @@ page{
   border-bottom: 1rpx solid #e0e0e0;
 }
 
-.row{
+.row {
   display: flex;
   flex-direction: row;
   align-items: center;
-  padding:26rpx 0rpx 26rpx 0rpx;
+  padding: 26rpx 0rpx 26rpx 0rpx;
 }
 
-.icon{
+.icon {
   width: 50rpx;
   height: 50rpx;
   margin-right: 30rpx;
 }
 
-.list_name{
+.list_name {
   width: 500rpx;
 }
 
-.task_amount{
+.task_amount {
   width: 100rpx;
   margin-left: 20rpx;
   text-align: right;
   color: #8a8a8a;
 }
 
+.creatPop {
+  height: 700rpx;
+  border-radius: 20rpx 20rpx 0rpx 0rpx;
+  padding: 30rpx;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.cP-topRow{
+  display: flex;
+  flex-direction: row;
+  width: 680rpx;
+  align-items: center;
+}
+
+.cP-cancel
+{
+  font-size: 26rpx;
+  width: 100rpx;
+  color: #5478c7;
+}
+
+.cP-titleName{
+  font-size: 32rpx;
+  font-weight: bold;
+  width: 480rpx;
+  text-align: center;
+}
+
+.cP-confirm{
+  font-size: 26rpx;
+  width: 100rpx;
+  text-align: right;
+}
+
+.cP-inputRow{
+  height: 80rpx;
+  margin-top: 50rpx;
+  border-radius: 20rpx;
+  display: flex;
+  flex-direction: row;
+  width: 680rpx;
+  align-items: center;
+  background-color: #f5f5f5;
+}
+
+.cP-list_icon{
+  margin-left: 20rpx;
+  margin-right: 20rpx;
+  width: 46rpx;
+  height: 46rpx;
+}

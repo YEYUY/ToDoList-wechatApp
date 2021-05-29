@@ -18,7 +18,10 @@
               <l-radio-group current="{{item.isFinished}}" placement="row" bind:linchange="tapFinish" id="{{index}}">
                 <l-radio key="1"></l-radio>
               </l-radio-group>
-              <!-- <image class="tA-row-icon" src="../../icons/circle.png" mode="widthFix"></image> -->
+              <!-- <image wx:if="{{item.isFinished!=1}}" class="tA-row-icon" src="../../icons/unfinished.png" mode="widthFix"
+              bindtap="tapFinish" id="{{index}}"></image>
+            <image wx:if="{{item.isFinished==1}}" class="tA-row-icon" src="../../icons/finish.png" mode="widthFix"
+              bindtap="tapFinish" id="{{index}}"></image> -->
             </view>
 
             <view class="tA-row-rightArea" bindtap="toTaskDetail" id="{{index}}">
@@ -51,7 +54,7 @@
   </view>
 
   <!-- 已完成 -->
-  <l-collapse wx:if="{{isHaveFinished}}" type='accordion' class="l-collapse" bind:linexpand="expand_collapse" 
+  <l-collapse wx:if="{{isHaveFinished}}" type='accordion' class="l-collapse" bind:linexpand="expand_collapse"
     bind:linfold="fold_collapse">
     <l-collapse-item customTitle="{{true}}">
       <view class="collapse-rowTitle" slot="title">
@@ -73,8 +76,23 @@
                 <l-radio-group current="{{item.isFinished}}" placement="row" bind:linchange="tapFinish" id="{{index}}">
                   <l-radio key="1"></l-radio>
                 </l-radio-group>
-                <!-- <image class="tA-row-icon" src="../../icons/circle.png" mode="widthFix"></image> -->
               </view>
+              <!-- <view>
+                <image wx:if="{{item.isFinished!=1}}" class="tA-row-icon" src="../../icons/unfinished.png"
+                  mode="widthFix" bindtap="tapFinish" id="{{index}}"></image>
+                <image wx:if="{{item.isFinished==1}}" class="tA-row-icon" src="../../icons/finish.png" mode="widthFix"
+                  bindtap="tapFinish" id="{{index}}"></image>
+              </view> -->
+
+              <!-- <view class="tA-row-icon" bindtap="tapFinish" id="{{index}}">
+                <block wx:if="{{item.isFinished!=1}}">
+                  <image src="../../icons/unfinished.png" class="tA-row-icon" mode="widthFix"></image>
+                </block>
+                <block wx:elif="{{item.isFinished==1}}">
+                  <image src="../../icons/finish.png" class="tA-row-icon" mode="widthFix"></image>
+                </block>
+              </view> -->
+
 
               <view class="tA-row-finishedRightArea" bindtap="toTaskDetail" id="{{index}}">
                 <view class="tA-row-title">{{item.title}}</view>
@@ -160,7 +178,7 @@
 
 
 <!-- 底部固定添加任务栏 -->
-<view class="fixedBottom">
+<view class="fixedBottom"  wx:if="{{!isShowPop}}">
   <view class="fB-area" bindtap="tapAddTask">
     <image src="../../icons/add.png" mode="widthFix" class="add_icon"></image>
     <view>添加任务</view>
@@ -170,11 +188,11 @@
 
 <!-- 底部弹出窗 -->
 <l-popup show="{{isShowPop}}" content-align="bottom" bind:lintap="tapBackground">
-  <view class="pp-Area">
+  <view class="pp-Area" wx:if="{{isShowPop}}">
     <view class="pA-topRow">
       <image class="pA-topRow-icon" src="../../icons/circle.png" mode="widthFix"></image>
-      <input class="pA-input" type="text" placeholder="准备做什么" cursor-spacing="50" focus="{{iShowKeyboard}}"
-        hold-keyboard="true" bindinput="input_text" value="{{task.title}}" />
+      <input class="pA-input" type="text" placeholder="准备做什么"  focus="{{isshowKeyboard}}" adjust-position="{{false}}"  
+        hold-keyboard="{{true}}" bindinput="input_text" value="{{task.title}}" />
     </view>
     <view class="pA-bottomRow">
       <view class="pA-bottomRow-left">
@@ -190,6 +208,9 @@
 
       <image src="../../icons/submit.png" class="pA-bottom-submitIcon" mode="widthFix" bindtap="submit"></image>
     </view>
+    <!-- <view class="pA-calendar">
+      <calendar calendarConfig="{{calendarConfig}}" bind:afterTapDay="afterTapDay" />
+    </view> -->
   </view>
 </l-popup>
 

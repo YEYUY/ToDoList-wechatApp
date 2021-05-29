@@ -21,9 +21,16 @@ page {
   height: 860rpx;
 }
 
+
+
 .task-Area {
   display: flex;
   flex-direction: column;
+}
+
+.finishIcon{
+  width: 30rpx;
+  height: 30rpx;
 }
 
 .l-collapse {
@@ -75,9 +82,8 @@ page {
 
 
 .tA-row-icon {
-  width: 50rpx;
+  width: 40rpx;
   height: 40rpx;
-  margin-right: 0rpx;
 }
 
 .tA-row-bottom {
@@ -152,7 +158,7 @@ page {
 }
 
 .pp-Area {
-  height: 134rpx;
+  height: 640rpx;
   /* width: 750rpx; */
   padding: 30rpx 10rpx 0 30rpx;
   border-top-left-radius: 30rpx;
@@ -177,7 +183,7 @@ page {
 }
 
 .pA-bottomRow {
-  margin-top: 20rpx;
+  margin-top: 30rpx;
   display: flex;
   flex-direction: row;
 }
@@ -205,6 +211,10 @@ page {
   width: 44rpx;
 }
 
+.pA-calendar{
+  background-color: violet;
+  height: 400rpx !important;
+}
 
 /* 日历 */
 

@@ -1,7 +1,8 @@
 {
   "usingComponents": {
     "l-collapse":"/miniprogram_npm/lin-ui/collapse/index",
-    "l-collapse-item":"/miniprogram_npm/lin-ui/collapse-item/index"
+    "l-collapse-item":"/miniprogram_npm/lin-ui/collapse-item/index",
+    "l-popup":"/miniprogram_npm/lin-ui/popup/index"
   },
   "navigationBarTitleText": "清单",
   "enablePullDownRefresh": true,

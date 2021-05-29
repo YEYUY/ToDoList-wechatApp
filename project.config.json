@@ -67,6 +67,12 @@
         {
           "name": "清单",
           "pathName": "pages/lists/lists",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "清单详情",
+          "pathName": "pages/myListDetail/myListDetail",
           "scene": null
         }
       ]

@@ -5,6 +5,7 @@
     "pages/lists/lists",
     "pages/mine/mine",
     "pages/taskDetail/taskDetail",
+    "pages/myListDetail/myListDetail",
 
     "pages/index0/index0"
 
