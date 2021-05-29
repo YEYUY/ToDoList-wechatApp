@@ -1,0 +1,38 @@
+<!-- 顶部固定区域 -->
+<view class="top-area">
+  <view class="row">
+    <image class="icon" src="../../icons/allList_icon.png" mode="widthFix"></image>
+    <view class="list_name">全部清单</view>
+    <view class="list_amount">{{totalTasks_amount}}</view>
+  </view>
+
+  <view class="row">
+    <image class="icon" src="../../icons/today_icon.png" mode="widthFix"></image>
+    <view class="list_name">我的一天</view>
+    <view class="list_amount">{{todayTasks_amount}}</view>
+  </view>
+</view>
+
+<!-- 自己创建的清单 -->
+<view class="title_show">创建</view>
+<view class="mid-area">
+  <block wx:for="{{self_lists}}" wx:key="index">
+    <view class="row">
+      <image class="icon" src="../../icons/list_icon.png" mode="widthFix"></image>
+      <view class="list_name">{{item.name}}</view>
+      <view class="list_amount">{{item.amount}}</view>
+    </view>
+  </block>
+</view>
+
+<!-- 加入的清单 -->
+<view class="title_show">加入</view>
+<view class="mid-area">
+  <block wx:for="{{self_lists}}" wx:key="index">
+    <view class="row">
+      <image class="icon" src="../../icons/list_icon.png" mode="widthFix"></image>
+      <view class="list_name">{{item.name}}</view>
+      <view class="list_amount">{{item.amount}}</view>
+    </view>
+  </block>
+</view>

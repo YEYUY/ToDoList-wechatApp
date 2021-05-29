@@ -1,6 +1,11 @@
 <view class="top-area">
-  <image class="top-icon" src="../../icons/circle.png" mode="widthFix"></image>
-  <input type="text" value="{{task.title}}" bindblur="input_title" />
+  <!-- <image class="top-icon" src="../../icons/circle.png" mode="widthFix"></image> -->
+  <l-radio-group current="{{task.isFinished}}" placement="row" bind:linchange="tapFinish">
+    <l-radio key="1"></l-radio>
+  </l-radio-group>
+  <input wx:if="{{task.isFinished==0}}"  type="text" value="{{task.title}}" bindblur="input_title" />
+  <input wx:if="{{task.isFinished==1}}" class="finished-title" type="text" value="{{task.title}}" bindblur="input_title" />
+  <!-- <view wx:elif="{{task.isFinished==1}}" class="finished-title">{{task.title}}</view> -->
 </view>
 
 <view class="mid-area">
@@ -45,10 +50,7 @@
     bindblur="input_content"></textarea>
 </view>
 
-<View class="fixed-area">
-  <view class="fixed-area-text">创建于 {{task.creat_time}} </view>
-  <image class="fixed-area-icon" src="../../icons/delete0.png" mode="widthFix" bindtap="tapDelete"></image>
-</View>
+
 
 
 <l-popup show="{{isShowPopup}}">
@@ -62,3 +64,9 @@
     </view>
   </view>
 </l-popup>
+
+
+<View class="fixed-area">
+  <view class="fixed-area-text">{{task.isFinished==0?"创建于":"完成于"}} {{show_time}} </view>
+  <image class="fixed-area-icon" src="../../icons/delete0.png" mode="widthFix" bindtap="tapDelete"></image>
+</View>

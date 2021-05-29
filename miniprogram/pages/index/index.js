@@ -10,6 +10,8 @@ Page({
     isshowKeyboard: true,
     isCloseSlide: false,
     isHaveFinished:false,
+    isExpand_collapse:false,//折叠面板
+    finishedAmount:"",
     tasks_list: [],
     choose_end_date: "",
     task: {
@@ -65,10 +67,12 @@ Page({
       let res = await util.cloud_getList("test_list")
       let now_date = util.changeDate(new Date())
       let isHaveFinished = false
+      let finishedAmount = 0
       for (let i = 0; i < res.data.length; i++) {
         if(res.data[i].isFinished==1)
         {
           isHaveFinished=true
+          finishedAmount+=1
         }
         if (now_date.substr(0, 3) == res.data[i].end_date.substr(0, 3)) {
           res.data[i].end_date = res.data[i].end_date.substr(5)
@@ -76,7 +80,8 @@ Page({
       }
       that.setData({
         tasks_list: res.data,
-        isHaveFinished:isHaveFinished
+        isHaveFinished:isHaveFinished,
+        finishedAmount:finishedAmount,
       })
     } catch (error) {
       console.log("fail",error)
@@ -235,47 +240,54 @@ Page({
   //点击圆标完成
   async tapFinish(e) {
     var that = this
+    that.setData({
+      isCloseSlide:true
+    })
     let tap_id = e.currentTarget.id * 1
-    let finished_task_id = that.data.tasks_list[tap_id]._id
-    that.playAudio()
+    let tapTask = that.data.tasks_list[tap_id]
+    let data
+    let finished_time = util.changeDate(new Date())
+    if(tapTask.isFinished==0)
+    {
+      data={
+        isFinished:1,
+        finished_time:finished_time
+      }
+      util.playAudio()
+    }else
+    {
+      data={
+        isFinished:0,
+      }
+    }
     wx.vibrateShort({
       type: "heavy"
     }) //手机振动15ms
-    db.collection("test_list").doc(finished_task_id).update({
-      data: {
-        isFinished: 1
-      },
+    db.collection("test_list").doc(tapTask._id).update({
+      data: data,
       success(res) {
         that.getList()
-        console.log("已完成", that.data.tasks_list[tap_id].title)
+        //console.log("已完成", that.data.tasks_list[tap_id].title)
       }
     })
   },
 
-  //音效
-  playAudio() {
-    const innerAudioContext = wx.createInnerAudioContext()
-    innerAudioContext.autoplay = true // 是否自动开始播放，默认为 false
-    innerAudioContext.loop = false // 是否循环播放，默认为 false
-    wx.setInnerAudioOption({ // ios在静音状态下能够正常播放音效
-      obeyMuteSwitch: false, // 是否遵循系统静音开关，默认为 true。当此参数为 false 时，即使用户打开了静音开关，也能继续发出声音。
-      success: function (e) {
-        console.log(e)
-        console.log('play success')
-      },
-      fail: function (e) {
-        console.log(e)
-        console.log('play fail')
-      }
+
+  // 折叠展开
+  expand_collapse()
+  {
+    var that = this
+    that.setData({
+      isExpand_collapse:true
     })
-    innerAudioContext.src = 'cloud://main-6gsnf8ac856384e6.6d61-main-6gsnf8ac856384e6-1305997284/resource/finished.mp3'; // 音频资源的地址
-    //innerAudioContext.src = '/miniprogram/resource/finished.mp3'; // 音频资源的地址
-    innerAudioContext.onPlay(() => { // 监听音频播放事件
-      console.log('开始播放')
-    })
-    innerAudioContext.onError((res) => { // 监听音频播放错误事件
-      console.log(res.errMsg)
-      console.log(res.errCode)
+  },
+
+  fold_collapse()
+  {
+    var that = this
+    that.setData({
+      isExpand_collapse:false
     })
   }
+
 })

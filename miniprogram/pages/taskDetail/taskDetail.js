@@ -12,6 +12,7 @@ Page({
     picture: "添加图片",
     file: "添加文件",
     choose_end_date: "",
+    show_time:"",//底下展示时间
     task: {
       title: "小测试",
       content: "none",
@@ -36,13 +37,25 @@ Page({
         task: task
       })
       task_id = task._id
-      let now_date = util.changeDate(new Date())
-      if (now_date.substr(0, 3) == task.creat_time.substr(0, 3)) {
-        that.setData({
-          'task.creat_time': task.creat_time.substr(5)
-        })
-      }
+      that.checkShow_time()
       console.log("接收任务", task)
+    }
+  },
+
+  checkShow_time()
+  {
+    var that = this
+    var task =that.data.task
+    let now_date = util.changeDate(new Date())
+    let show_time = task.creat_time
+    if(task.isFinished==1)
+    {
+      show_time=task.finished_time
+    }
+    if (now_date.substr(0, 3) == show_time.substr(0, 3)) {
+      that.setData({
+        show_time: show_time.substr(5)
+      })
     }
   },
 
@@ -56,6 +69,7 @@ Page({
           task: res.data
         })
         wx.hideNavigationBarLoading()
+        that.checkShow_time()
         console.log(res.data)
       },
       fail(res) {
@@ -190,6 +204,39 @@ Page({
         })
 
 
+      }
+    })
+  },
+
+  //点击⚪完成
+  tapFinish()
+  {
+    var that = this
+    var task = that.data.task
+    let isFinished =1 
+    let data
+    let finished_time = util.changeDate(new Date())
+    if(task.isFinished==0)
+    {
+      data={
+        isFinished:1,
+        finished_time:finished_time
+      }
+      util.playAudio()
+    }else
+    {
+      data={
+        isFinished:0,
+      }
+    }
+    wx.vibrateShort({
+      type: "heavy"
+    }) //手机振动15ms
+    db.collection("test_list").doc(task._id).update({
+      data: data,
+      success(res) {
+        that.getTask()
+        //console.log("已完成", that.data.tasks_list[tap_id].title)
       }
     })
   },

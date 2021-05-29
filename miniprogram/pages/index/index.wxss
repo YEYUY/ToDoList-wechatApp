@@ -16,19 +16,63 @@ page {
   font-size: 32rpx;
 }
 
-.task-Area {
+.scroll-view {
   margin-top: 20rpx;
+  height: 860rpx;
+}
+
+.task-Area {
   display: flex;
   flex-direction: column;
 }
 
+.l-collapse {
+  overflow-x: hidden;
+}
 
+.collapse-rowTitle {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  background-color: #EDEFFA;
+  margin-left: -20rpx;
+  margin-right: -20rpx;
+  margin-bottom: -18rpx;
+  padding: 6rpx 12rpx 6rpx 28rpx;
+  font-size: 26rpx;
+  color: #8a8a8a;
+}
+
+.finishedAmount {
+  width: 100rpx;
+  text-align: right;
+  margin-left: 486rpx;
+  margin-right: 30rpx;
+}
+
+.collapse-icon {
+  width: 26rpx;
+  height: 26rpx;
+}
 
 .tA-row {
   padding: 12rpx 0rpx 18rpx 30rpx;
   display: flex;
   flex-direction: row;
 }
+
+.tA-finishedRow {
+  padding: 12rpx 0rpx 18rpx 20rpx;
+  display: flex;
+  flex-direction: row;
+}
+
+/* 字体画横线 */
+.tA-row-finishedRightArea {
+  text-decoration: line-through;
+}
+
 
 .tA-row-icon {
   width: 50rpx;
@@ -43,7 +87,7 @@ page {
   color: #8a8a8a;
 }
 
-.tA-row-rightArea{
+.tA-row-rightArea {
   padding-left: 0rpx;
 }
 
@@ -84,13 +128,13 @@ page {
 .fixedBottom {
   position: fixed;
   bottom: 0rpx;
-  height: 120rpx;
+  height: 114rpx;
   width: 100%;
   background-color: white;
 }
 
 .fB-area {
-  margin: 10rpx 20rpx 10rpx 20rpx;
+  margin: 4rpx 20rpx 10rpx 20rpx;
   height: 100rpx;
   background-color: #4270d4;
   border-radius: 20rpx;
@@ -111,7 +155,7 @@ page {
   height: 134rpx;
   /* width: 750rpx; */
   padding: 30rpx 10rpx 0 30rpx;
-  border-top-left-radius:30rpx;
+  border-top-left-radius: 30rpx;
   border-top-right-radius: 30rpx;
   background-color: white;
 }
@@ -128,7 +172,7 @@ page {
   margin-right: 10rpx;
 }
 
-.pA-input{
+.pA-input {
   width: 100%;
 }
 
@@ -138,8 +182,7 @@ page {
   flex-direction: row;
 }
 
-.pA-bottomRow-left
-{
+.pA-bottomRow-left {
   display: flex;
   flex-direction: row;
   width: 650rpx;
@@ -165,7 +208,7 @@ page {
 
 /* 日历 */
 
-.popup{
+.popup {
   height: 740rpx;
   width: 660rpx;
   background-color: white;
@@ -175,13 +218,13 @@ page {
   align-items: center;
 }
 
-.pp-calendar{
+.pp-calendar {
   margin-top: 20rpx;
   height: 600rpx;
   width: 600rpx;
 }
 
-.pp-row{
+.pp-row {
   background-color: white;
   display: flex;
   flex-direction: row;
@@ -190,6 +233,6 @@ page {
 }
 
 
-.pp-cancel{
+.pp-cancel {
   margin-right: 200rpx;
 }

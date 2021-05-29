@@ -2,27 +2,19 @@
   "pages": [
     "pages/index/index",
     "pages/calendar/calendar",
+    "pages/lists/lists",
     "pages/mine/mine",
     "pages/taskDetail/taskDetail",
 
-    "pages/index0/index0",
-    "pages/userConsole/userConsole",
-    "pages/storageConsole/storageConsole",
-    "pages/databaseGuide/databaseGuide",
-    "pages/addFunction/addFunction",
-    "pages/deployFunctions/deployFunctions",
-    "pages/chooseLib/chooseLib",
-    "pages/openapi/openapi",
-    "pages/openapi/serverapi/serverapi",
-    "pages/openapi/callback/callback",
-    "pages/openapi/cloudid/cloudid",
-    "pages/im/im",
-    "pages/im/room/room"
+    "pages/index0/index0"
+
   ],
   "window": {
     "backgroundColor": "#F6F6F6",
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#FFFFFF",
+    "backgroundColorTop": "#FFFFFF",
+    "backgroundColorBottom": "#FFFFFF",
     "navigationBarTitleText": "ToDo",
     "navigationBarTextStyle": "black"
   },
@@ -38,10 +30,10 @@
         "text": "今日"
       },
       {
-        "pagePath": "pages/calendar/calendar",
-        "iconPath": "icons/calendar.png",
-        "selectedIconPath": "icons/calendar0.png",
-        "text": "日历"
+        "pagePath": "pages/lists/lists",
+        "iconPath": "icons/list.png",
+        "selectedIconPath": "icons/list0.png",
+        "text": "清单"
       },
       {
         "pagePath": "pages/mine/mine",

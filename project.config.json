@@ -63,6 +63,11 @@
           "pathName": "pages/taskDetail/taskDetail",
           "query": "",
           "scene": null
+        },
+        {
+          "name": "清单",
+          "pathName": "pages/lists/lists",
+          "scene": null
         }
       ]
     }

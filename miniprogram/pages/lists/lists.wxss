@@ -1,0 +1,50 @@
+page{
+  background-color: white;
+}
+
+.top-area{
+  margin-left: 30rpx;
+  margin-right: 30rpx;
+  padding-bottom: 20rpx;
+  padding-top: 20rpx;
+  border-bottom: 1rpx solid #e0e0e0;
+}
+
+.mid-area{
+  margin-left: 30rpx;
+  margin-right: 30rpx;
+  padding-bottom: 20rpx;
+  padding-top: 20rpx;
+  border-bottom: 1rpx solid #e0e0e0;
+}
+
+.row{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding:26rpx 0rpx 26rpx 0rpx;
+}
+
+.icon{
+  width: 50rpx;
+  height: 50rpx;
+  margin-right: 30rpx;
+}
+
+.list_name{
+  width: 500rpx;
+}
+
+.list_amount{
+  width: 100rpx;
+  margin-left: 20rpx;
+  text-align: right;
+  color: #8a8a8a;
+}
+
+.title_show{
+  margin-left: 30rpx;
+  margin-top: 20rpx;
+  font-size: 34rpx;
+  font-weight: bold;
+}

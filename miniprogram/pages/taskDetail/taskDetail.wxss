@@ -6,7 +6,7 @@ page {
   display: flex;
   flex-direction: row;
   height: 100rpx;
-  margin: 10rpx 30rpx 0rpx 30rpx;
+  margin: 10rpx 30rpx 0rpx 40rpx;
   padding-bottom: 12rpx;
   border-bottom: 1rpx solid #e0e0e0;
   align-items: center;
@@ -19,6 +19,10 @@ page {
   margin-right: 20rpx;
 }
 
+.finished-title{
+  color: #8a8a8a;
+  text-decoration:line-through;
+}
 
 
 .mid-area {

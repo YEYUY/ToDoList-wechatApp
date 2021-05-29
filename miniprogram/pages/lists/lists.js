@@ -1,11 +1,19 @@
-// pages/deployFunctions/deployFunctions.js
+// pages/lists/lists.js
 Page({
 
-  /**
-   * 页面的初始数据
-   */
   data: {
-
+    totalTasks_amount:10,
+    todayTasks_amount:4,
+    self_lists:[
+      {
+        name:"物联网导论",
+        amount:6
+      },
+      {
+        name:"企业项目",
+        amount:4
+      },
+    ]
   },
 
   /**
