@@ -3,13 +3,13 @@
   <view class="row" bindtap="tapAllTasks">
     <image class="icon" src="../../icons/allList_icon.png" mode="widthFix"></image>
     <view class="list_name">全部事项</view>
-    <view class="task_amount">{{totalTasks_amount}}</view>
+    <view class="task_amount">{{user.allTaskAmount}}</view>
   </view>
 
   <view class="row" bindtap="tapMyToday">
     <image class="icon" src="../../icons/today_icon.png" mode="widthFix"></image>
     <view class="list_name">我的一天</view>
-    <view class="task_amount">{{todayTasks_amount}}</view>
+    <view class="task_amount">{{user.todayTasks.length}}</view>
   </view>
 
   <view class="row" bindtap="tapCreatList">
@@ -30,17 +30,17 @@
   <l-collapse-item customTitle="{{true}}">
     <view class="collapse-rowTitle" slot="title">
       <view class="title_show">我的清单</view>
-      <view class="list_amount">{{myLists_amount}}</view>
+      <view class="list_amount">{{user.myCreatList.length}}</view>
       <image wx:if="{{!isExpand_collapse_1}}" class="collapse-icon" src="../../icons/left.png" mode="widthFix"></image>
       <image wx:if="{{isExpand_collapse_1}}" class="collapse-icon" src="../../icons/down.png" mode="widthFix"></image>
     </view>
 
     <view class="list_area">
-      <block wx:for="{{self_lists}}" wx:key="index">
+      <block wx:for="{{user.myCreatList}}" wx:key="index">
         <view class="row" bindtap="tapMyLists" id="{{index}}">
           <image class="icon" src="../../icons/list_icon.png" mode="widthFix"></image>
-          <view class="list_name">{{item.name}}</view>
-          <view class="task_amount">{{item.amount}}</view>
+          <view class="list_name">{{item.list_name}}</view>
+          <view class="task_amount">{{item.list_taskAmount}}</view>
         </view>
       </block>
     </view>
@@ -53,17 +53,17 @@
   <l-collapse-item customTitle="{{true}}">
     <view class="collapse-rowTitle" slot="title">
       <view class="title_show">我的加入</view>
-      <view class="list_amount">{{myLists_amount}}</view>
+      <view class="list_amount">{{user.myJoinList.length}}</view>
       <image wx:if="{{!isExpand_collapse_2}}" class="collapse-icon" src="../../icons/left.png" mode="widthFix"></image>
       <image wx:if="{{isExpand_collapse_2}}" class="collapse-icon" src="../../icons/down.png" mode="widthFix"></image>
     </view>
 
     <view class="list_area">
-      <block wx:for="{{self_lists}}" wx:key="index">
+      <block wx:for="{{user.myJoinList}}" wx:key="index">
         <view class="row" bindtap="tapMyJoinLists" id="{{index}}">
           <image class="icon" src="../../icons/list_icon2.png" mode="widthFix"></image>
-          <view class="list_name">{{item.name}}</view>
-          <view class="task_amount">{{item.amount}}</view>
+          <view class="list_name">{{item.list_name}}</view>
+          <view class="task_amount">{{item.list_taskAmount}}</view>
         </view>
       </block>
     </view>

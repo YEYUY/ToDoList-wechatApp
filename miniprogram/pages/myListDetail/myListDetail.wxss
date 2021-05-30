@@ -158,7 +158,7 @@ page {
 }
 
 .pp-Area {
-  height: 134rpx;
+  height: 640rpx;
   /* width: 750rpx; */
   padding: 30rpx 10rpx 0 30rpx;
   border-top-left-radius: 30rpx;
@@ -183,7 +183,7 @@ page {
 }
 
 .pA-bottomRow {
-  margin-top: 20rpx;
+  margin-top: 30rpx;
   display: flex;
   flex-direction: row;
 }
@@ -211,6 +211,10 @@ page {
   width: 44rpx;
 }
 
+.pA-calendar{
+  background-color: violet;
+  height: 400rpx !important;
+}
 
 /* 日历 */
 

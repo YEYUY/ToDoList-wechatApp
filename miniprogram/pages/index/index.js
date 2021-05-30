@@ -2,6 +2,8 @@ const db = wx.cloud.database()
 var util = require('../../utils/util.js')
 const app = getApp()
 
+var users_id
+
 Page({
   data: {
     now_date:"",
@@ -31,10 +33,33 @@ Page({
     }
   },
 
-  onLoad() {
+  async onLoad() {
     var that = this
-    
-    let weekArray = ['', "周一", "周二", "周三", "周四", "周五", "周六", '周日']
+    let res = await util.cloud_getList("users")
+    if(res.data.length==0)
+    {
+      console.log("users集合无")
+      let data={
+        todayTasks:[],
+        myCreatList:[],
+        myJoinList:[],
+        allTaskAmount:0,
+      }
+     let res2 =  await util.cloud_add("users",data)
+      users_id = res2._id 
+      app.globalData.users_id = res2._id
+    }else
+    {
+      users_id = res.data[0]._id 
+      app.globalData.users_id = users_id
+    }
+    console.log("users_id: ",users_id)
+    wx.setStorage({
+      data: users_id,
+      key: 'users_id',
+    })
+
+    let weekArray = ['周日', "周一", "周二", "周三", "周四", "周五", "周六", ]
     let now_date = (new Date().getMonth()+1)+"月"+new Date().getDate()+"日"
     let now_week = new Date().getDay()
     now_date = now_date+" "+weekArray[now_week]
@@ -65,6 +90,7 @@ Page({
     var that = this
     try {
       let res = await util.cloud_getList("test_list")
+
       let now_date = util.changeDate(new Date())
       let isHaveFinished = false
       let finishedAmount = 0
@@ -231,8 +257,8 @@ Page({
   afterTapDay(e) {
     console.log('点击日期 ', e.detail)
     var that = this
-    let weekArray = ['', "周一", "周二", "周三", "周四", "周五", "周六", '周日']
-    that.data.task.end_date = e.detail.year + "-" + e.detail.month + "-" + e.detail.day + " " + weekArray[e.detail.week]
+    let weekArray = ['周日', "周一", "周二", "周三", "周四", "周五", "周六",]
+    that.data.task.end_date = e.detail.year + "年" + e.detail.month + "月" + e.detail.day + "日 " + weekArray[e.detail.week]
   },
 
   //点击圆标完成

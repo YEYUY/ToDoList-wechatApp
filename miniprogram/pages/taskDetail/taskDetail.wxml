@@ -28,9 +28,9 @@
     <view bindtap="tapAddFile">{{file}}</view>
   </view>
 
-  <block wx:for="{{task.file}}" wx:key="index">
+  <block wx:for="{{task.files}}" wx:key="index">
     <view class="mid-area-row_file">
-      <view class="file-text" bindtap="tapFile" id="{{index}}">{{item.files_name}}</view>
+      <view class="file-text" bindtap="tapFile" id="{{index}}">{{item.file_name}}</view>
     </view>
   </block>
 
@@ -40,8 +40,8 @@
     </view>
     <view bindtap="tapPicture">{{picture}}</view>
   </view>
-  <view class="mid-area-row_picture" wx:if="{{task.picture}}">
-    <l-album urls='{{task.picture}}'></l-album>
+  <view class="mid-area-row_picture" wx:if="{{task.pictures}}">
+    <l-album urls='{{task.pictures}}'></l-album>
   </view>
 </view>
 

@@ -31,5 +31,6 @@ App({
 
   globalData: {
     openid:"",
+    users_id:"",
   }
 })

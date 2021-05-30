@@ -2,7 +2,7 @@ const db = wx.cloud.database()
 const _ = db.command
 var util = require('../../utils/util.js')
 
-var task_id
+var list_id
 
 Page({
 
@@ -12,7 +12,7 @@ Page({
     picture: "添加图片",
     file: "添加文件",
     choose_end_date: "",
-    show_time:"",//底下展示时间
+    show_time: "", //底下展示时间
     task: {
       title: "小测试",
       content: "none",
@@ -31,26 +31,25 @@ Page({
 
   onLoad: function (options) {
     var that = this
+    // console.log("op",options)
+    list_id = options.list_id
     if (options.task) {
       var task = JSON.parse(options.task)
       that.setData({
         task: task
       })
-      task_id = task._id
       that.checkShow_time()
       console.log("接收任务", task)
     }
   },
 
-  checkShow_time()
-  {
+  checkShow_time() {
     var that = this
-    var task =that.data.task
+    let task = that.data.task
     let now_date = util.changeDate(new Date())
-    let show_time = task.creat_time
-    if(task.isFinished==1)
-    {
-      show_time=task.finished_time
+    let show_time = task.creat_time.substr(0, 11)
+    if (task.isFinished == 1) {
+      show_time = task.finished_time.substr(0, 11)
     }
     if (now_date.substr(0, 3) == show_time.substr(0, 3)) {
       that.setData({
@@ -59,27 +58,28 @@ Page({
     }
   },
 
-  getTask() {
-    var that = this
-    wx.showNavigationBarLoading()
-    wx.hideNavigationBarLoading()
-    db.collection('test_list').doc(that.data.task._id).get({
-      success: function (res) {
-        that.setData({
-          task: res.data
-        })
-        wx.hideNavigationBarLoading()
-        that.checkShow_time()
-        console.log(res.data)
-      },
-      fail(res) {
-        console.log("fail", res)
-        wx.hideNavigationBarLoading()
-      }
-    })
-  },
+  // getTask() {
+  //   var that = this
+  //   wx.showNavigationBarLoading()
+  //   wx.hideNavigationBarLoading()
+  //   db.collection('test_list').doc(that.data.task._id).get({
+  //     success: function (res) {
+  //       that.setData({
+  //         task: res.data
+  //       })
+  //       wx.hideNavigationBarLoading()
+  //       that.checkShow_time()
+  //       console.log(res.data)
+  //     },
+  //     fail(res) {
+  //       console.log("fail", res)
+  //       wx.hideNavigationBarLoading()
+  //     }
+  //   })
+  // },
 
   //点击日期
+
   tapEnd_date() {
     var that = this
     that.setData({
@@ -87,19 +87,29 @@ Page({
     })
   },
 
+  async update_task(task)
+  {
+    var that = this
+    let data = {
+      list_id: list_id,
+      task: task
+    }
+    try {
+      await util.cloud_function("taskUpdate", data)
+      that.setData({
+        task:task
+      })
+    } catch (error) {
+      console.log(error)
+    }
+  },
+
   input_title(e) {
     console.log(e)
-    db.collection("test_list").doc(task_id).update({
-      data: {
-        title: e.detail.value
-      },
-      success(res) {
-        console.log("标题已修改成功：", e.detail.value)
-      },
-      fail(res) {
-        console.log("fail", res)
-      }
-    })
+    var that = this
+    var task = that.data.task
+    task.title = e.detail.value
+    that.update_task(task)
   },
 
 
@@ -123,32 +133,36 @@ Page({
           filePath: tempFilePaths.path, // 文件路径
           success: res => {
             console.log("上传返回", res)
-            let data
-            data = {
+            let file = {
               fileID: res.fileID,
-              files_name: tempFilePaths.name
+              file_name: tempFilePaths.name
             }
-            db.collection("test_list").doc(task_id).update({
-              data: {
-                file: _.push(data)
-              },
-              success(res) {
-                wx.hideNavigationBarLoading()
-                wx.hideLoading()
-                that.getTask()
-                console.log("文件添加成功")
-                // let file = that.data.task.file
-                // file.push(data)
-                // that.setData({
-                //   'task.file':file
-                // })
-              },
-              fail(err) {
-                console.log(err)
-                wx.hideNavigationBarLoading()
-                wx.hideLoading()
-              }
-            })
+            var task = that.data.task
+            task.files.push(file)
+            that.update_task(task)
+            wx.hideNavigationBarLoading()
+            wx.hideLoading()
+            // db.collection("test_list").doc(task_id).update({
+            //   data: {
+            //     file: _.push(data)
+            //   },
+            //   success(res) {
+            //     wx.hideNavigationBarLoading()
+            //     wx.hideLoading()
+            //     that.getTask()
+            //     console.log("文件添加成功")
+            //     // let file = that.data.task.file
+            //     // file.push(data)
+            //     // that.setData({
+            //     //   'task.file':file
+            //     // })
+            //   },
+            //   fail(err) {
+            //     console.log(err)
+            //     wx.hideNavigationBarLoading()
+            //     wx.hideLoading()
+            //   }
+            // })
           },
           fail: err => {
             console.log(err)
@@ -178,25 +192,27 @@ Page({
           filePath: tempFilePaths, // 文件路径
           success: res => {
             console.log("上传返回", res)
-            let data = res.fileID
-            db.collection("test_list").doc(task_id).update({
-              data: {
-                picture: _.push(data)
-              },
-              success(res) {
-                console.log("图片添加成功")
-                that.getTask()
-                //   let picture = that.data.task.picture
-                //   picture.push(data)
-                //   console.log(picture)
-                //   that.setData({
-                //     'task.picture':picture
-                //   })
-              },
-              fail(err) {
-                console.log(err)
-              }
-            })
+           // let data = res.fileID
+            var task = that.data.task
+            task.pictures.push(res.fileID)
+            // db.collection("test_list").doc(task_id).update({
+            //   data: {
+            //     picture: _.push(data)
+            //   },
+            //   success(res) {
+            //     console.log("图片添加成功")
+            //     that.getTask()
+            //     //   let picture = that.data.task.picture
+            //     //   picture.push(data)
+            //     //   console.log(picture)
+            //     //   that.setData({
+            //     //     'task.picture':picture
+            //     //   })
+            //   },
+            //   fail(err) {
+            //     console.log(err)
+            //   }
+            // })
           },
           fail: err => {
             console.log(err)
@@ -209,36 +225,21 @@ Page({
   },
 
   //点击⚪完成
-  tapFinish()
-  {
+  tapFinish() {
     var that = this
     var task = that.data.task
-    let isFinished =1 
-    let data
     let finished_time = util.changeDate(new Date())
-    if(task.isFinished==0)
-    {
-      data={
-        isFinished:1,
-        finished_time:finished_time
-      }
+    if (task.isFinished == 0) {
+        task.isFinished= 1,
+        task.finished_time= finished_time
       util.playAudio()
-    }else
-    {
-      data={
-        isFinished:0,
-      }
+    } else {
+      task.isFinished= 0
     }
     wx.vibrateShort({
       type: "heavy"
     }) //手机振动15ms
-    db.collection("test_list").doc(task._id).update({
-      data: data,
-      success(res) {
-        that.getTask()
-        //console.log("已完成", that.data.tasks_list[tap_id].title)
-      }
-    })
+    that.update_task(task)
   },
 
   // //上传文件
@@ -380,7 +381,7 @@ Page({
   afterTapDay(e) {
     console.log('点击日期 ', e.detail)
     var that = this
-    let weekArray = ['', "周一", "周二", "周三", "周四", "周五", "周六", '周日']
+    let weekArray = ['周日', "周一", "周二", "周三", "周四", "周五", "周六", ]
     that.data.choose_end_date = e.detail.month + "-" + e.detail.day + " " + weekArray[e.detail.week]
   },
 
