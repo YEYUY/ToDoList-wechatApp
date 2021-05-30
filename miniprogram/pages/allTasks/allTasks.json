@@ -1,0 +1,12 @@
+{
+  "usingComponents": {
+    "l-slide-view":"/miniprogram_npm/lin-ui/slide-view/index",
+    "l-radio-group":"/miniprogram_npm/lin-ui/radio-group/index",
+    "l-radio":"/miniprogram_npm/lin-ui/radio/index",
+    "l-collapse":"/miniprogram_npm/lin-ui/collapse/index",
+    "l-collapse-item":"/miniprogram_npm/lin-ui/collapse-item/index"
+  },
+  "navigationBarTitleText": "全部事项",
+  "enablePullDownRefresh": true,
+  "backgroundTextStyle": "dark"
+}

@@ -6,7 +6,8 @@
     "pages/mine/mine",
     "pages/taskDetail/taskDetail",
     "pages/myListDetail/myListDetail",
-
+    "pages/about/about",
+    "pages/allTasks/allTasks",
     "pages/index0/index0"
 
   ],

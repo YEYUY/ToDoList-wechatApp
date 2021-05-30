@@ -136,6 +136,65 @@ const cloud_function = (name, data) => {
   })
 }
 
+//lists中tasks更新
+const cloud_listTasksUpadte = (name, list_id ,tasks) => {
+  return new Promise((resolve, reject) => {
+    db.collection(name).doc(list_id).update({
+      data: {
+        tasks: tasks
+      },
+      success(res) {
+        console.log("lists中tasks更新成功", res)
+        resolve(res)
+      },
+      fail(err) {
+       reject(res)
+      }
+    })
+  })
+}
+
+//lists中unfinishedTasks更新
+const cloud_taskAmountUpadte = (name, list_id ,unfinishedTaskAmount) => {
+  return new Promise((resolve, reject) => {
+    db.collection(name).doc(list_id).update({
+      data: {
+        unfinishedTaskAmount: unfinishedTaskAmount
+      },
+      success(res) {
+        console.log("lists中unfinishedTaskAmount更新成功", unfinishedTaskAmount)
+
+        let data={
+          users_id:wx.getStorageSync('users_id'),
+          list:{
+            list_id:list_id,
+            unfinishedTaskAmount:unfinishedTaskAmount,
+          }
+        }
+        console.log("传的data",data)
+    
+        wx.cloud.callFunction({
+          name: "listUpdate",
+          data: data,
+          success: res => {
+            resolve(res)
+          },
+          fail: err => {
+            console.log(err)
+            reject(err)
+          }
+        })
+      },
+      fail(err) {
+       reject(res)
+      }
+    })
+
+
+
+  })
+}
+
 function playAudio() {
   const innerAudioContext = wx.createInnerAudioContext()
   innerAudioContext.autoplay = true // 是否自动开始播放，默认为 false
@@ -162,8 +221,23 @@ function playAudio() {
   })
 }
 
-
-
+//users中myCreatLists更新
+const cloud_usersCtUpadte = (name, users_id ,myCreatLists) => {
+  return new Promise((resolve, reject) => {
+    db.collection(name).doc(users_id).update({
+      data: {
+        myCreatLists: myCreatLists
+      },
+      success(res) {
+        console.log("users中myCreatLists更新", res)
+        resolve(res)
+      },
+      fail(err) {
+       reject(res)
+      }
+    })
+  })
+}
 
 module.exports = {
   formatTime,
@@ -176,4 +250,7 @@ module.exports = {
   playAudio,
   cloud_get,
   cloud_function,
+  cloud_listTasksUpadte,
+  cloud_taskAmountUpadte,
+  cloud_usersCtUpadte,
 }

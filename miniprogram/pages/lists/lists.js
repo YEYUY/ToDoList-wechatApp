@@ -12,10 +12,7 @@ Page({
     isListName: false,
     listName: "",
     user:{},
-    totalTasks_amount: 10,
-    todayTasks_amount: 4,
-    myLists_amount: 3,
-    self_lists: []
+    allTaskAmount:0,
   },
 
   onLoad: function (options) {
@@ -28,6 +25,12 @@ Page({
     this.getUsers()
   },
 
+  onPullDownRefresh()
+  {
+    this.onShow()
+    wx.stopPullDownRefresh()
+  },
+
   //获取列表 -调用
   async getUsers() {
     wx.showNavigationBarLoading()
@@ -36,9 +39,33 @@ Page({
     that.setData({
       user:res.data
     })
+    let allTaskAmount = 0
+    for(var i = 0; i<res.data.myCreatLists.length;i++)
+    {
+      allTaskAmount+=res.data.myCreatLists[i].unfinishedTaskAmount
+    }
+    for(var i = 0; i<res.data.myJoinLists.length;i++)
+    {
+      allTaskAmount+=res.data.myJoinLists[i].unfinishedTaskAmount
+    }
+    that.setData({
+      allTaskAmount:allTaskAmount
+    })
+
+    db.collection("users").doc(users_id).update({
+      data: {
+        allTaskAmount: allTaskAmount
+      },
+      success(res) {
+        console.log("users中allTaskAmount更新", res)
+      },
+      fail(err) {
+       console.log(err)
+      }
+    })
+
+    wx.hideNavigationBarLoading()
   },
-
-
 
   // 折叠展开
   expand_collapse(e) {
@@ -70,8 +97,8 @@ Page({
 
   //点击全部事项
   tapAllTasks() {
-    wx.switchTab({
-      url: '../index/index',
+    wx.navigateTo({
+      url: '../allTasks/allTasks',
     })
   },
 
@@ -100,7 +127,7 @@ Page({
   tapMyLists(e) {
     var that = this
     let tap_id = e.currentTarget.id * 1
-    let tap_task = that.data.user.myCreatList[tap_id]
+    let tap_task = that.data.user.myCreatLists[tap_id]
     wx.navigateTo({
       url: '../myListDetail/myListDetail?list_id='+tap_task.list_id,
     })
@@ -155,6 +182,7 @@ Page({
     if (isListName) {
       let data = {
         name: that.data.listName,
+        unfinishedTaskAmount:0,
         tasks: [],
       }
       try {
@@ -162,7 +190,8 @@ Page({
         let data2 = {
           list_name: that.data.listName,
           list_id: res._id,
-          list_taskAmount:0,
+          creat_timeStampKey:new Date().getTime(),
+          unfinishedTaskAmount:0,
         }
         that.cloud_pushMyCreatList(data2)
         wx.navigateTo({
@@ -177,11 +206,11 @@ Page({
   //创建清单的user集合增加
   cloud_pushMyCreatList(data) {
     users_id = wx.getStorageSync('users_id')
-    console.log("user_id", users_id)
-    console.log("添加users清单", data)
+    // console.log("user_id", users_id)
+    // console.log("添加users清单", data)
     db.collection("users").doc(users_id).update({
       data: {
-        myCreatList: _.push(data)
+        myCreatLists: _.push(data)
       },
       success(res) {
         wx.hideLoading()

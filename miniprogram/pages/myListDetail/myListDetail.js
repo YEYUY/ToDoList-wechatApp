@@ -2,6 +2,7 @@ const util = require("../../utils/util")
 const db = wx.cloud.database()
 const _ = db.command
 var list_id
+var users_id
 
 Page({
 
@@ -23,8 +24,9 @@ Page({
       isFinished: 0,
       creat_time: "",
       creat_timeStampKey: "",
-      files:[],
-      pictures:[],
+      files: [],
+      pictures: [],
+      content: "",
     },
     calendarConfig: {
       theme: 'elegant',
@@ -37,24 +39,16 @@ Page({
     }
   },
 
-
   onLoad: async function (options) {
     var that = this
     if (options.list_id) {
       console.log("接收task_id：", options.list_id)
       list_id = options.list_id
-      try {
-
-      } catch (error) {
-        console.log(error)
-      }
+      users_id = wx.getStorageSync('users_id')
     } else {
       console.log("没有接收id")
     }
   },
-
-
-
 
   onShow() {
     var that = this
@@ -90,12 +84,89 @@ Page({
         isHaveFinished: isHaveFinished,
         finishedAmount: finishedAmount,
       })
+      // wx.setNavigationBarTitle({
+      //   title: res.data.name,
+      // })
     } catch (error) {
       console.log("fail", error)
     }
     wx.hideNavigationBarLoading()
   },
 
+  //修改清单名称
+  input_listName(e) {
+    var that = this
+    let list_name = e.detail.value
+    db.collection("lists").doc(list_id).update({
+      data: {
+        name: list_name
+      },
+      success(res) {
+        
+        db.collection('users').where({
+          '_id':users_id ,
+          'myCreatLists.list_id': list_id,
+        }).update({
+          data: {
+            'myCreatLists.$.list_name': list_name,
+          },
+        })
+        console.log("标题更新成功", list_name)
+      },
+      fail(err) {
+        console.log(err)
+      }
+    })
+  },
+
+  //点击邀请
+  tapInvite()
+  {
+
+  },
+
+  //删除清单
+  tapDeleteList()
+  {
+    var that = this
+    wx.showModal({
+      content: "确定删除该任务吗?",
+      async success(res) {
+        if (res.confirm) {
+          wx.showLoading({
+            title: "删除中"
+          })
+          try {
+
+            await util.cloud_remove("lists",list_id,getApp().globalData.openid)
+            let res = await util.cloud_get("users",users_id)
+            let myCreatLists = res.data.myCreatLists
+            let i
+            for(i=0;i<myCreatLists.length;i++)
+            {
+              if(list_id ==myCreatLists[i].list_id)
+              break
+            }
+            myCreatLists.splice(i, 1)
+            await util.cloud_usersCtUpadte("users", users_id, myCreatLists)
+            wx.hideLoading()
+            wx.navigateBack({
+              delta: 1,
+            })
+
+          } catch (error) {
+            wx.hideLoading()
+            wx.showModal({
+              showCancel: false,
+              content: "删除失败",
+              title: "错误",
+            })
+            console.log(error)
+          }
+        }
+      }
+    })
+  },
 
   //点击详情跳转
   toTaskDetail(e) {
@@ -103,7 +174,7 @@ Page({
     let tap_id = e.currentTarget.id * 1
     let taskDetail = that.data.list.tasks[tap_id]
     wx.navigateTo({
-      url: "../taskDetail/taskDetail?list_id=" + list_id + "&&task=" + JSON.stringify(taskDetail),
+      url: "../taskDetail/taskDetail?list_id=" + list_id + "&&task=" + JSON.stringify(taskDetail) + "&&arrayIndex=" + tap_id,
     })
     that.setData({
       isCloseSlide: true
@@ -126,7 +197,11 @@ Page({
             console.log("删除前：", tasks)
             tasks.splice(tap_id, 1)
             console.log("删除后：", tasks)
-            that.cloud_pushTask(tasks)
+            await util.cloud_listTasksUpadte("lists", list_id, tasks)
+            let unfinishedTaskAmount = that.data.list.unfinishedTaskAmount - 1
+            await util.cloud_taskAmountUpadte("lists", list_id, unfinishedTaskAmount)
+
+            that.tapBackground()
             wx.hideLoading()
             that.getList()
           } catch (error) {
@@ -197,8 +272,9 @@ Page({
       isFinished: 0,
       creat_time: "",
       creat_timeStampKey: "",
-      files:[],
-      pictures:[],
+      files: [],
+      pictures: [],
+      content: "",
     }
     that.setData({
       isShowPop: false,
@@ -225,31 +301,17 @@ Page({
       try {
         let tasks = that.data.list.tasks
         tasks.push(data)
-        that.cloud_pushTask(tasks)
+        await util.cloud_listTasksUpadte("lists", list_id, tasks)
+        let unfinishedTaskAmount = that.data.list.unfinishedTaskAmount + 1
+        await util.cloud_taskAmountUpadte("lists", list_id, unfinishedTaskAmount)
+        that.tapBackground()
+        wx.hideLoading()
+        that.getList()
       } catch (error) {
         console.log(error)
       }
     }
   },
-
-  //任务更新
-  cloud_pushTask(tasks) {
-    var that = this
-    db.collection("lists").doc(list_id).update({
-      data: {
-        tasks: tasks
-      },
-      success(res) {
-        console.log("lists中tasks更新成功", res)
-        that.tapBackground()
-        that.getList()
-      },
-      fail(err) {
-        console.log(err)
-      }
-    })
-  },
-
 
   //点击圆标
   async tapFinish(e) {
@@ -257,6 +319,7 @@ Page({
     let tap_id = e.currentTarget.id * 1
     let task = that.data.list.tasks[tap_id]
     let finished_time = util.changeDate(new Date())
+    let unfinishedTaskAmount = that.data.list.unfinishedTaskAmount
     that.setData({
       isCloseSlide: true,
     })
@@ -264,8 +327,10 @@ Page({
       util.playAudio()
       task.finished_time = finished_time
       task.isFinished = 1
+      unfinishedTaskAmount -= 1
     } else {
       task.isFinished = 0
+      unfinishedTaskAmount += 1
     }
     wx.vibrateShort({
       type: "heavy"
@@ -276,6 +341,7 @@ Page({
       task: task
     }
     await util.cloud_function("taskUpdate", data)
+    await util.cloud_taskAmountUpadte("lists", list_id, unfinishedTaskAmount)
     that.getList()
   },
 
@@ -293,6 +359,5 @@ Page({
       isExpand_collapse: false
     })
   },
-
 
 })

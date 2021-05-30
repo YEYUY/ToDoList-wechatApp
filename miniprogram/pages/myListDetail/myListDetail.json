@@ -12,7 +12,7 @@
     "l-collapse-item":"/miniprogram_npm/lin-ui/collapse-item/index",
     "calendar":"/miniprogram_npm/calendar_v1/index"
   },
-  "navigationBarTitleText": "今日",
+  "navigationBarTitleText": "清单",
   "enablePullDownRefresh": true,
   "backgroundTextStyle": "dark"
 }

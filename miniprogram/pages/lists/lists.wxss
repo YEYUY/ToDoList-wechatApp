@@ -134,3 +134,13 @@ page {
   width: 46rpx;
   height: 46rpx;
 }
+
+
+.tA-row-delete {
+  height: 100rpx;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  background-color: #d81e06;
+}

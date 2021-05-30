@@ -1,13 +1,21 @@
 <view class="top-Area">
-  <view class="tA-title"><input type="text" value="{{list.name}}" bindblur="input_listName" /></view>
-  <image class="top_icon" src="../../icons/invite.png" mode="widthFix" bindtap="tapInvite"></image>
-  <image class="top_icon" src="../../icons/delete2.png" mode="widthFix" bindtap="tapDeleteList"></image>
+  <image class="tA-icon" mode="widthFix"
+    src="../../icons/allList_icon.png">
+  </image>
+  <view class="tA-title">全部事项</view>
+
 </view>
 
 <scroll-view scroll-y="true" class="scroll-view">
   <!-- 进行中 -->
   <view class="task-Area" name="isDoing">
-    <block wx:for="{{list.tasks}}" wx:key="index">
+
+    <view class="waitFinish">
+      <view class="waitFinish-title">待完成</view>
+      <view>{{user.allTaskAmount}}</view>
+    </view>
+
+    <block wx:for="{{tasks_list}}" wx:key="index">
 
       <l-slide-view wx:if="{{item.isFinished!=1}}" height="100" width="750" slide-width="140" auto-close="true"
         close="{{isCloseSlide}}">
@@ -29,6 +37,9 @@
                   <image src="../../icons/endTime.png" mode="widthFix" style="width:30rpx;"></image>
                   <view class="tA-row-endDate">{{item.end_date}}</view>
                   <view class="tA-row-endWeek">{{item.end_week}}</view>
+                </view>
+                <view class="tA-row-listName">
+                  {{item.list}}
                 </view>
               </view>
 
@@ -58,7 +69,7 @@
         <image wx:if="{{isExpand_collapse}}" class="collapse-icon" src="../../icons/down.png" mode="widthFix"></image>
       </view>
 
-      <block wx:for="{{list.tasks}}" wx:key="index">
+      <block wx:for="{{tasks_list}}" wx:key="index">
         <l-slide-view wx:if="{{item.isFinished==1}}" height="100" width="750" slide-width="140" auto-close="true"
           close="{{isCloseSlide}}">
 
@@ -80,6 +91,9 @@
                     <view class="tA-row-endDate">{{item.end_date}}</view>
                     <view class="tA-row-endWeek">{{item.end_week}}</view>
                   </view>
+                  <view class="tA-row-listName">
+                    {{item.list}}
+                  </view>
                 </view>
 
               </view>
@@ -98,51 +112,3 @@
     </l-collapse-item>
   </l-collapse>
 </scroll-view>
-
-<!-- 底部固定添加任务栏 -->
-<view class="fixedBottom" wx:if="{{!isShowPop}}">
-  <view class="fB-area" bindtap="tapAddTask">
-    <image src="../../icons/add.png" mode="widthFix" class="add_icon"></image>
-    <view>添加任务</view>
-  </view>
-</view>
-
-
-<!-- 底部弹出窗 -->
-<l-popup show="{{isShowPop}}" content-align="bottom" bind:lintap="tapBackground">
-  <view class="pp-Area" wx:if="{{isShowPop}}">
-    <view class="pA-topRow">
-      <image class="pA-topRow-icon" src="../../icons/circle.png" mode="widthFix"></image>
-      <input class="pA-input" type="text" placeholder="准备做什么" focus="{{isshowKeyboard}}" adjust-position="{{false}}"
-        hold-keyboard="{{true}}" bindinput="input_text" value="{{task.title}}" />
-    </view>
-    <view class="pA-bottomRow">
-      <view class="pA-bottomRow-left">
-        <view class="pA-bottomRow-item" bindtap="tapChooseDate">
-          <image src="../../icons/endTime2.png" class="pA-bottom-icon" mode="widthFix"></image>
-          <view>{{task.end_date}}</view>
-        </view>
-        <view class="pA-bottomRow-item">
-          <image src="../../icons/tag.png" class="pA-bottom-icon" mode="widthFix"></image>
-          <view>数学</view>
-        </view>
-      </view>
-
-      <image src="../../icons/submit.png" class="pA-bottom-submitIcon" mode="widthFix" bindtap="submit"></image>
-    </view>
-  </view>
-</l-popup>
-
-
-<!-- 日历弹出窗 -->
-<l-popup show="{{isShowCalendar}}">
-  <view class="popup">
-    <view class="pp-calendar">
-      <calendar calendarConfig="{{calendarConfig}}" bind:afterTapDay="afterTapDay" />
-    </view>
-    <view class="pp-row">
-      <view class="pp-cancel" bindtap="cancel_calendar">取消</view>
-      <view bindtap="confirm_calendar">确定</view>
-    </view>
-  </view>
-</l-popup>

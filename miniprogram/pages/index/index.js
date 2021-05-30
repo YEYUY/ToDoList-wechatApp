@@ -7,13 +7,18 @@ var users_id
 Page({
   data: {
     now_date:"",
+    momentIcon_show:"afternoon",
     isShowPop: false,
     isShowCalendar: false,
     isshowKeyboard:true,
     isCloseSlide: false,
     isHaveFinished:false,
+    isTaskName:false,
+    isShowToast:false,
+    isShowListPop:false,
     isExpand_collapse:false,//折叠面板
     finishedAmount:"",
+    unfinishedAmount:"",
     tasks_list: [],
     choose_end_date: "",
     task: {
@@ -35,14 +40,16 @@ Page({
 
   async onLoad() {
     var that = this
+    that.updateTodayMoment()
+
     let res = await util.cloud_getList("users")
     if(res.data.length==0)
     {
       console.log("users集合无")
       let data={
         todayTasks:[],
-        myCreatList:[],
-        myJoinList:[],
+        myCreatLists:[],
+        myJoinLists:[],
         allTaskAmount:0,
       }
      let res2 =  await util.cloud_add("users",data)
@@ -59,14 +66,6 @@ Page({
       key: 'users_id',
     })
 
-    let weekArray = ['周日', "周一", "周二", "周三", "周四", "周五", "周六", ]
-    let now_date = (new Date().getMonth()+1)+"月"+new Date().getDate()+"日"
-    let now_week = new Date().getDay()
-    now_date = now_date+" "+weekArray[now_week]
-    that.setData({
-      now_date:now_date
-    })
-    console.log(now_date)
     app.globalData.openid = wx.getStorage({
       key: 'openid',
     })
@@ -74,8 +73,50 @@ Page({
   },
 
   onShow() {
+    
+    this.getList()
+  },
+
+
+  //点击清单
+  tapChooseList()
+  {
+    this.setData({
+      isShowListPop:true,
+    })
+  },
+
+  //更新当前时间
+  updateTodayMoment()
+  {
     var that = this
-    that.getList()
+
+    let weekArray = ['周日', "周一", "周二", "周三", "周四", "周五", "周六", ]
+    let now_date = (new Date().getMonth()+1)+"月"+new Date().getDate()+"日"
+    let now_week = new Date().getDay()
+    now_date = now_date+" "+weekArray[now_week]
+    that.setData({
+      now_date:now_date
+    })
+
+    let now_hour = new Date().getHours()
+    let momentIcon_show
+    if(now_hour>18||now_hour<6)
+    {
+      momentIcon_show="evening"
+    }else if(now_hour>=6&&now_hour<12)
+    {
+      momentIcon_show="morning"
+    }else
+    {
+      momentIcon_show="afternoon"
+    }
+    if(momentIcon_show!=that.data.momentIcon_show)
+    {
+      that.setData({
+        momentIcon_show:momentIcon_show
+      })
+    }
   },
 
   onPullDownRefresh() {
@@ -94,11 +135,15 @@ Page({
       let now_date = util.changeDate(new Date())
       let isHaveFinished = false
       let finishedAmount = 0
+      let unfinishedAmount = 0
       for (let i = 0; i < res.data.length; i++) {
         if(res.data[i].isFinished==1)
         {
           isHaveFinished=true
           finishedAmount+=1
+        }else
+        {
+          unfinishedAmount+=1
         }
         if (now_date.substr(0, 3) == res.data[i].end_date.substr(0, 3)) {
           res.data[i].end_date = res.data[i].end_date.substr(5)
@@ -108,6 +153,7 @@ Page({
         tasks_list: res.data,
         isHaveFinished:isHaveFinished,
         finishedAmount:finishedAmount,
+        unfinishedAmount:unfinishedAmount,
       })
     } catch (error) {
       console.log("fail",error)
@@ -200,15 +246,6 @@ Page({
     })
   },
 
-  // //选择日期后确定
-  // chooseDate(e) {
-  //   var that = this
-  //   var date = util.getDate(new Date(e.detail))
-  //   that.setData({
-  //     'task.end_date': date
-  //   })
-  // },
-
   //点击背景层
   tapBackground() {
     var that = this
@@ -222,6 +259,7 @@ Page({
     that.setData({
       isShowPop: false,
       task: task,
+      isTaskName:false,
     })
     wx.showTabBar()
   },
@@ -231,13 +269,37 @@ Page({
   input_text(e) {
     var that = this
     that.data.task.title = e.detail.value
+    if (that.data.task.title == "") {
+      that.setData({
+        isTaskName: false
+      })
+    } else if (that.data.isTaskName == false) {
+      that.setData({
+        isTaskName: true
+      })
+    }
+  },
+
+  //点击键盘的完成
+  tapKeyboardConfirm(e)
+  {
+    var that = this
+    if (that.data.task.title == "") {
+      that.setData({
+        isShowToast:true,
+        isshowKeyboard:true,
+      })
+    }else
+    {
+      that.submit()
+    }
   },
 
 
   //点击提交
   async submit() {
     var that = this
-    if (that.data.title != "") {
+    if (that.data.task.title != "") {
       let data = that.data.task
       let creat_time = util.changeDate(new Date())
       data.creat_time = creat_time
@@ -321,6 +383,13 @@ Page({
     that.setData({
       isExpand_collapse:false
     })
+  },
+
+
+  onShareAppMessage: function () {
+    return {
+     imageUrl:"../../resource/logo3.png"
+    }
   }
 
 })

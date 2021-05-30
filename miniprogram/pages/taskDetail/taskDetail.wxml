@@ -25,7 +25,7 @@
     <view class="baoguoIcon">
       <image class="mid-icon" mode="widthFix" src="../../icons/file.png"></image>
     </view>
-    <view bindtap="tapAddFile">{{file}}</view>
+    <view bindtap="tapAddFile">添加文件</view>
   </view>
 
   <block wx:for="{{task.files}}" wx:key="index">

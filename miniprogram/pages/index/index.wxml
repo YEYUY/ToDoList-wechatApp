@@ -1,11 +1,25 @@
 <view class="top-Area">
-  <view class="tA-title">我的一天</view>
-  <view class="tA-date">{{now_date}}</view>
+  <view class="tA-left">
+    <view class="tA-title">我的一天</view>
+    <view class="tA-date">
+      <view>{{now_date}}</view>
+      <image class="momentIcon" mode="widthFix"
+        src="../../icons/{{momentIcon_show=='morning'?'morning':momentIcon_show=='afternoon'?'afternoon':'evening'}}.png">
+      </image>
+    </view>
+  </view>
+  <image class="tA-icon" src="../../icons/addTodayTask.png" mode="widthFix" bindtap="tapChooseList"></image>
 </view>
 
 <scroll-view scroll-y="true" class="scroll-view">
   <!-- 进行中 -->
   <view class="task-Area" name="isDoing">
+
+    <view class="waitFinish">
+      <view class="waitFinish-title">待完成</view>
+      <view>{{unfinishedAmount}}</view>
+    </view>
+
     <block wx:for="{{tasks_list}}" wx:key="index">
 
       <l-slide-view wx:if="{{item.isFinished!=1}}" height="100" width="750" slide-width="140" auto-close="true"
@@ -18,10 +32,6 @@
               <l-radio-group current="{{item.isFinished}}" placement="row" bind:linchange="tapFinish" id="{{index}}">
                 <l-radio key="1"></l-radio>
               </l-radio-group>
-              <!-- <image wx:if="{{item.isFinished!=1}}" class="tA-row-icon" src="../../icons/unfinished.png" mode="widthFix"
-              bindtap="tapFinish" id="{{index}}"></image>
-            <image wx:if="{{item.isFinished==1}}" class="tA-row-icon" src="../../icons/finish.png" mode="widthFix"
-              bindtap="tapFinish" id="{{index}}"></image> -->
             </view>
 
             <view class="tA-row-rightArea" bindtap="toTaskDetail" id="{{index}}">
@@ -178,7 +188,7 @@
 
 
 <!-- 底部固定添加任务栏 -->
-<view class="fixedBottom"  wx:if="{{!isShowPop}}">
+<view class="fixedBottom" wx:if="{{!isShowPop}}">
   <view class="fB-area" bindtap="tapAddTask">
     <image src="../../icons/add.png" mode="widthFix" class="add_icon"></image>
     <view>添加任务</view>
@@ -191,8 +201,8 @@
   <view class="pp-Area" wx:if="{{isShowPop}}">
     <view class="pA-topRow">
       <image class="pA-topRow-icon" src="../../icons/circle.png" mode="widthFix"></image>
-      <input class="pA-input" type="text" placeholder="准备做什么"  focus="{{isshowKeyboard}}" adjust-position="{{false}}"  
-        hold-keyboard="{{true}}" bindinput="input_text" value="{{task.title}}" />
+      <input class="pA-input" type="text" placeholder="准备做什么" focus="{{isshowKeyboard}}" adjust-position="{{false}}"
+        hold-keyboard="{{true}}" bindinput="input_text" value="{{task.title}}" bindconfirm="tapKeyboardConfirm" />
     </view>
     <view class="pA-bottomRow">
       <view class="pA-bottomRow-left">
@@ -200,17 +210,15 @@
           <image src="../../icons/endTime2.png" class="pA-bottom-icon" mode="widthFix"></image>
           <view>{{task.end_date}}</view>
         </view>
-        <view class="pA-bottomRow-item">
+        <!-- <view class="pA-bottomRow-item">
           <image src="../../icons/tag.png" class="pA-bottom-icon" mode="widthFix"></image>
           <view>数学</view>
-        </view>
+        </view> -->
       </view>
 
-      <image src="../../icons/submit.png" class="pA-bottom-submitIcon" mode="widthFix" bindtap="submit"></image>
+      <image src="../../icons/{{isTaskName?'submit0':'submit'}}.png" class="pA-bottom-submitIcon" mode="widthFix"
+        bindtap="submit"></image>
     </view>
-    <!-- <view class="pA-calendar">
-      <calendar calendarConfig="{{calendarConfig}}" bind:afterTapDay="afterTapDay" />
-    </view> -->
   </view>
 </l-popup>
 
@@ -229,3 +237,15 @@
     </view>
   </view>
 </l-popup>
+
+
+<!-- 底部弹出窗 -->
+<l-popup show="{{isShowListPop}}" content-align="center" >
+  <view class="list-pop" >
+
+  </view>
+</l-popup>
+
+
+<!-- 轻提示 -->
+<l-toast offsetY="-20" show="{{isShowToast}}" title="今天准备做啥呀？" />
