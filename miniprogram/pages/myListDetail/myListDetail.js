@@ -9,16 +9,19 @@ Page({
   data: {
     list: {},
     now_date: "",
+    isOverTime: false,
     isShowPop: false,
     isShowCalendar: false,
     isshowKeyboard: true,
     isCloseSlide: false,
-    isShowToast:false,
+    isShowToast: false,
     isHaveFinished: false,
-    isShowInvitePop:false,
-    isTaskName:false,
+    isShowInvitePop: false,
+    isTaskName: false,
     isExpand_collapse: false, //折叠面板
     finishedAmount: "",
+    overTasksAmount: "",
+    unfinishedAmount: "",
     tasks_list: [],
     choose_end_date: "",
     task: {
@@ -30,6 +33,7 @@ Page({
       files: [],
       pictures: [],
       content: "",
+      isOverTime:0,
     },
     calendarConfig: {
       theme: 'elegant',
@@ -72,11 +76,22 @@ Page({
       let res = await util.cloud_get("lists", list_id)
       let now_date = util.changeDate(new Date())
       let isHaveFinished = false
+      let isOverTime = false
       let finishedAmount = 0
+      let unfinishedAmount = 0
+      let overTasksAmount = 0
       for (let i = 0; i < res.data.tasks.length; i++) {
+
         if (res.data.tasks[i].isFinished == 1) {
           isHaveFinished = true
           finishedAmount += 1
+        } else {
+          if (res.data.tasks[i].isOverTime == 1) {
+            isOverTime = true
+            overTasksAmount += 1
+          } else {
+            unfinishedAmount += 1
+          }
         }
         if (now_date.substr(0, 3) == res.data.tasks[i].end_date.substr(0, 3)) {
           res.data.tasks[i].end_date = res.data.tasks[i].end_date.substr(5)
@@ -86,10 +101,10 @@ Page({
         list: res.data,
         isHaveFinished: isHaveFinished,
         finishedAmount: finishedAmount,
+        unfinishedAmount: unfinishedAmount,
+        overTasksAmount: overTasksAmount,
+        isOverTime: isOverTime,
       })
-      // wx.setNavigationBarTitle({
-      //   title: res.data.name,
-      // })
     } catch (error) {
       console.log("fail", error)
     }
@@ -105,9 +120,9 @@ Page({
         name: list_name
       },
       success(res) {
-        
+
         db.collection('users').where({
-          '_id':users_id ,
+          '_id': users_id,
           'myCreatLists.list_id': list_id,
         }).update({
           data: {
@@ -123,16 +138,14 @@ Page({
   },
 
   //点击邀请
-  tapInvite()
-  {
+  tapInvite() {
     this.setData({
-      isShowInvitePop:true,
+      isShowInvitePop: true,
     })
   },
 
   //删除清单
-  tapDeleteList()
-  {
+  tapDeleteList() {
     var that = this
     wx.showModal({
       content: "确定删除该清单吗?",
@@ -143,14 +156,13 @@ Page({
           })
           try {
 
-            await util.cloud_remove("lists",list_id,getApp().globalData.openid)
-            let res = await util.cloud_get("users",users_id)
+            await util.cloud_remove("lists", list_id, getApp().globalData.openid)
+            let res = await util.cloud_get("users", users_id)
             let myCreatLists = res.data.myCreatLists
             let i
-            for(i=0;i<myCreatLists.length;i++)
-            {
-              if(list_id ==myCreatLists[i].list_id)
-              break
+            for (i = 0; i < myCreatLists.length; i++) {
+              if (list_id == myCreatLists[i].list_id)
+                break
             }
             myCreatLists.splice(i, 1)
             await util.cloud_usersCtUpadte("users", users_id, myCreatLists)
@@ -280,11 +292,12 @@ Page({
       files: [],
       pictures: [],
       content: "",
+      isOverTime:0,
     }
     that.setData({
       isShowPop: false,
       task: task,
-      isTaskName:false,
+      isTaskName: false,
     })
     wx.showTabBar()
   },
@@ -304,20 +317,18 @@ Page({
     }
   },
 
-   //点击键盘的完成
-   tapKeyboardConfirm()
-   {
-     var that = this
-     if (that.data.task.title == "") {
-       that.setData({
-         isShowToast:true,
-         isshowKeyboard:true,
-       })
-     }else
-     {
-       that.submit()
-     }
-   },
+  //点击键盘的完成
+  tapKeyboardConfirm() {
+    var that = this
+    if (that.data.task.title == "") {
+      that.setData({
+        isShowToast: true,
+        isshowKeyboard: true,
+      })
+    } else {
+      that.submit()
+    }
+  },
 
   //点击提交
   async submit() {
@@ -376,18 +387,31 @@ Page({
   },
 
   // 折叠展开
-  expand_collapse() {
+  expand_collapse(e) {
     var that = this
-    that.setData({
-      isExpand_collapse: true
-    })
+    if (e.currentTarget.id == "0") {
+      that.setData({
+        isExpand_collapse0: true
+      })
+    } else {
+      that.setData({
+        isExpand_collapse: true
+      })
+    }
+
   },
 
-  fold_collapse() {
+  fold_collapse(e) {
     var that = this
-    that.setData({
-      isExpand_collapse: false
-    })
+    if (e.currentTarget.id == "0") {
+      that.setData({
+        isExpand_collapse0: false
+      })
+    } else {
+      that.setData({
+        isExpand_collapse: false
+      })
+    }
   },
 
 })

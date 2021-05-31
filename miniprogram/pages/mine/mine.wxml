@@ -1,5 +1,5 @@
-<view class="top-area">
-  <image class="avatar" src="../../resource/avatar.jpg" mode="widthFix"></image>
+<view class="top-area" bindtap="tapInformation">
+  <image class="avatar" src="{{user.avatarUrl==''?default_avatarUrl:user.avatarUrl}}" mode="widthFix"></image>
   <view class="name">{{user.name}}</view>
   <image class="rightIcon" mode="widthFix" src="../../icons/right.png"></image>
 </view>
@@ -18,20 +18,20 @@
 </view>
 
 
-<view class="commonRow">
+<view class="commonRow" bindtap="tapFeedback">
   <image class="cR-icon" src="../../icons/feedback.png" mode="widthFix"></image>
   <view class="cR-text">反馈</view>
   <image class="rightIcon" mode="widthFix" src="../../icons/right.png"></image>
 </view>
 
-<view class="commonRow">
+<view class="commonRow"  bindtap="tapAbout">
   <image class="cR-icon" src="../../icons/about.png" mode="widthFix"></image>
   <view class="cR-text">关于</view>
   <image class="rightIcon" mode="widthFix" src="../../icons/right.png"></image>
 </view>
 
 
-<view class="commonRowLast">
+<view class="commonRowLast" bindtap="tapSet">
   <image class="cR-icon" src="../../icons/set.png" mode="widthFix"></image>
   <view class="cR-text">设置</view>
   <image class="rightIcon" mode="widthFix" src="../../icons/right.png"></image>

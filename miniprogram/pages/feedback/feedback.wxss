@@ -1,0 +1,14 @@
+
+page{
+  background-color: white;
+}
+
+
+
+.text{
+  width: 90%;
+  margin-left: 5%;
+  margin-top: 300rpx;
+  margin-bottom: 50rpx;
+  font-size: 30rpx;
+}

@@ -94,7 +94,7 @@ page{
 }
 
 .commonRowLast{
-  margin-top: 20rpx;
+  margin-top: 26rpx;
   display: flex;
   flex-direction: row;
   background-color: white;

@@ -1,0 +1,9 @@
+
+
+<view class="text">
+  <text> 如果您在使用过程中发现了BUG，或者对该小程序有任何建议和想法，都可通过下方按钮向我反馈，也可以通过我的邮箱与我取得联系：       befang1122@163.com
+  我会及时接收并处理。
+  </text>
+</view>
+
+<button  style="color:#515151;border:1rpx solid grey" type="default" open-type="feedback">反馈</button>

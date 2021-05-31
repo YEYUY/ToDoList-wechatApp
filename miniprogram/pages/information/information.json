@@ -1,0 +1,6 @@
+{
+  "usingComponents": {
+    "l-popup":"/miniprogram_npm/lin-ui/popup/index"
+  },
+  "navigationBarTitleText": "编辑信息"
+}

@@ -260,3 +260,22 @@ page {
   border-radius: 40rpx;
   background-color: white;
 }
+
+.overTime-text{
+  color: #b33423;
+}
+
+
+.waitFinish{
+  font-size: 26rpx;
+  color: #8a8a8a;
+  padding: 10rpx 12rpx 10rpx 16rpx;
+  display: flex;
+  flex-direction: row;
+}
+
+.waitFinish-title{
+  margin-right: 14rpx;
+}
+
+

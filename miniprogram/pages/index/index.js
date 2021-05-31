@@ -3,6 +3,7 @@ var util = require('../../utils/util.js')
 const app = getApp()
 
 var users_id
+var today_id
 
 Page({
   data: {
@@ -54,6 +55,10 @@ Page({
         myCreatLists: [],
         myJoinLists: [],
         allTaskAmount: 0,
+        avatarUrl:"",
+        name:"昵称",
+        finishedToday:0,
+        totalFinishedAmount:0,
       }
       let res2 = await util.cloud_add("users", data)
       users_id = res2._id
@@ -138,11 +143,9 @@ Page({
     wx.hideNavigationBarLoading()
   },
 
-
   //更新当前时间
   updateTodayMoment() {
     var that = this
-
     let weekArray = ['周日', "周一", "周二", "周三", "周四", "周五", "周六", ]
     let now_date = (new Date().getMonth() + 1) + "月" + new Date().getDate() + "日"
     let now_week = new Date().getDay()
@@ -179,7 +182,6 @@ Page({
     var that = this
     try {
       let res = await util.cloud_getList("test_list")
-
       let now_date = util.changeDate(new Date())
       let isHaveFinished = false
       let isOverTime = false
@@ -191,10 +193,12 @@ Page({
           isHaveFinished = true
           finishedAmount += 1
         } else {
-          unfinishedAmount += 1
           if (res.data[i].isOverTime == 1) {
             isOverTime = true
             overTasksAmount += 1
+          }else
+          {
+            unfinishedAmount += 1
           }
         }
         if (now_date.substr(0, 3) == res.data[i].end_date.substr(0, 3)) {
@@ -364,7 +368,6 @@ Page({
       }
     }
   },
-
 
   //日历选择日期
   afterTapDay(e) {

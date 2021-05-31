@@ -1,0 +1,25 @@
+<view class="avatarRow" bindtap="changeAvatar">
+  <view class="row-text">头像</view>
+  <image class="avatar" src="{{user.avatarUrl}}" mode="widthFix"></image>
+</view>
+
+<view class="nameRow">
+  <view class="row-text">昵称</view>
+  <input class="name" type="text" value="{{user.name}}" bindblur="inputName" />
+  <!-- <view class="name">{{user.name}}</view> -->
+</view>
+
+<!-- 创建弹出窗 -->
+<l-popup show="{{isShowPop}}" content-align="center" bind:lintap="tapBackground">
+  <view class="creatPop">
+    <view class="cP-titleName">修改昵称</view>
+    <view class="cP-inputRow">
+      <input type="text" placeholder="昵称" focus="{{true}}" hold-keyboard="{{true}}" adjust-position="{{false}}"
+        bindinput="inputName" />
+    </view>
+    <view class="cp-bottomRow">
+      <view>取消</view>
+      <view>确定</view>
+    </view>
+  </view>
+</l-popup>

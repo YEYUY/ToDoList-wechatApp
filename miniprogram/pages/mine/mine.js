@@ -1,66 +1,58 @@
-// pages/mine/mine.js
+const db = wx.cloud.database()
+const _ = db.command
+var users_id = wx.getStorageSync('users_id')
+var util = require('../../utils/util.js')
+
 Page({
 
   data: {
-    user:{
-      name:"张三",
-      finishedToday:5,
-      totalFinishedAmount:16,
-    }
+    default_avatarUrl:"../../resource/avatar.jpg",
+    user:{}
   },
 
-  /**
-   * 生命周期函数--监听页面加载
-   */
   onLoad: function (options) {
 
   },
 
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
+  onShow: async function () {
+    var that = this
+    wx.showNavigationBarLoading()
+    let res = await util.cloud_get("users",users_id)
+    that.setData({
+      user:res.data
+    })
+    wx.hideNavigationBarLoading()
   },
 
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-
+  tapFeedback()
+  {
+    wx.navigateTo({
+      url: '../feedback/feedback',
+    })
   },
 
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
+  tapInformation()
+  {
+    var that = this
+    wx.navigateTo({
+      url: '../information/information?user='+JSON.stringify(that.data.user),
+    })
   },
 
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
+  tapAbout()
+  {
+    wx.navigateTo({
+      url: '../about/about',
+    })
   },
 
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
+  tapSet()
+  {
+    wx.navigateTo({
+      url: '../set/set',
+    })
   },
 
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
   onShareAppMessage: function () {
 
   }

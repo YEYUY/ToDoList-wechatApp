@@ -5,6 +5,64 @@
 </view>
 
 <scroll-view scroll-y="true" class="scroll-view">
+
+  <!-- 已过期 -->
+  <l-collapse id="0" wx:if="{{isOverTime}}" type='accordion' class="l-collapse" bind:linexpand="expand_collapse"
+    bind:linfold="fold_collapse">
+    <l-collapse-item customTitle="{{true}}">
+      <view class="collapse-rowTitle" slot="title">
+        <view class="overTime-text">已过期</view>
+        <view class="finishedAmount" style="color:#b33423;">{{overTasksAmount}}</view>
+        <image wx:if="{{!isExpand_collapse0}}" class="collapse-icon" src="../../icons/left.png" mode="widthFix"></image>
+        <image wx:if="{{isExpand_collapse0}}" class="collapse-icon" src="../../icons/down.png" mode="widthFix"></image>
+      </view>
+
+      <block wx:for="{{list.tasks}}" wx:key="index">
+        <l-slide-view wx:if="{{item.isOverTime==1&&item.isFinished==0}}" height="100" width="750" slide-width="140"
+          auto-close="true" close="{{isCloseSlide}}">
+
+          <view slot="left" class="left" id="{{index}}" hover-class="hover">
+            <view class="tA-finishedRow">
+
+              <view class="tA-row-leftArea">
+                <l-radio-group current="{{item.isFinished}}" placement="row" bind:linchange="tapFinish" id="{{index}}">
+                  <l-radio key="1"></l-radio>
+                </l-radio-group>
+              </view>
+
+              <view class="overTime-text" bindtap="toTaskDetail" id="{{index}}">
+                <view class="tA-row-title">{{item.title}}</view>
+
+                <view class="tA-row-bottom">
+                  <view class="tA-row-date">
+                    <image src="../../icons/endTime3.png" mode="widthFix" style="width:30rpx;"></image>
+                    <view class="tA-row-endDate" style="color:#b33423;">{{item.end_date}}</view>
+                  </view>
+                  <view class="tA-row-listName">
+                    {{item.list}}
+                  </view>
+                </view>
+              </view>
+            </view>
+          </view>
+
+          <view slot="right" class="right">
+            <view class="tA-row-delete" bindtap="tapDelete" id="{{index}}">
+              <image src="../../icons/delete.png" mode="widthFix" style="width:40rpx;"></image>
+            </view>
+          </view>
+
+        </l-slide-view>
+      </block>
+
+    </l-collapse-item>
+  </l-collapse>
+
+  <view class="waitFinish">
+      <view class="waitFinish-title">待完成</view>
+      <view>{{unfinishedAmount}}</view>
+    </view>
+
   <!-- 进行中 -->
   <view class="task-Area" name="isDoing">
     <block wx:for="{{list.tasks}}" wx:key="index">
@@ -114,7 +172,7 @@
     <view class="pA-topRow">
       <image class="pA-topRow-icon" src="../../icons/circle.png" mode="widthFix"></image>
       <input class="pA-input" type="text" placeholder="准备做什么" focus="{{isshowKeyboard}}" adjust-position="{{false}}"
-        hold-keyboard="{{true}}" bindinput="input_text" value="{{task.title}}"  bindconfirm="tapKeyboardConfirm" />
+        hold-keyboard="{{true}}" bindinput="input_text" value="{{task.title}}" bindconfirm="tapKeyboardConfirm" />
     </view>
     <view class="pA-bottomRow">
       <view class="pA-bottomRow-left">
@@ -128,7 +186,8 @@
         </view> -->
       </view>
 
-      <image src="../../icons/{{isTaskName?'submit0':'submit'}}.png" class="pA-bottom-submitIcon" mode="widthFix" bindtap="submit"></image>
+      <image src="../../icons/{{isTaskName?'submit0':'submit'}}.png" class="pA-bottom-submitIcon" mode="widthFix"
+        bindtap="submit"></image>
     </view>
   </view>
 </l-popup>
@@ -149,8 +208,8 @@
 
 
 <!-- 邀请弹出窗 -->
-<l-popup show="{{isShowInvitePop}}" content-align="center" >
-  <view class="invite-pop" >
+<l-popup show="{{isShowInvitePop}}" content-align="center">
+  <view class="invite-pop">
 
   </view>
 </l-popup>

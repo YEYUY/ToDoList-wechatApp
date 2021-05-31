@@ -8,6 +8,11 @@
     "pages/myListDetail/myListDetail",
     "pages/about/about",
     "pages/allTasks/allTasks",
+    "pages/set/set",
+    "pages/information/information",
+    "pages/feedback/feedback",
+
+
     "pages/index0/index0"
 
   ],
