@@ -1,11 +1,12 @@
 // pages/mine/mine.js
 Page({
 
-  /**
-   * 页面的初始数据
-   */
   data: {
-
+    user:{
+      name:"张三",
+      finishedToday:5,
+      totalFinishedAmount:16,
+    }
   },
 
   /**

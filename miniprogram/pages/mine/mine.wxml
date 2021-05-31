@@ -1,2 +1,41 @@
-<!--pages/mine/mine.wxml-->
-<text>pages/mine/mine.wxml</text>
+<view class="top-area">
+  <image class="avatar" src="../../resource/avatar.jpg" mode="widthFix"></image>
+  <view class="name">{{user.name}}</view>
+  <image class="rightIcon" mode="widthFix" src="../../icons/right.png"></image>
+</view>
+
+<view class="midArea">
+  <view class="mA-leftArea">
+    <view class="mAl-topText">今日已完成</view>
+    <!-- <view class="mAl-compare">比前一天多{{user.compareAmount}}</view> -->
+    <view class="mAl-amount">{{user.finishedToday}}</view>
+  </view>
+  <view class="mA-rightArea">
+    <view class="mAl-topText">总已完成</view>
+    <!-- <view class="mAl-compare"></view> -->
+    <view class="mAl-amount">{{user.totalFinishedAmount}}</view>
+  </view>
+</view>
+
+
+<view class="commonRow">
+  <image class="cR-icon" src="../../icons/feedback.png" mode="widthFix"></image>
+  <view class="cR-text">反馈</view>
+  <image class="rightIcon" mode="widthFix" src="../../icons/right.png"></image>
+</view>
+
+<view class="commonRow">
+  <image class="cR-icon" src="../../icons/about.png" mode="widthFix"></image>
+  <view class="cR-text">关于</view>
+  <image class="rightIcon" mode="widthFix" src="../../icons/right.png"></image>
+</view>
+
+
+<view class="commonRowLast">
+  <image class="cR-icon" src="../../icons/set.png" mode="widthFix"></image>
+  <view class="cR-text">设置</view>
+  <image class="rightIcon" mode="widthFix" src="../../icons/right.png"></image>
+</view>
+
+
+

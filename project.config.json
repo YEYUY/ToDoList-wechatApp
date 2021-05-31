@@ -73,6 +73,12 @@
         {
           "name": "清单详情",
           "pathName": "pages/myListDetail/myListDetail",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "个人中心",
+          "pathName": "pages/mine/mine",
           "scene": null
         }
       ]
