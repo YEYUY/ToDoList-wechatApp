@@ -39,6 +39,13 @@ page {
   height: 860rpx;
 }
 
+.overTime-text{
+  color: #b33423;
+}
+
+/* .overTimeRowArea{
+  border-bottom: 1rpx solid #e0e0e0;
+} */
 
 
 .task-Area {
@@ -279,9 +286,56 @@ page {
   margin-right: 200rpx;
 }
 
+
 .list-pop{
   width: 650rpx;
   height: 800rpx;
   border-radius: 40rpx;
   background-color: white;
+  display: flex;
+  flex-direction: column;
+}
+
+
+
+.lp-topRow{
+  margin-top: 20rpx;
+  text-align: center;
+  font-size: 32rpx;
+  font-weight: bold;
+}
+
+.lp-taskArea{
+  padding: 20rpx; 
+}
+
+.lp-row{
+  height: 80rpx;
+  padding: 4rpx 0rpx 4rpx 0rpx;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.lp-addIcon{
+  width: 50rpx;
+  height: 50rpx;
+  margin-right: 20rpx;
+}
+
+.lp-row-rightArea{
+  display: flex;
+  flex-direction: column;
+}
+
+.lp-row-bottom{
+  display: flex;
+  flex-direction: row;
+  font-size: 26rpx;
+  align-items: center;
+}
+
+.lp-endTimeIcon{
+  width: 30rpx;
+  height: 30rpx;
 }

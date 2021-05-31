@@ -9,6 +9,7 @@ Page({
 
   data: {
     isShowPopup: false,
+
     remind: "提醒",
     picture: "添加图片",
     file: "添加文件",

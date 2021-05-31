@@ -13,7 +13,10 @@ Page({
     isShowCalendar: false,
     isshowKeyboard: true,
     isCloseSlide: false,
+    isShowToast:false,
     isHaveFinished: false,
+    isShowInvitePop:false,
+    isTaskName:false,
     isExpand_collapse: false, //折叠面板
     finishedAmount: "",
     tasks_list: [],
@@ -122,7 +125,9 @@ Page({
   //点击邀请
   tapInvite()
   {
-
+    this.setData({
+      isShowInvitePop:true,
+    })
   },
 
   //删除清单
@@ -130,7 +135,7 @@ Page({
   {
     var that = this
     wx.showModal({
-      content: "确定删除该任务吗?",
+      content: "确定删除该清单吗?",
       async success(res) {
         if (res.confirm) {
           wx.showLoading({
@@ -279,6 +284,7 @@ Page({
     that.setData({
       isShowPop: false,
       task: task,
+      isTaskName:false,
     })
     wx.showTabBar()
   },
@@ -287,12 +293,36 @@ Page({
   input_text(e) {
     var that = this
     that.data.task.title = e.detail.value
+    if (that.data.task.title == "") {
+      that.setData({
+        isTaskName: false
+      })
+    } else if (that.data.isTaskName == false) {
+      that.setData({
+        isTaskName: true
+      })
+    }
   },
+
+   //点击键盘的完成
+   tapKeyboardConfirm()
+   {
+     var that = this
+     if (that.data.task.title == "") {
+       that.setData({
+         isShowToast:true,
+         isshowKeyboard:true,
+       })
+     }else
+     {
+       that.submit()
+     }
+   },
 
   //点击提交
   async submit() {
     var that = this
-    if (that.data.title != "") {
+    if (that.data.task.title != "") {
       let data = that.data.task
       let creat_time = util.changeDate(new Date())
       data.creat_time = creat_time

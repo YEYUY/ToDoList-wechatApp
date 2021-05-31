@@ -4,7 +4,8 @@
     "l-popup":"/miniprogram_npm/lin-ui/popup/index",
     "l-album":"/miniprogram_npm/lin-ui/album/index",
     "l-radio-group":"/miniprogram_npm/lin-ui/radio-group/index",
-    "l-radio":"/miniprogram_npm/lin-ui/radio/index"
+    "l-radio":"/miniprogram_npm/lin-ui/radio/index",
+    "l-toast":"/miniprogram_npm/lin-ui/toast/index"
   },
   "navigationBarTitleText": "任务",
   "navigationBarBackgroundColor": "#ffffff"

@@ -114,7 +114,7 @@
     <view class="pA-topRow">
       <image class="pA-topRow-icon" src="../../icons/circle.png" mode="widthFix"></image>
       <input class="pA-input" type="text" placeholder="准备做什么" focus="{{isshowKeyboard}}" adjust-position="{{false}}"
-        hold-keyboard="{{true}}" bindinput="input_text" value="{{task.title}}" />
+        hold-keyboard="{{true}}" bindinput="input_text" value="{{task.title}}"  bindconfirm="tapKeyboardConfirm" />
     </view>
     <view class="pA-bottomRow">
       <view class="pA-bottomRow-left">
@@ -122,13 +122,13 @@
           <image src="../../icons/endTime2.png" class="pA-bottom-icon" mode="widthFix"></image>
           <view>{{task.end_date}}</view>
         </view>
-        <view class="pA-bottomRow-item">
+        <!-- <view class="pA-bottomRow-item">
           <image src="../../icons/tag.png" class="pA-bottom-icon" mode="widthFix"></image>
           <view>数学</view>
-        </view>
+        </view> -->
       </view>
 
-      <image src="../../icons/submit.png" class="pA-bottom-submitIcon" mode="widthFix" bindtap="submit"></image>
+      <image src="../../icons/{{isTaskName?'submit0':'submit'}}.png" class="pA-bottom-submitIcon" mode="widthFix" bindtap="submit"></image>
     </view>
   </view>
 </l-popup>
@@ -146,3 +146,14 @@
     </view>
   </view>
 </l-popup>
+
+
+<!-- 邀请弹出窗 -->
+<l-popup show="{{isShowInvitePop}}" content-align="center" >
+  <view class="invite-pop" >
+
+  </view>
+</l-popup>
+
+<!-- 轻提示 -->
+<l-toast offsetY="-60" show="{{isShowToast}}" title="今天准备做啥呀？" />

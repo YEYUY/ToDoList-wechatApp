@@ -9,6 +9,7 @@ Page({
     isExpand_collapse_1: true,
     isExpand_collapse_2: true,
     isShowCreatPop: false,
+    isShowJoinPop:false,
     isListName: false,
     listName: "",
     user:{},
@@ -120,7 +121,9 @@ Page({
 
   //点击加入清单
   tapJoinList() {
-
+    this.setData({
+      isShowJoinPop:true
+    })
   },
 
   //点击我的清单中某一项

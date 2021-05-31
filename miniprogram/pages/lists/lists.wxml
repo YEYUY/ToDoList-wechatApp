@@ -95,7 +95,7 @@
   </block>
 </view> -->
 
-
+<!-- 创建弹出窗 -->
 <l-popup show="{{isShowCreatPop}}" content-align="bottom" bind:lintap="tapBackground">
   <view class="creatPop" wx:if="{{isShowCreatPop}}">
     <view class="cP-topRow">
@@ -106,7 +106,15 @@
     <view class="cP-inputRow">
       <image src="../../icons/list_icon_creat.png" mode="widthFix" class="cP-list_icon"></image>
       <input type="text" placeholder="清单名称" focus="{{true}}"  hold-keyboard="{{true}}" adjust-position="{{false}}"
-        bindinput="input_listName" />
+        bindinput="input_listName"  />
     </view>
+  </view>
+</l-popup>
+
+
+<!-- 加入弹出窗 -->
+<l-popup show="{{isShowJoinPop}}" content-align="center" >
+  <view class="join-pop" >
+
   </view>
 </l-popup>

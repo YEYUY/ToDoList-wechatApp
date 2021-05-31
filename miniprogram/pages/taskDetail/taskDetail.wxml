@@ -70,3 +70,4 @@
   <view class="fixed-area-text">{{task.isFinished==0?"创建于":"完成于"}} {{show_time}} </view>
   <image class="fixed-area-icon" src="../../icons/delete0.png" mode="widthFix" bindtap="tapDelete"></image>
 </View>
+

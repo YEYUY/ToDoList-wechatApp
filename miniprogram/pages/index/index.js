@@ -6,19 +6,23 @@ var users_id
 
 Page({
   data: {
-    now_date:"",
-    momentIcon_show:"afternoon",
+    user: {},
+    chosenList: [],
+    now_date: "",
+    momentIcon_show: "afternoon",
+    isOverTime: false,
     isShowPop: false,
     isShowCalendar: false,
-    isshowKeyboard:true,
+    isshowKeyboard: true,
     isCloseSlide: false,
-    isHaveFinished:false,
-    isTaskName:false,
-    isShowToast:false,
-    isShowListPop:false,
-    isExpand_collapse:false,//折叠面板
-    finishedAmount:"",
-    unfinishedAmount:"",
+    isHaveFinished: false,
+    isTaskName: false,
+    isShowToast: false,
+    isShowListPop: false,
+    isExpand_collapse: false, //折叠面板
+    finishedAmount: "",
+    unfinishedAmount: "",
+    overTasksAmount: "",
     tasks_list: [],
     choose_end_date: "",
     task: {
@@ -43,24 +47,22 @@ Page({
     that.updateTodayMoment()
 
     let res = await util.cloud_getList("users")
-    if(res.data.length==0)
-    {
+    if (res.data.length == 0) {
       console.log("users集合无")
-      let data={
-        todayTasks:[],
-        myCreatLists:[],
-        myJoinLists:[],
-        allTaskAmount:0,
+      let data = {
+        todayTasks: [],
+        myCreatLists: [],
+        myJoinLists: [],
+        allTaskAmount: 0,
       }
-     let res2 =  await util.cloud_add("users",data)
-      users_id = res2._id 
+      let res2 = await util.cloud_add("users", data)
+      users_id = res2._id
       app.globalData.users_id = res2._id
-    }else
-    {
-      users_id = res.data[0]._id 
+    } else {
+      users_id = res.data[0]._id
       app.globalData.users_id = users_id
     }
-    console.log("users_id: ",users_id)
+    console.log("users_id: ", users_id)
     wx.setStorage({
       data: users_id,
       key: 'users_id',
@@ -69,52 +71,98 @@ Page({
     app.globalData.openid = wx.getStorage({
       key: 'openid',
     })
-    console.log("openid ",app.globalData.openid)
+    console.log("openid ", app.globalData.openid)
   },
 
   onShow() {
-    
+
     this.getList()
   },
 
 
   //点击清单
-  tapChooseList()
-  {
+  async tapChooseList() {
+    var that = this
+    that.getUsers()
     this.setData({
-      isShowListPop:true,
+      isShowListPop: true,
     })
   },
 
+  //获取users
+  async getUsers() {
+    wx.showNavigationBarLoading()
+    var that = this
+    let res = await util.cloud_get("users", users_id)
+    that.setData({
+      user: res.data
+    })
+    wx.hideNavigationBarLoading()
+  },
+
+  tapListName(e) {
+    console.log(e)
+    var that = this
+    let tap_id = e.currentTarget.id * 1
+    let tap_list_id = that.data.user.myCreatLists[tap_id].list_id
+    that.getListTasks(tap_list_id)
+  },
+
+  //获取清单详情
+  async getListTasks(list_id) {
+    wx.showNavigationBarLoading()
+    var that = this
+    try {
+      let res = await util.cloud_get("lists", list_id)
+      let now_date = util.changeDate(new Date())
+      let isHaveFinished = false
+      let finishedAmount = 0
+      for (let i = 0; i < res.data.tasks.length; i++) {
+        if (res.data.tasks[i].isFinished == 1) {
+          isHaveFinished = true
+          finishedAmount += 1
+        }
+        if (now_date.substr(0, 3) == res.data.tasks[i].end_date.substr(0, 3)) {
+          res.data.tasks[i].end_date = res.data.tasks[i].end_date.substr(5)
+        }
+      }
+      that.setData({
+        chosenList: res.data,
+        // isHaveFinished: isHaveFinished,
+        finishedAmount: finishedAmount,
+      })
+      console.log("chosenList", that.data.chosenList)
+    } catch (error) {
+      console.log("fail", error)
+    }
+    wx.hideNavigationBarLoading()
+  },
+
+
   //更新当前时间
-  updateTodayMoment()
-  {
+  updateTodayMoment() {
     var that = this
 
     let weekArray = ['周日', "周一", "周二", "周三", "周四", "周五", "周六", ]
-    let now_date = (new Date().getMonth()+1)+"月"+new Date().getDate()+"日"
+    let now_date = (new Date().getMonth() + 1) + "月" + new Date().getDate() + "日"
     let now_week = new Date().getDay()
-    now_date = now_date+" "+weekArray[now_week]
+    now_date = now_date + " " + weekArray[now_week]
     that.setData({
-      now_date:now_date
+      now_date: now_date
     })
 
     let now_hour = new Date().getHours()
     let momentIcon_show
-    if(now_hour>18||now_hour<6)
-    {
-      momentIcon_show="evening"
-    }else if(now_hour>=6&&now_hour<12)
-    {
-      momentIcon_show="morning"
-    }else
-    {
-      momentIcon_show="afternoon"
+    if (now_hour > 18 || now_hour < 6) {
+      momentIcon_show = "evening"
+    } else if (now_hour >= 6 && now_hour < 12) {
+      momentIcon_show = "morning"
+    } else {
+      momentIcon_show = "afternoon"
     }
-    if(momentIcon_show!=that.data.momentIcon_show)
-    {
+    if (momentIcon_show != that.data.momentIcon_show) {
       that.setData({
-        momentIcon_show:momentIcon_show
+        momentIcon_show: momentIcon_show
       })
     }
   },
@@ -134,16 +182,20 @@ Page({
 
       let now_date = util.changeDate(new Date())
       let isHaveFinished = false
+      let isOverTime = false
       let finishedAmount = 0
       let unfinishedAmount = 0
+      let overTasksAmount = 0
       for (let i = 0; i < res.data.length; i++) {
-        if(res.data[i].isFinished==1)
-        {
-          isHaveFinished=true
-          finishedAmount+=1
-        }else
-        {
-          unfinishedAmount+=1
+        if (res.data[i].isFinished == 1) {
+          isHaveFinished = true
+          finishedAmount += 1
+        } else {
+          unfinishedAmount += 1
+          if (res.data[i].isOverTime == 1) {
+            isOverTime = true
+            overTasksAmount += 1
+          }
         }
         if (now_date.substr(0, 3) == res.data[i].end_date.substr(0, 3)) {
           res.data[i].end_date = res.data[i].end_date.substr(5)
@@ -151,12 +203,14 @@ Page({
       }
       that.setData({
         tasks_list: res.data,
-        isHaveFinished:isHaveFinished,
-        finishedAmount:finishedAmount,
-        unfinishedAmount:unfinishedAmount,
+        isHaveFinished: isHaveFinished,
+        finishedAmount: finishedAmount,
+        unfinishedAmount: unfinishedAmount,
+        overTasksAmount: overTasksAmount,
+        isOverTime: isOverTime,
       })
     } catch (error) {
-      console.log("fail",error)
+      console.log("fail", error)
     }
     wx.hideNavigationBarLoading()
   },
@@ -212,10 +266,9 @@ Page({
     wx.hideTabBar()
     that.setData({
       isShowPop: true,
-     // isshowKeyboard: true
     })
 
-  }, 
+  },
 
   //点击日期
   tapChooseDate() {
@@ -224,7 +277,7 @@ Page({
 
     that.setData({
       isShowCalendar: true,
-     // isshowKeyboard: false
+      // isshowKeyboard: false
     })
   },
 
@@ -259,7 +312,7 @@ Page({
     that.setData({
       isShowPop: false,
       task: task,
-      isTaskName:false,
+      isTaskName: false,
     })
     wx.showTabBar()
   },
@@ -281,16 +334,14 @@ Page({
   },
 
   //点击键盘的完成
-  tapKeyboardConfirm(e)
-  {
+  tapKeyboardConfirm(e) {
     var that = this
     if (that.data.task.title == "") {
       that.setData({
-        isShowToast:true,
-        isshowKeyboard:true,
+        isShowToast: true,
+        isshowKeyboard: true,
       })
-    }else
-    {
+    } else {
       that.submit()
     }
   },
@@ -319,7 +370,7 @@ Page({
   afterTapDay(e) {
     console.log('点击日期 ', e.detail)
     var that = this
-    let weekArray = ['周日', "周一", "周二", "周三", "周四", "周五", "周六",]
+    let weekArray = ['周日', "周一", "周二", "周三", "周四", "周五", "周六", ]
     that.data.task.end_date = e.detail.year + "年" + e.detail.month + "月" + e.detail.day + "日 " + weekArray[e.detail.week]
   },
 
@@ -327,33 +378,22 @@ Page({
   async tapFinish(e) {
     var that = this
     let tap_id = e.currentTarget.id * 1
-    let tapTask = that.data.tasks_list[tap_id]  
+    let tapTask = that.data.tasks_list[tap_id]
     let data
     let finished_time = util.changeDate(new Date())
     that.setData({
-      isCloseSlide:true,
-      // ['tasks_list[' + tap_id + '].isFinished']:1
+      isCloseSlide: true,
     })
-    if(tapTask.isFinished==0)
-    {
+    if (tapTask.isFinished == 0) {
       util.playAudio()
-      data={
-        isFinished:1,
-        finished_time:finished_time
+      data = {
+        isFinished: 1,
+        finished_time: finished_time
       }
-      // that.setData({
-      //   isCloseSlide:true,
-      //   ['tasks_list[' + tap_id + '].isFinished']:1
-      // })
-    }else
-    {
-      data={
-        isFinished:0,
+    } else {
+      data = {
+        isFinished: 0,
       }
-      // that.setData({
-      //   isCloseSlide:true,
-      //   ['tasks_list[' + tap_id + '].isFinished']:0
-      // })
     }
     wx.vibrateShort({
       type: "heavy"
@@ -369,26 +409,37 @@ Page({
 
 
   // 折叠展开
-  expand_collapse()
-  {
+  expand_collapse(e) {
     var that = this
-    that.setData({
-      isExpand_collapse:true
-    })
+    if (e.currentTarget.id == "0") {
+      that.setData({
+        isExpand_collapse0: true
+      })
+    } else {
+      that.setData({
+        isExpand_collapse: true
+      })
+    }
+
   },
 
-  fold_collapse()
-  {
+  fold_collapse(e) {
     var that = this
-    that.setData({
-      isExpand_collapse:false
-    })
+    if (e.currentTarget.id == "0") {
+      that.setData({
+        isExpand_collapse0: false
+      })
+    } else {
+      that.setData({
+        isExpand_collapse: false
+      })
+    }
   },
 
 
   onShareAppMessage: function () {
     return {
-     imageUrl:"../../resource/logo3.png"
+      imageUrl: "../../resource/logo3.png"
     }
   }
 

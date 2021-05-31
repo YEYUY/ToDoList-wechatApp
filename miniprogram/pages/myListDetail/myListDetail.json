@@ -10,7 +10,8 @@
     "l-radio":"/miniprogram_npm/lin-ui/radio/index",
     "l-collapse":"/miniprogram_npm/lin-ui/collapse/index",
     "l-collapse-item":"/miniprogram_npm/lin-ui/collapse-item/index",
-    "calendar":"/miniprogram_npm/calendar_v1/index"
+    "calendar":"/miniprogram_npm/calendar_v1/index",
+    "l-toast":"/miniprogram_npm/lin-ui/toast/index"
   },
   "navigationBarTitleText": "清单",
   "enablePullDownRefresh": true,

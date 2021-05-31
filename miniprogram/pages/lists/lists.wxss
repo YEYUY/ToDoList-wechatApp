@@ -144,3 +144,10 @@ page {
   align-items: center;
   background-color: #d81e06;
 }
+
+.join-pop{
+  width: 650rpx;
+  height: 800rpx;
+  border-radius: 40rpx;
+  background-color: white;
+}
