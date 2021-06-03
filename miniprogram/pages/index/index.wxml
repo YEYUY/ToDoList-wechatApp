@@ -8,7 +8,7 @@
       </image>
     </view>
   </view>
-  <image class="tA-icon" src="../../icons/addTodayTask.png" mode="widthFix" bindtap="tapChooseList"></image>
+  <!-- <image class="tA-icon" src="../../icons/addTodayTask.png" mode="widthFix" bindtap="tapChooseList"></image> -->
 </view>
 
 <scroll-view scroll-y="true" class="scroll-view">
@@ -24,7 +24,7 @@
         <image wx:if="{{isExpand_collapse0}}" class="collapse-icon" src="../../icons/down.png" mode="widthFix"></image>
       </view>
 
-      <block wx:for="{{tasks_list}}" wx:key="index">
+      <block wx:for="{{list.tasks}}" wx:key="index">
         <l-slide-view wx:if="{{item.isOverTime==1&&item.isFinished==0}}" height="100" width="750" slide-width="140"
           auto-close="true" close="{{isCloseSlide}}">
 
@@ -73,7 +73,7 @@
       <view>{{unfinishedAmount}}</view>
     </view>
 
-    <block wx:for="{{tasks_list}}" wx:key="index">
+    <block wx:for="{{list.tasks}}" wx:key="index">
 
       <l-slide-view wx:if="{{item.isFinished!=1&&item.isOverTime!=1}}" height="100" width="750" slide-width="140"
         auto-close="true" close="{{isCloseSlide}}">
@@ -124,7 +124,7 @@
         <image wx:if="{{isExpand_collapse}}" class="collapse-icon" src="../../icons/down.png" mode="widthFix"></image>
       </view>
 
-      <block wx:for="{{tasks_list}}" wx:key="index">
+      <block wx:for="{{list.tasks}}" wx:key="index">
         <l-slide-view wx:if="{{item.isFinished==1}}" height="100" width="750" slide-width="140" auto-close="true"
           close="{{isCloseSlide}}">
 
@@ -232,6 +232,7 @@
         <l-collapse-item title="我的创建">
           <l-collapse type="accordion">
             <block wx:for="{{user.myCreatLists}}" wx:key="list_id">
+
               <l-collapse-item title="{{item.list_name}}" id="{{index}}" bindtap="tapListName">
                 <block wx:for="{{chosenList.tasks}}" wx:key="_id" wx:for-item="taskItem" wx:for-index="taskIndex">
 
@@ -254,7 +255,8 @@
             </block>
           </l-collapse>
         </l-collapse-item>
-        <l-collapse-item title="我的加入">
+        
+        <!-- <l-collapse-item title="我的加入">
           <l-collapse type="accordion">
             <block wx:for="{{user.myJoinLists}}" wx:key="index">
               <l-collapse-item title="{{item.list_name}}">
@@ -262,7 +264,8 @@
               </l-collapse-item>
             </block>
           </l-collapse>
-        </l-collapse-item>
+        </l-collapse-item> -->
+
       </l-collapse>
     </view>
 

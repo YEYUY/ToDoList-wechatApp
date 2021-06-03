@@ -1,7 +1,7 @@
 <view class="top-Area">
   <view class="tA-title"><input type="text" value="{{list.name}}" bindblur="input_listName" /></view>
-  <image class="top_icon" src="../../icons/invite.png" mode="widthFix" bindtap="tapInvite"></image>
-  <image class="top_icon" src="../../icons/delete2.png" mode="widthFix" bindtap="tapDeleteList"></image>
+  <!-- <image class="top_icon" src="../../icons/invite.png" mode="widthFix" bindtap="tapInvite"></image> -->
+  <image class="top_icon" src="../../icons/delete2.png" mode="widthFix" bindtap="tapDeleteList" style="margin-left:80rpx;"></image>
 </view>
 
 <scroll-view scroll-y="true" class="scroll-view">

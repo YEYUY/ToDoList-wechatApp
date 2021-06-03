@@ -1,5 +1,6 @@
 <view class="top-area" bindtap="tapInformation">
-  <image class="avatar" src="{{user.avatarUrl==''?default_avatarUrl:user.avatarUrl}}" mode="widthFix"></image>
+  <!-- <image class="avatar" src="{{user.avatarUrl==''?default_avatarUrl:user.avatarUrl}}" mode="widthFix"></image> -->
+  <l-avatar size="130" src="{{user.avatarUrl==''?'/resource/avatar.jpg':user.avatarUrl}}" />
   <view class="name">{{user.name}}</view>
   <image class="rightIcon" mode="widthFix" src="../../icons/right.png"></image>
 </view>

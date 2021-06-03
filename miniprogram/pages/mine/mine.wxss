@@ -5,6 +5,7 @@ page{
 .top-area{
   background-color: white;
   width: 100%;
+  padding-left: 30rpx;
   height: 250rpx;
   margin-bottom: 20rpx;
   /* border-radius: 30rpx; */

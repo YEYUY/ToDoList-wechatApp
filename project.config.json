@@ -85,6 +85,12 @@
         {
           "name": "个人信息",
           "pathName": "pages/information/information",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "设置",
+          "pathName": "pages/set/set",
           "scene": null
         }
       ]

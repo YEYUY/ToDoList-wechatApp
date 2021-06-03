@@ -6,8 +6,7 @@ var util = require('../../utils/util.js')
 Page({
 
   data: {
-    default_avatarUrl:"../../resource/avatar.jpg",
-    user:{}
+    user: {}
   },
 
   onLoad: function (options) {
@@ -17,37 +16,33 @@ Page({
   onShow: async function () {
     var that = this
     wx.showNavigationBarLoading()
-    let res = await util.cloud_get("users",users_id)
+    let res = await util.cloud_get("users", users_id)
     that.setData({
-      user:res.data
+      user: res.data
     })
     wx.hideNavigationBarLoading()
   },
 
-  tapFeedback()
-  {
+  tapFeedback() {
     wx.navigateTo({
       url: '../feedback/feedback',
     })
   },
 
-  tapInformation()
-  {
+  tapInformation() {
     var that = this
     wx.navigateTo({
-      url: '../information/information?user='+JSON.stringify(that.data.user),
+      url: '../information/information?user=' + JSON.stringify(that.data.user),
     })
   },
 
-  tapAbout()
-  {
+  tapAbout() {
     wx.navigateTo({
       url: '../about/about',
     })
   },
 
-  tapSet()
-  {
+  tapSet() {
     wx.navigateTo({
       url: '../set/set',
     })

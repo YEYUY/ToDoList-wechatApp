@@ -21,10 +21,16 @@ page{
   width: 120rpx;
   height: 120rpx;
   border-radius: 14rpx;
-  margin-left: 480rpx;
+
 }
 
 .row-text{
+  margin-left: 30rpx;
+  width: 90rpx;
+  margin-right: 480rpx;
+}
+
+.row-text2{
   margin-left: 30rpx;
   width: 90rpx;
 }

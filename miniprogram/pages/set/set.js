@@ -1,66 +1,53 @@
-// pages/set/set.js
+const db = wx.cloud.database()
+const _ = db.command
+var users_id
+var util = require('../../utils/util.js')
+
 Page({
 
-  /**
-   * 页面的初始数据
-   */
   data: {
-
+    user: {
+      switch: {
+        audio: true,
+        touch: true,
+      }
+    }
   },
 
-  /**
-   * 生命周期函数--监听页面加载
-   */
-  onLoad: function (options) {
-
+  onShow: async function () {
+    var that = this
+    users_id = wx.getStorageSync('users_id')
+    wx.showNavigationBarLoading()
+    let res = await util.cloud_get("users", users_id)
+    that.setData({
+      user: res.data
+    })
+    wx.hideNavigationBarLoading()
   },
 
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
+  onChange(e) {
+    console.log(e)
+    var that = this
+    var switch_ = that.data.user.switch
+    if (e.currentTarget.id == "audio") {
+      switch_.audio = !switch_.audio
+    } else {
+      switch_.touch = !switch_.touch
+    }
+    that.setData({
+      'user.switch': switch_
+    })
+    db.collection("users").doc(users_id).update({
+      data: {
+        switch: switch_
+      },
+      success(res) {
+        console.log("users中switch更新", res)
+      },
+      fail(err) {
+        console.log(err)
+      }
+    })
   }
+
 })

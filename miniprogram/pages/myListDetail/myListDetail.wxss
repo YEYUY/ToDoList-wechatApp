@@ -25,10 +25,8 @@ page {
 
 .scroll-view {
   margin-top: 20rpx;
-  height: 860rpx;
+  height: 960rpx;
 }
-
-
 
 .task-Area {
   display: flex;

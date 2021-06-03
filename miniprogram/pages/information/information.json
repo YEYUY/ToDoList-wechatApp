@@ -1,6 +1,7 @@
 {
   "usingComponents": {
-    "l-popup":"/miniprogram_npm/lin-ui/popup/index"
+    "l-popup":"/miniprogram_npm/lin-ui/popup/index",
+    "l-avatar":"../../miniprogram_npm/lin-ui/avatar/index"
   },
   "navigationBarTitleText": "编辑信息"
 }

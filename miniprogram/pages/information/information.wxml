@@ -1,10 +1,11 @@
 <view class="avatarRow" bindtap="changeAvatar">
   <view class="row-text">头像</view>
-  <image class="avatar" src="{{user.avatarUrl}}" mode="widthFix"></image>
+  <l-avatar size="130" shape="square" src="{{user.avatarUrl==''?'/resource/avatar.jpg':user.avatarUrl}}" />
+  <!-- <l-avatar size="130" shape="square" src="{{user.avatarUrl}}" /> -->
 </view>
 
 <view class="nameRow">
-  <view class="row-text">昵称</view>
+  <view class="row-text2">昵称</view>
   <input class="name" type="text" value="{{user.name}}" bindblur="inputName" />
   <!-- <view class="name">{{user.name}}</view> -->
 </view>

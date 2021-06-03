@@ -59,14 +59,14 @@ Page({
 
   changeAvatar() {
     var that = this
-    wx.showLoading({
-      title: '头像上传中',
-    })
     wx.chooseImage({
       count: 1,
       sizeType: ['original', 'compressed'],
       sourceType: ['album', 'camera'],
       success(res) {
+        wx.showLoading({
+          title: '头像上传中',
+        })
         const tempFilePaths = res.tempFilePaths[0]
         let random_data = Math.random()
         wx.cloud.uploadFile({

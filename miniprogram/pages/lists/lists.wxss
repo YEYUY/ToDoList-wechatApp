@@ -45,7 +45,7 @@ page {
 .list_area {
   color: black;
   padding-bottom: 20rpx;
-  border-bottom: 1rpx solid #e0e0e0;
+  /* border-bottom: 1rpx solid #e0e0e0; */
 }
 
 .mid-area {

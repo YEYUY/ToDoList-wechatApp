@@ -59,7 +59,6 @@ const cloud_getList = (collection_name) => {
         resolve(res)
       },
       fail(res) {
-        console.log("???")
         console.log("获取列表失败", res)
         reject(res)
       }

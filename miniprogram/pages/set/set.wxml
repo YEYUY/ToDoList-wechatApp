@@ -1,2 +1,9 @@
-<!--pages/set/set.wxml-->
-<text>pages/set/set.wxml</text>
+<view class="row">
+  <view class="text">完成提示音</view>
+  <i-switch id="audio" value="{{user.switch.audio}}" bind:change="onChange" slot="footer"></i-switch>
+</view>
+
+<view class="row">
+  <view class="text">完成触感</view>
+  <i-switch id="touch" value="{{user.switch.touch}}" bind:change="onChange" slot="footer"></i-switch>
+</view>

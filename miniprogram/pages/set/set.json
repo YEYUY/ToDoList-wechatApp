@@ -1,3 +1,6 @@
 {
-  "usingComponents": {}
+  "usingComponents": {
+    "i-switch": "/miniprogram_npm/iview-switch/index"
+  },
+  "navigationBarTitleText": "设置"
 }
