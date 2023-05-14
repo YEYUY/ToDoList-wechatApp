@@ -1,0 +1,4 @@
+# ToDoList-wechatApp
+微信小程序-ToDo任务清单
+目前将todo和blog结合起来利用editor对文字做出编辑，将某一天的todo事项的note展示作为blog
+修改一天的blog只能从todo中对note进行修改
