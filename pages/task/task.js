@@ -1,251 +1,369 @@
-const util = require("../../utils/util")
-import {
-    task_api,
-} from '../../api/common/index'
-
-var CHOOSE_END_DATE
-
+// pages/task.js
 Page({
 
-    data: {
-        weekArray: [],
-        isInputName: false,
-        isSubmit: true,
-        task: {},
-        isShowCalendar: false,
-        calendarConfig: {
-            theme: 'elegant',
-            inverse: true, // 单选模式下是否支持取消选中,
-            showLunar: false,
-            onlyShowCurrentMonth: true, // 日历面板是否只显示本月日期
-            disableMode: { // 禁用某一天之前/之后的所有日期
-                type: 'before', // [‘before’, 'after']
-            },
-        },
-        setting: getApp().globalData.setting,
-    },
+  /**
+   * 页面的初始数据
+   */
+  data: {
+    date:'',
+    mindate:'',
+    showtask:false,
+    showblog:false,
+    alltask:null,
+    allblog:null,
+    allgroup:null,
+    showcrgrp:false,
+    groupname:"",
+    groupsecret:"",
+    id:"",
+  },
 
+  /**
+   * 生命周期函数--监听页面加载
+   */
+  onLoad(options) {
+    this.getData1()
+  },
 
-    onLoad: function (options) {
-        var that = this
-        that.data.setting = getApp().globalData.setting
-        if (options.list_id) {
-            that.data.task.list_id = options.list_id * 1
-        } else {
-            let task = JSON.parse(options.task)
-            if (task.photos) {
-                task.photos.map((item, index) => {
-                    task.photos[index].path = getApp().globalData.API_FILE + item.path
-                })
-            }
+  /**
+   * 生命周期函数--监听页面初次渲染完成
+   */
+  onReady() {
+
+  },
+
+  /**
+   * 生命周期函数--监听页面显示
+   */
+  onShow() {
+    if (typeof this.getTabBar === 'function' &&
+      this.getTabBar()) {
+      this.getTabBar().setData({
+        selected: 1
+      })
+    }
+    this.getData1()
+},
+  getData1(){
+    let that=this
+    wx.getStorage({
+      key:'token',
+      success(res){
+       wx.request({
+         url: getApp().globalData.apiUrl+'/group/my/page',
+         method:"GET",
+         header: {
+           'Accept': '*/*',
+           'Content-Type': 'application/x-www-form-urlencoded',
+           'token':res.data
+         },
+         data:{
+           "pageSize":100
+         },
+         success(res){
+           //that.setData({
+            //alltask:res.data.data.personal_item_today
+           //})
             that.setData({
-                task
+            allgroup:res.data.data.group_page.records
             })
-        }
-        that.setData({
-            weekArray: getApp().globalData.weekArray
-        })
-    },
+         }})
+      }
+    })
+  },
+  /**
+   * 生命周期函数--监听页面隐藏
+   */
+  onHide() {
 
-    //为什么要多一个input，因为初始创建提交时可能blur不到
-    input_description(e) {
-        this.data.task.description = e.detail.value
-    },
+  },
 
-    blur_description(e) {
-        this.data.task.description = e.detail.value
-        if (this.data.task.id) {
-            this.updateTask()
-        }
-    },
+  /**
+   * 生命周期函数--监听页面卸载
+   */
+  onUnload() {
 
-    tapSubmit() {
-        if(this.data.task.end_date){
-            this.data.task.end_date = util.setDateFormat(this.data.task.end_date)
-        }
-        task_api.save("", this.data.task).then(e => {
-            wx.navigateBack({
-                delta: 1,
+  },
+
+  /**
+   * 页面相关事件处理函数--监听用户下拉动作
+   */
+  onPullDownRefresh() {
+
+  },
+
+  /**
+   * 页面上拉触底事件的处理函数
+   */
+  onReachBottom() {
+
+  },
+
+  /**
+   * 用户点击右上角分享
+   */
+  onShareAppMessage() {
+
+  },
+  inputname(e){
+    this.setData({
+      groupname:e.detail.value
+    })
+  },
+  inputpassward(e){
+    this.setData({
+      groupsecret:e.detail.value
+    })
+  },
+  inputid(e){
+    this.setData({
+      id:e.detail.value
+    })
+  },
+  creategroup(){
+    this.setData({
+      showcrgrp:true
+    })
+    this.getTabBar().setData({
+      showtab:false
+    })
+  },
+  joingroup(){
+    this.setData({
+      showjogrp:true
+    })
+    this.getTabBar().setData({
+      showtab:false
+    })
+  },
+  joingroup1(){
+    let that=this
+    wx.getStorage({
+      key:'token',
+      success(res){
+       wx.request({
+         url: getApp().globalData.apiUrl+'/group/join/'+that.data.id,
+         method:"POST",
+         header: {
+           'Accept': '*/*',
+           'Content-Type': 'application/x-www-form-urlencoded',
+           'token':res.data
+         },
+         data:{
+          "group_id": that.data.id,
+          "password": that.data.groupsecret
+         },
+         success(res){
+           console.log(res)
+           if(res.data.success==false)
+           {
+            wx.showToast({
+              title: res.data.message,
+              icon:"error"
             })
-        })
-    },
-
-    updateTask() {
-        var that = this
-        // that.data.task.end_date = new Date(that.data.task.end_date).toJSON();
-        // that.data.task.finished_date = new Date(that.data.task.finished_date).toJSON();  但是时间为空则是 2000-12-31T16:00:00.000Z
-        that.data.task.end_date = util.setDateFormat(that.data.task.end_date)
-        that.data.task.finished_date = util.setDateFormat(that.data.task.finished_date)
-        task_api.save(that.data.task.id, that.data.task)
-    },
-
-    async tapAddFile(e) {
-        var task = this.data.task
-        if (task.id) {
-            if (task.files.length >= 6) {
-                util.showToast("每位用户上传文件数不能超过6个")
-                return
-            }
-        } else {
-            util.showToast("需要先添加任务后才可以上传文件")
-            return
-        }
-        util.chooseFile(1).then(e => {
-            task_api.uploadFile(task.id, e[0]).then(res => {
-                task = JSON.parse(res)
-                task.photos.map((item, index) => {
-                    task.photos[index].path = getApp().globalData.API_FILE + item.path
-                })
-                this.setData({
-                    task
-                })
+           }
+           else if(res.statusCode==404){
+            wx.showToast({
+              title: "不存在该小组",
+              icon:"error"
             })
-        })
-    },
-
-    readFile(e) {
-        util.readFile(e.currentTarget.dataset.path)
-    },
-
-    tapPhoto() {
-        var that = this
-        var task = that.data.task
-        if (task.id) {
-            if (task.files.length >= 9) {
-                util.showToast("每位用户上传图片数不能超过6个")
-                return
-            }
-        } else {
-            util.showToast("需要先添加任务后才可以上传图片")
-            return
-        }
-
-        wx.chooseImage({
-            count: 1,
-            sizeType: 'original',
-            success(res) {
-                task_api.uploadPhoto(task.id, res.tempFilePaths[0]).then(res => {
-                    console.log(res)
-                    task = JSON.parse(res)
-                    task.photos.map((item, index) => {
-                        console.log(item, index)
-                        task.photos[index].path = getApp().globalData.API_FILE + item.path
-                    })
-                    console.log("dsa", task)
-                    that.setData({
-                        task
-                    })
-                })
-            }
-        })
-    },
-
-    tapDelete() {
-        var that = this
-        wx.showActionSheet({
-            alertText: "将永久删除该任务，无法撤回",
-            itemColor: "#f5222d",
-            itemList: ['删除任务'],
-            success() {
-                task_api.delete(that.data.task.id).then(() => {
-                    wx.navigateBack({
-                        delta: 1,
-                    })
-                })
-            },
-            fail(res) {
-                console.log(res.errMsg)
-            }
-        })
-    },
-
-    tapChooseEndTime() {
-        this.setData({
-            isShowCalendar: true
-        })
-    },
-
-    //日历选择日期
-    afterTapDay(e) {
-        var that = this
-        if (e.detail.month < 10) {
-            e.detail.month = '0' + e.detail.month
-        }
-        if (e.detail.day < 10) {
-            e.detail.day = '0' + e.detail.day
-        }
-        CHOOSE_END_DATE = e.detail.year + "-" + e.detail.month + "-" + e.detail.day
-        that.data.task.week = e.detail.week + 1 //week需要多加1，后端如果0的话不会更新
-    },
-
-    //点击日历的确定
-    confirmDate() {
-        var that = this
-        var task = that.data.task
-        task.end_date = CHOOSE_END_DATE
-        that.setData({
-            task
-        })
-        that.data.task.end_date = CHOOSE_END_DATE
-        if (that.data.task.id) {
-            that.updateTask()
-        }
-        that.cancel()
-    },
-
-    //点击日历的取消
-    cancel() {
-        this.setData({
-            isShowCalendar: false
-        })
-    },
-
-    tapInputName() {
-        this.setData({
-            isInputName: true
-        })
-    },
-
-    input_name(e) {
-        var that = this
-        that.setData({
-            isInputName: false
-        })
-        if (e.detail.value === "") {
-            util.showToast("请输入任务名称")
-            return
-        }
-        that.data.task.name = e.detail.value
-        if (that.data.task.id) {
-            that.updateTask()
-        }
-    },
-
-
-
-
-
-    // 这里不满意啊，代码复用了
-    tapFinish(e) {
-        var task = e.currentTarget.dataset.item
-        if (!task.id) return
-        util.touchFeedback(this.data.setting)
-        task.finished_date = util.getNowDateFormat()
-        task_api.finish(task.id, task)
-        task.is_finished = true //为啥不等接口返回成功再改，为了用户体验，担心延迟太久，出问题也不管啦。
-        this.setData({
-            task
-        })
-    },
-
-    tapCancel(e) {
-        var task = e.currentTarget.dataset.item
-        if (!task.id) return
-        task_api.cancelFinish(task.id)
-        task.is_finished = false //为啥不等接口返回成功再改，为了用户体验，担心延迟太久，出问题也不管啦。
-        this.setData({
-            task
-        })
-    },
-
+           }
+           else{
+            wx.showToast({
+              title: "加入小组成功",
+              icon:"success"
+            })
+           }
+            that.getData1()
+            that.setData({
+              groupname:"",
+              groupsecret:"",
+              groupid:"",
+              showjogrp:false,
+            })
+            that.getTabBar().setData({
+              showtab:true
+            })
+         }})
+      }
+    })
+  },
+  buildgroup(e){
+    let that=this
+    wx.getStorage({
+      key:'token',
+      success(res){
+       wx.request({
+         url: getApp().globalData.apiUrl+'/group',
+         method:"POST",
+         header: {
+           'Accept': '*/*',
+           'Content-Type': 'application/json',
+           'token':res.data
+         },
+         data:{
+          "groupName": that.data.groupname,
+          "password": that.data.groupsecret
+         },
+         success(res){
+          if(res.data.success==false)
+          {
+           wx.showToast({
+             title: res.data.message,
+             icon:"error"
+           })
+          }
+          else{
+           wx.showToast({
+             title: "创建小组成功",
+             icon:"success"
+           })
+          }
+            that.getData1()
+            that.setData({
+              groupname:"",
+              groupsecret:"",
+              showcrgrp:false,
+            })
+            that.getTabBar().setData({
+              showtab:true
+            })
+         }})
+      }
+    })
+  },
+  cancel(){
+    this.setData({
+      showcrgrp:false,
+      showjogrp:false,
+      groupname:"",
+      groupsecret:"",
+    })
+    this.getTabBar().setData({
+      showtab:true
+    })
+  },
+  showalltask(){
+    let that=this
+    wx.getStorage({
+      key:'token',
+      success(res){
+       wx.request({
+         url: getApp().globalData.apiUrl+'/item/personal/my/page',
+         method:"GET",
+         header: {
+           'Accept': '*/*',
+           'Content-Type': 'application/x-www-form-urlencoded',
+           'token':res.data
+         },
+         data:{
+           "pageSize":100
+         },
+         success(res){
+           console.log(res)
+           //that.setData({
+            //alltask:res.data.data.personal_item_today
+           //})
+            that.setData({
+            showtask:true,
+            alltask:res.data.data.personal_item_page.records
+            })
+            that.getTabBar().setData({
+              showtab:false
+            })
+         }})
+      }
+    })
+  },
+  finishchange(e){
+    const index = e.detail.index;
+    const key = `alltask[${index}].isDone`;
+    this.setData({
+      [key]: !this.data.alltask[index].isDone,
+    });
+  },
+  change(e){
+    const index = e.detail.index;
+    const task = e.detail.task;
+    const key = `alltask[${index}]`;
+    this.setData({
+      [key]: task
+    });
+  },
+  delete(e){
+    const index = e.detail.index;
+    const task = e.detail.task;
+    const key = this.data.alltask;
+    key.splice(index,1)
+    this.setData({
+      alltask: key
+    });
+    this.getTabBar().setData({
+      showtab:true
+    })
+  },
+  deleteblog(e){
+    const index = e.detail.index;
+    const key = this.data.allblog;
+    key.splice(index,1)
+    this.setData({
+      allblog: key
+    });
+  },
+  deletegroup(e){
+    const index = e.detail.index;
+    const key = this.data.allgroup;
+    key.splice(index,1)
+    this.setData({
+      allgroup: key
+    });
+  },
+  hidetaskmask(){
+    this.setData({
+      showtask:false
+      })
+    this.getTabBar().setData({
+      showtab:true
+    })
+  },
+  showallblog(){
+    let that=this
+    wx.getStorage({
+      key:'token',
+      success(res){
+       wx.request({
+         url: getApp().globalData.apiUrl+'/blog/my/page',
+         method:"GET",
+         header: {
+           'Accept': '*/*',
+           'Content-Type': 'application/x-www-form-urlencoded',
+           'token':res.data
+         },
+         data:{
+           "pageSize":100
+         },
+         success(res){
+           console.log(res)
+           //that.setData({
+            //alltask:res.data.data.personal_item_today
+           //})
+            that.setData({
+            showblog:true,
+            allblog:res.data.data.blog_page.records
+            })
+            that.getTabBar().setData({
+              showtab:false
+            })
+         }})
+      }
+    })
+  },
+  hideblogmask(){
+    this.setData({
+      showblog:false
+      })
+    this.getTabBar().setData({
+        showtab:true
+      })
+  },
 })

@@ -1,0 +1,49 @@
+<!--components/blog/blog.wxml-->
+<view class="it">
+<view bindtap="showmask" style="display: flex;flex-direction: column;margin-left: 20rpx;">
+<text  style="font-size: 40rpx;">{{blog.header}}</text>
+<text style="font-size: 20rpx;">
+  创建时间：{{blog.createTime}}
+</text>
+</view>
+</view>
+<l-mask show="{{showmask}}" opacity="0.3" style="display: flex;flex-direction: column;align-items: center;justify-content: center;align-content: center;justify-items: center;">
+      <view class="moreset">
+        <view class="day">
+<view style="display: flex;flex-direction: row;border-bottom: 2rpx solid #ccd8eb;  padding-bottom: 10rpx;"> 
+<view>
+<view class="header" style="display: flex;flex-direction: row;align-items: center;">
+    <input placeholder="完成todo后自动创建" type="text" value="{{blog.header}}" bindblur="input_name"  style="font-size: 50rpx;color:#7FAFC3;margin-left: 30rpx;height: 60rpx;"/>
+    <text style="font-size: 15rpx;">创建时间:{{blog.createTime}}</text>
+  </view>
+</view>
+</view>
+<view class="blog" style="display: flex;flex-direction: column;height: 90%;">
+  <view class="desc" style="display: flex;flex-direction: row;align-items: center;justify-content: center;">
+    <image class="icon"  src="/images/blog/blog3.jpeg" style="height: 30rpx;width: 30rpx;"></image>
+    <input placeholder="简述" type="text" value="{{blog.description}}" bindblur="input_descr"  style="font-size: 25rpx; margin-left: 10rpx;"/>
+    <image class="icon1" src="/images/list/listDetail/delete_row.png" bindtap="delete" style="width: 40rpx;height: 40rpx;margin-left: 80rpx;"></image>
+  </view>
+  <view class="note" style="overflow-y:scroll;height: 80%;">
+    <view class="items" wx:for="{{blog.personalItemDtoList}}" wx:key="index" >
+        <l-card l-class="card"
+                type="cover" 
+                plaintext="{{true}}"
+                full="{{true}}"
+                l-title-class="tt"
+            title="{{blog.personalItemDtoList[index].content}}"
+              >
+        <!-- 此处为content -->
+        <view class="content" style="font-size: 30rpx;">
+        <text space="emsp" style="font-size: 15rpx;">                        创建于：{{blog.personalItemDtoList[index].createTime}}</text>
+        <rich-text nodes="{{blog.personalItemDtoList[index].itemNote.content}}">
+        </rich-text>
+        </view>
+     </l-card>
+    </view>
+  </view>
+  <button class = "finish"bindtap="hidemask" style="margin-top: 20rpx;margin-bottom: 20rpx;"> 完成</button>
+</view>
+</view>
+    </view>
+    </l-mask>

@@ -1,0 +1,43 @@
+<!--pages/today/today.wxml-->
+<view class="containert">
+<view class="overlay"></view>
+<view class="all">
+<view class="day">
+<view style="display: flex;flex-direction: row;border-bottom: 2rpx solid #ccd8eb;  padding-bottom: 10rpx;"> 
+<view>
+<view style="font-size: 50rpx;color:#7FAFC3;margin-left: 30rpx;">我的一天</view>
+<view class="icon_date" style="margin-left: 60rpx;">
+<image class="icon" wx:if="{{hours>=6&&hours<12}}" src="/images/index/morning.png"></image>
+<image class="icon" wx:elif="{{hours>=12&&hours<19}}" src="/images/index/afternoon.png"></image>
+<image class="icon" wx:else src="/images/index/evening.png"></image>
+<view class="date">
+  {{date}}
+</view>
+</view>
+</view>
+<image src="/images/list/add.png" style="width: 60rpx; height: 60rpx; margin-block-start: 40rpx;margin-left: 250rpx;" bindtap="add"></image>
+</view>
+<view class="unfinish">
+  <view class="items" wx:for="{{alllist}}" wx:key="index" >
+    <task task="{{alllist[index]}}" index="{{index}}" wx:if="{{!alllist[index].isDone}}" bind:finishchanged="finishchange" bind:changed="change" bind:deleted="delete"></task>
+  </view>
+</view>
+<view class="finished">
+<l-collapse>
+<l-collapse-item title="已完成">
+<view class="finished_item">
+  <view class="items" wx:for="{{alllist}}" wx:key="index" >
+    <task task="{{alllist[index]}}" index="{{index}}"wx:if="{{alllist[index].isDone}}" bind:finishchanged="finishchange" bind:changed="change" bind:deleted="delete"></task>
+  </view>
+  </view>
+</l-collapse-item>
+</l-collapse>
+</view>
+</view>
+</view>
+<l-mask show="{{show}}" opacity="0.3" style="display: flex;flex-direction: column;align-items: center;justify-content: center;align-content: center;justify-items: center;">
+      <view class="moreset">
+      <mtask wx:if="{{show}}"  isadd="{{true}}" bind:close="finishied" bind:build="pushback"type='0'></mtask>
+      </view>
+    </l-mask>
+</view>

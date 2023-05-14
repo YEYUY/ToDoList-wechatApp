@@ -1,51 +1,60 @@
-.top-Area {
-  padding: 20rpx 30rpx 20rpx 20rpx;
+/**index.wxss**/
+.container{
+  height: 100vh;
+  width: 100%;
+  background-image: url("http://m.qpic.cn/psc?/V50yJ2q22oR1YT3uoyRS1JxPwJ3Q3Y82/ruAMsa53pVQWN7FLK88i5o8aehP4nV9oB2xllGreFXhd*0NxJEj4*OH9fdoAIBK*IsVFEe2VCg2cITq4oYzy58ASUMNXBHoQGUNbQ80yFGs!/b&bo=AAQABgAAAAABByI!&rf=viewer_4");
+  background-size:100% 100%;
+  background-position: center;
+}
+.overlay {
+  position: absolute; /* 使用绝对定位 */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  background-color: rgba(255, 255, 255, 0.4); /* 白色蒙版，透明度 50% */
+}
+.name{
+  height: 200rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   justify-content: space-between;
+  padding: 20rpx 20rpx;
+  z-index: 2;
+  position:relative;
 }
-.top-Area .top-Area-left .top-Area-title {
-  font-size: 46rpx;
-  color: #2c2c2c;
-  font-weight: bold;
-}
-.top-Area .top-Area-left .top-Area-date {
-  margin-top: 6rpx;
-  font-size: 32rpx;
-}
-.top-Area .top-Area-left .top-Area-date .top-Area-momentIcon {
-  margin-left: 24rpx;
-  width: 40rpx;
-  height: 40rpx;
-}
-.top-Area .top-Area-icon {
-  width: 50rpx;
-  height: 50rpx;
-}
-.popArea {
-  width: 600rpx;
-  height: 700rpx;
-  border-radius: 50rpx;
-  padding: 30rpx;
-  background-color: white;
-}
-.popArea .popArea-topRow {
-  text-align: center;
-  font-size: 34rpx;
-  font-weight: bold;
-  margin-bottom: 30rpx;
-}
-.popArea .popArea-collapse-list .popArea-collapse-list-row {
-  margin: 4rpx 30rpx;
+.setting{
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   justify-content: space-between;
+  padding: 100rpx 0;
+  box-sizing: border-box;
+  z-index: 2;
+  position:relative;
 }
-.popArea .popArea-collapse-list .popArea-collapse-list-row image {
-  width: 30rpx;
-  height: 30rpx;
-}
-.addIcon {
-  position: fixed;
-  right: 50rpx;
-}
-.addIcon image {
-  width: 100rpx;
+.set{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #7FAFC3;
+  border-radius: 10px;
+  color: #ffffff;
+  box-shadow: 3rpx 4rpx 6rpx rgba(0,0,0,0.2);
+  width: 700rpx;
   height: 100rpx;
+  font-size: 30rpx;
+  z-index: 2;
+  position:relative;
 }
+.set:active{
+  background-color: #6290a3;
+  box-shadow: 6rpx 8rpx 10rpx rgba(0,0,0,0.3);
+  z-index: 2;
+  position:relative;
+}
+@import 'index-wxa-auto-dark.wxss'

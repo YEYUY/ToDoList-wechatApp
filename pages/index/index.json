@@ -1,10 +1,6 @@
 {
-  "usingComponents": {
-    "taskList": "/component/taskList/taskList",
+  "usingComponents": {    
+    "l-avatar":"/miniprogram_npm/lin-ui/avatar/index",
     "l-popup":"/miniprogram_npm/lin-ui/popup/index",
-    "l-collapse":"/miniprogram_npm/lin-ui/collapse/index",
-    "l-collapse-item":"/miniprogram_npm/lin-ui/collapse-item/index"
-  },
-  "navigationBarTitleText": "",
-  "backgroundTextStyle": "dark"
+    "l-button":"/miniprogram_npm/lin-ui/button/index"}
 }

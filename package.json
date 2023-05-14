@@ -1,5 +1,5 @@
 {
-  "name": "todo",
+  "name": "miniprogram-3",
   "version": "1.0.0",
   "description": "",
   "main": ".eslintrc.js",
@@ -9,6 +9,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "lin-ui": "^0.9.5"
+    "lin-ui": "^0.9.13"
   }
 }

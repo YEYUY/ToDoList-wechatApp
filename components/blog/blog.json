@@ -1,0 +1,7 @@
+{
+  "component": true,
+  "usingComponents": {
+    "l-mask":"/miniprogram_npm/lin-ui/mask/index",
+    "l-card":"/miniprogram_npm/lin-ui/card/index"
+  }
+}

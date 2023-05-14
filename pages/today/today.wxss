@@ -1,0 +1,77 @@
+/* pages/today/today.wxss */
+.containert{
+  padding: 10rpx 0;
+  box-sizing: border-box;
+  height: 100vh;
+  width: 100%;
+  background-image: url("http://m.qpic.cn/psc?/V50yJ2q22oR1YT3uoyRS1JxPwJ3Q3Y82/ruAMsa53pVQWN7FLK88i5pmttczKOGRwPOJh7hrNsSRqWGEkKG3JKBtvYLpsKpRRziNQruyz8jlDo3olcrCnaRdX7pCQ0caETUwF*VMa02I!/mnull&bo=oAU4BAAAAAABB7k!&rf=photolist&t=5");
+  background-size:100% 100%;
+  background-position: center;
+}
+.overlay {
+  position: absolute; /* 使用绝对定位 */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  background-color: rgba(255, 255, 255, 0.6); /* 白色蒙版，透明度 50% */
+}
+.all{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  z-index: 2;
+  position: relative;
+}
+.day{
+  display: flex;
+  flex-direction: column;
+  height: 98vh;
+  width: 700rpx;
+  background-color: rgba(256, 256,256, 0.5);
+  border-radius: 30rpx;
+  box-shadow: 3rpx 4rpx 6rpx rgba(0, 0,0, 0.3);
+}
+.icon_date{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.icon{
+  width: 50rpx;
+  height: 50rpx;
+}
+.date
+{
+  display: flex;
+  flex-direction: row;
+  opacity: 0.5;
+}
+.unfinish{
+  display: flex;
+  align-items: center;
+  margin-block-start: 20rpx;
+  flex-direction: column;
+  height: 500rpx;
+  overflow-y: scroll;
+}
+.finished_item{
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  height: 400rpx;
+  overflow-y: scroll;
+}
+.moreset{
+  display: flex;
+  flex-direction: column;
+  height: 90vh;
+  width: 700rpx;
+  margin: 20rpx;
+  border-radius: 10px;
+  background-color: #DAD0C4;
+  box-shadow: 3rpx 4rpx 6rpx rgba(0,0,0,0.2);
+  overflow-y: scroll;
+}

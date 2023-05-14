@@ -4,7 +4,7 @@
     /* left: 0;
     right: 0; */
     bottom: 60rpx;
-    height: 55px;
+    height: 110rpx;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -15,8 +15,8 @@
   .tab-bar-area{
       display: flex;
       width: 54%;
-      height: 55px;
-      background-color: white;
+      height: 110rpx;
+      background-color: rgb(238, 230, 230);
       border-radius: 50%;
   }
   
@@ -31,12 +31,12 @@
   }
   
   .tab-bar-item cover-image {
-    width: 26px;
-    height: 26px;
+    width: 50rpx;
+    height: 50rpx;
   }
   
   .tab-bar-item cover-view {
-    font-size: 10px;
+    font-size: 20rpx;
     margin-top: 2rpx;
   }
   

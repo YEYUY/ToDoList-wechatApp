@@ -1,0 +1,162 @@
+/* 
+此文件为开发者工具生成，生成时间: 2023/4/29下午1:35:21
+使用方法：
+在 index.wxss 文件末尾引入样式
+```
+@import "./index-wxa-auto-dark.wxss";
+```
+ */
+
+@media (prefers-color-scheme: dark) {
+    @keyframes popup-top-fadein {
+        0% {
+            transform: translate3d(0, -100%, 0);
+            opacity: 0;
+        }
+
+        100% {
+            transform: translate3d(0, 0, 0);
+            opacity: 1;
+        }
+    }
+
+    @keyframes popup-top-fadeout {
+        0% {
+            transform: translate3d(0, 0, 0);
+            opacity: 1;
+        }
+
+        100% {
+            transform: translate3d(0, -100%, 0);
+            opacity: 0.1;
+        }
+    }
+
+    @keyframes popup-left-fadein {
+        0% {
+            transform: translate3d(-100%, 0, 0);
+            opacity: 0;
+        }
+
+        100% {
+            transform: translate3d(0, 0, 0);
+            opacity: 1;
+        }
+    }
+
+    @keyframes popup-left-fadeout {
+        0% {
+            transform: translate3d(0, 0, 0);
+            opacity: 1;
+        }
+
+        100% {
+            transform: translate3d(-100%, 0, 0);
+            opacity: 0.1;
+        }
+    }
+
+    @keyframes popup-right-fadein {
+        0% {
+            transform: translate3d(100%, 0, 0);
+            opacity: 0;
+        }
+
+        100% {
+            transform: translate3d(0, 0, 0);
+            opacity: 1;
+        }
+    }
+
+    @keyframes popup-right-fadeout {
+        0% {
+            transform: translate3d(0, 0, 0);
+            opacity: 1;
+        }
+
+        100% {
+            transform: translate3d(100%, 0, 0);
+            opacity: 0.1;
+        }
+    }
+
+    @keyframes popup-bottom-fadein {
+        0% {
+            transform: translate3d(0, 100%, 0);
+            opacity: 0;
+        }
+
+        100% {
+            transform: translate3d(0, 0, 0);
+            opacity: 1;
+        }
+    }
+
+    @keyframes popup-bottom-fadeout {
+        0% {
+            transform: translate3d(0, 0, 0);
+            opacity: 1;
+        }
+
+        100% {
+            transform: translate3d(0, 100%, 0);
+            opacity: 0.1;
+        }
+    }
+
+    @keyframes popup-center-fadein {
+        0% {
+            transform: scale(0.8);
+            opacity: 0;
+        }
+
+        50% {
+            transform: scale(1.1);
+        }
+
+        100% {
+            transform: scale(1);
+            opacity: 1;
+        }
+    }
+
+    @keyframes popup-center-fadeout {
+        0% {
+            transform: scale(1);
+            opacity: 1;
+        }
+
+        50% {
+            transform: scale(1.1);
+        }
+
+        100% {
+            transform: scale(0.8);
+            opacity: 0;
+        }
+    }
+
+    @keyframes bg-fadein {
+        0% {
+            opacity: 0;
+        }
+
+        100% {
+            opacity: 1;
+        }
+    }
+
+    @keyframes bg-fadeout {
+        0% {
+            opacity: 1;
+        }
+
+        100% {
+            opacity: 0;
+        }
+    }
+
+    .container-bg {
+        background: rgba(255, 255, 255, 0.4);
+    }
+}

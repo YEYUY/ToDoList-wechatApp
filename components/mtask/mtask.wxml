@@ -1,0 +1,48 @@
+<!--components/mtask/mtask.wxml-->
+<view class="container" style="margin-bottom: 20rpx;">
+<view class="name">
+  <image wx:if="{{isadd}}" class="icon" mode="heightFix" src="/images/list/listDetail/circle.png"></image>
+  <image wx:if="{{!isadd&&!finished}}" class="icon" mode="heightFix" src="/images/list/listDetail/circle.png" bindtap="tapFinish"  ></image>
+  <image wx:if="{{finished}}" class="icon" mode="heightFix" src="/images/finish.png" bindtap="tapCancel" ></image>
+  <input placeholder="任务名称" type="text" value="{{text}}" bindblur="input_name"  style="font-size: 40rpx; opacity: {{!finished ? '1':'0.4'}};width: 400rpx;"/>
+  <image wx:if="{{!isadd}}" class="icon1" src="/images/list/listDetail/delete_row.png" bindtap="delete"></image>
+  </view>
+  <view class="dateall">
+    <view class="date">
+    <image class="icon-1"  src="/images/task/calendar.png" ></image>
+  <picker wx:if="{{hasdate}}"  bindtap="showdate" bindchange="onDateChange" mode="date" value="{{date}}" start="{{mindate}}">
+            <view style="font-size: 35rpx;opacity: 0.5;margin-block-start: 5rpx;width:470rpx;">{{date}}</view>
+            </picker>
+            <text wx:else style="width:470rpx;opacity: 0.3;margin-block-start: 5rpx;">添加截止日期</text>
+          </view>
+            <switch class="datechoose" checked="{{hasdate}}" color="#7FAFC3"  bindchange="changehasdate"
+            ></switch>
+          </view>
+          <view class="dateall" wx:if="{{!isadd}}">
+    <view class="date" >
+            <image class="icon-1" wx:if="{{task.visibility==0}}" src="/images/list/createman.png" ></image>
+            <text wx:if="{{task.visibility==0}}" style="width:470rpx;opacity: 0.3;margin-block-start: 5rpx;">不公开</text>
+            <image wx:if="{{task.visibility==1}}"  class="icon-1"  src="/images/list/listDetail/team.png" ></image>
+            <text wx:if="{{task.visibility==1}}" style="width:470rpx;opacity: 0.7;margin-block-start: 5rpx;">公开</text>
+          </view>
+            <switch class="datechoose" checked="{{task.visibility==1}}" color="#7FAFC3"  bindchange="changevisi"
+            ></switch>
+          </view>
+    <view class="date">
+            <image class="icon-1"  src="/images/index/addTodayTask.png" ></image>
+            <text wx:if="{{task.isToday}}" style="width:470rpx;opacity: 0.7;margin-block-start: 5rpx;">今日任务</text>
+            <text wx:if="{{!task.isToday}}" style="width:470rpx;opacity: 0.3;margin-block-start: 5rpx;">非今日任务</text>
+            <switch class="datechoose" checked="{{task.isToday==true}}" color="#7FAFC3"  bindchange="changetoday"
+            ></switch>
+          </view>      
+    <view wx:if="{{!isadd}}" class="detail" style="display: flex;flex-direction: column;align-items: center;margin-block-start: 10rpx;" >
+          <editor class="todo_blog" id="bless" 
+          confirm-type='done' placeholder="快来写下你独属的笔记吧！" show-img-resize="true" bindready="blogready" bindblur="bloginput">
+          </editor>
+          <image class="insert" src="/images/list/listDetail/add.png" bindtap="insertimg" style="width: 50rpx;height: 50rpx;"></image>
+    </view>
+    <view wx:if="{{isadd}}" style="display: flex;flex-direction:column;align-items: center;justify-content: center;margin-top: 20rpx;">
+      <button class = "finish"bindtap="build" > 创建</button>
+      <button class = "finish"bindtap="hidemask" > 取消</button>
+    </view>
+</view>

@@ -1,0 +1,97 @@
+/* 
+此文件为开发者工具生成，生成时间: 2023/4/29下午1:35:21
+使用方法：
+在 index.wxss 文件末尾引入样式
+```
+@import "./index-wxa-auto-dark.wxss";
+```
+ */
+
+@media (prefers-color-scheme: dark) {
+    .btn-hover::before {
+        border: rgb(0, 0, 0);
+        border-radius: rgb(0, 0, 0);
+        background-color: rgb(209, 209, 209);
+        border-color: rgb(209, 209, 209);
+    }
+
+    .l-btn {
+        color: rgb(17, 17, 17);
+    }
+
+    .l-btn-default {
+        background-color: rgb(116, 149, 244);
+    }
+
+    .l-btn-success {
+        background-color: rgb(0, 99, 77);
+    }
+
+    .l-btn-warning {
+        background-color: rgb(49, 33, 0);
+        color: rgb(209, 209, 209);
+    }
+
+    .l-btn-error {
+        background-color: rgb(204, 39, 77);
+    }
+
+    .l-btn-plain {
+        background-color: rgb(17, 17, 17);
+        color: rgb(116, 149, 244);
+        border: rgb(0, 0, 0);
+    }
+
+    .l-btn-success.l-btn-plain {
+        background-color: rgb(17, 17, 17);
+        color: rgb(0, 99, 77);
+        border: rgb(0, 0, 0);
+    }
+
+    .l-btn-error.l-btn-plain {
+        background-color: rgb(17, 17, 17);
+        color: rgb(204, 39, 77);
+        border: rgb(0, 0, 0);
+    }
+
+    .l-btn-warning.l-btn-plain {
+        background-color: rgb(17, 17, 17);
+        color: rgb(49, 33, 0);
+        border: rgb(0, 0, 0);
+    }
+
+    .l-btn-loading {
+        border: rgb(0, 0, 0);
+        border-color: rgb(0, 0, 0);
+    }
+
+    .l-btn-loading-default {
+        border: rgb(0, 0, 0);
+        border-color: rgb(0, 0, 0);
+    }
+
+    .l-btn-loading-success {
+        border: rgb(0, 0, 0);
+        border-color: rgb(0, 0, 0);
+    }
+
+    .l-btn-loading-error {
+        border: rgb(0, 0, 0);
+        border-color: rgb(0, 0, 0);
+    }
+
+    .l-btn-loading-warning {
+        border: rgb(0, 0, 0);
+        border-color: rgb(0, 0, 0);
+    }
+
+    @keyframes btn-spin {
+        0% {
+            transform: rotate(0);
+        }
+
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+}

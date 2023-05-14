@@ -1,0 +1,8 @@
+{
+  "usingComponents": {
+    "blog":"/components/blog/blog",
+    "l-collapse":"/miniprogram_npm/lin-ui/collapse",
+    "l-collapse-item":"/miniprogram_npm/lin-ui/collapse-item",
+    "l-card":"/miniprogram_npm/lin-ui/card/index"
+  }
+}

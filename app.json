@@ -1,38 +1,37 @@
 {
-    "pages": [
-        "pages/index/index",
-        "pages/list/list",
-        "pages/list/listDetail/listDetail",
-        "pages/allTaskList/allTaskList",
-        "pages/task/task",
-        "pages/mine/mine",
-        "pages/information/information",
-        "pages/setting/setting",
-        "pages/about/about"
-    ],
-    "window": {
-        "backgroundTextStyle": "light",
-        "navigationBarBackgroundColor": "#f6f6f6",
-        "navigationBarTitleText": "ToDo",
-        "navigationBarTextStyle": "black"
-    },
-    "tabBar": {
-        "custom": true,
-        "list": [
-            {
-                "pagePath": "pages/index/index",
-                "text": "今日"
-            },
-            {
-                "pagePath": "pages/list/list",
-                "text": "清单"
-            },
-            {
-                "pagePath": "pages/mine/mine",
-                "text": "我的"
-            }
-        ]
-    },
-    "style": "v2",
-    "sitemapLocation": "sitemap.json"
+  "pages": [
+    "pages/index/index",
+    "pages/task/task",
+    "pages/blog/blog",
+    "pages/today/today"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#DAD0C4",
+    "navigationBarTitleText": "B&TD",
+    "navigationBarTextStyle": "black"
+  },
+  "tabBar": {
+    "custom": true,
+    "list": [
+      {
+        "pagePath": "pages/today/today",
+        "text": "today"
+      },
+      {
+        "pagePath": "pages/task/task",
+        "text": "list"
+      },
+      {
+        "pagePath": "pages/blog/blog",
+        "text": "blog"
+      },
+      {
+        "pagePath": "pages/index/index",
+        "text": "mine"
+      }
+    ]
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json"
 }

@@ -1,66 +1,8 @@
 {
-    "setting": {},
-    "condition": {
-        "plugin": {
-            "list": []
-        },
-        "game": {
-            "list": []
-        },
-        "gamePlugin": {
-            "list": []
-        },
-        "miniprogram": {
-            "list": [
-                {
-                    "name": "mine",
-                    "pathName": "pages/mine/mine",
-                    "query": "",
-                    "scene": null
-                },
-                {
-                    "name": "information",
-                    "pathName": "pages/information/information",
-                    "query": "",
-                    "scene": null
-                },
-                {
-                    "name": "list",
-                    "pathName": "pages/list/list",
-                    "query": "",
-                    "scene": null
-                },
-                {
-                    "name": "listDetail",
-                    "pathName": "pages/list/listDetail/listDetail",
-                    "query": "data={\"id\":1,\"CreatedAt\":\"2021-12-05T13:38:48+08:00\",\"name\":\"sss\",\"user_id\":1}",
-                    "scene": null
-                },
-                {
-                    "name": "task",
-                    "pathName": "pages/task/task",
-                    "query": "list_id=4",
-                    "scene": null
-                },
-                {
-                    "name": "pages/task/task",
-                    "pathName": "pages/task/task",
-                    "query": "task=%7B%22id%22%3A4%2C%22created_at%22%3A%222021-12-06%2023%3A58%3A15%22%2C%22updated_at%22%3A%222021-12-07%2000%3A13%3A37%22%2C%22name%22%3A%22123%22%2C%22user_id%22%3A1%2C%22list_id%22%3A1%2C%22end_date%22%3A%222021-12-12%2023%3A59%3A59%22%2C%22week%22%3A1%2C%22is_finished%22%3Afalse%2C%22finished_date%22%3A%222021-12-07%2000%3A13%3A00%22%2C%22description%22%3A%22112233%22%2C%22files%22%3A%5B%5D%2C%22photos%22%3A%5B%5D%7D",
-                    "scene": null
-                },
-                {
-                    "name": "allTaskList",
-                    "pathName": "pages/allTaskList/allTaskList",
-                    "query": "",
-                    "scene": null
-                },
-                {
-                    "name": "about",
-                    "pathName": "pages/about/about",
-                    "query": "",
-                    "scene": null
-                }
-            ]
-        }
-    }
+  "description": "项目私有配置文件。此文件中的内容将覆盖 project.config.json 中的相同字段。项目的改动优先同步到此文件中。详见文档：https://developers.weixin.qq.com/miniprogram/dev/devtools/projectconfig.html",
+  "projectname": "miniprogram-3",
+  "setting": {
+    "compileHotReLoad": true,
+    "urlCheck": false
+  }
 }

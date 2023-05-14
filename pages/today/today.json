@@ -1,0 +1,9 @@
+{
+  "usingComponents": {
+    "task":"/components/task",
+    "l-collapse":"/miniprogram_npm/lin-ui/collapse",
+    "l-collapse-item":"/miniprogram_npm/lin-ui/collapse-item",
+    "l-mask":"/miniprogram_npm/lin-ui/mask/index",
+    "mtask":"/components/mtask/mtask"
+  }
+}

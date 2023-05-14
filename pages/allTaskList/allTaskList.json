@@ -1,6 +1,0 @@
-{
-  "usingComponents": {
-    "taskList":"/component/taskList/taskList"
-  },
-  "navigationBarTitleText": ""
-}

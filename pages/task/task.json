@@ -1,8 +1,12 @@
 {
   "usingComponents": {
-    "calendar":"/miniprogram_npm/calendar_v1/index",
-    "l-popup":"/miniprogram_npm/lin-ui/popup/index",
-    "l-album":"/miniprogram_npm/lin-ui/album/index"
-   },
-  "navigationBarTitleText": "任务编辑"
+    "l-collapse":"/miniprogram_npm/lin-ui/collapse/index",
+    "l-collapse-item":"/miniprogram_npm/lin-ui/collapse-item",
+    "task":"/components/task",
+    "l-mask":"/miniprogram_npm/lin-ui/mask/index",
+    "mtask":"/components/mtask/mtask",
+    "blog":"/components/blog/blog",
+    "l-dialog":"/miniprogram_npm/lin-ui/dialog/index",
+    "group":"/components/group/group"
+  }
 }

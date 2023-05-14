@@ -1,0 +1,43 @@
+<!--components/group/group.wxml-->
+<view style="font-size: 30rpx;margin:10rpx" bindtap="showmask">
+<text>{{group.groupName}}#{{group.id}}</text>
+</view>
+<l-mask show="{{showmask}}" opacity="0.3" style="display: flex;flex-direction: column;align-items: center;justify-content: center;align-content: center;justify-items: center;">
+      <view class="moreset">
+        <view class="day">
+          <view style="display: flex;flex-direction: row;border-bottom: 2rpx solid #ccd8eb;  padding-bottom: 10rpx;"> 
+<view>
+<view class="header" style="display: flex;flex-direction: row;align-items: center;">
+    <input placeholder="小组名称" type="text" value="{{group.groupName}}" bindblur="input_name"  style="font-size: 50rpx;color:#7FAFC3;margin-left: 30rpx;height: 60rpx;"/>
+    <text style="font-size: 50rpx">#{{group.id}}</text>
+  </view>
+  <view style="display: flex;flex-direction: row;align-items: center;margin-left: 50rpx;">
+  <l-icon wx:if="{{!hide}}"name="eye"bindtap="hidepassword"/>
+  <l-icon wx:else="{{hide}}"name="password"bindtap="showpassword"/>
+  <text style="margin-left: 20rpx;">密码：</text>
+  <input placeholder="密码为空" type="text" value="{{group.password}}" bindblur="input_password"  password="{{hide}}"/>
+  <l-icon name="add"bindtap="add"/>
+  <l-icon name="delete"bindtap="deletegroup"style="margin-left:20rpx"/>
+  </view>
+</view>
+</view>
+<view class="unfinish">
+  <view class="items" wx:for="{{alllist}}" wx:key="index" >
+    <task task="{{alllist[index]}}" index="{{index}}" wx:if="{{!alllist[index].isDone}}" bind:finishchanged="finishchange" bind:changed="change" bind:deleted="delete"></task>
+  </view>
+</view>
+<view class="finished">
+<l-collapse>
+<l-collapse-item title="已完成">
+<view class="finished_item">
+  <view class="items" wx:for="{{alllist}}" wx:key="index" >
+    <task task="{{alllist[index]}}" index="{{index}}"wx:if="{{alllist[index].isDone}}" bind:finishchanged="finishchange" bind:changed="change" bind:deleted="delete"></task>
+  </view>
+  </view>
+</l-collapse-item>
+</l-collapse>
+</view>
+          <button class = "finishbtn"bindtap="hidemask" style="margin-top: 20rpx;margin-bottom: 20rpx;"> 完成</button>
+</view>
+    </view>
+    </l-mask>

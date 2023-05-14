@@ -1,0 +1,48 @@
+<!--pages/blog.wxml-->
+<!--pages/today/today.wxml-->
+<view class="containert">
+<view class="overlay"></view>
+<view class="all">
+<view class="day">
+<view style="display: flex;flex-direction: row;border-bottom: 2rpx solid #ccd8eb;  padding-bottom: 10rpx;"> 
+<view >
+<view class="header" style="display: flex;flex-direction: row;align-items: center;">
+    <input placeholder="完成todo后自动创建" type="text" value="{{blog.header}}" bindblur="input_name"  style="font-size: 50rpx;color:#7FAFC3;margin-left: 30rpx;height: 60rpx;"/>
+    <text style="font-size: 15rpx;">创建时间:{{blog.createTime}}</text>
+  </view>
+<view class="icon_date" style="margin-left: 60rpx;">
+<image class="icon" wx:if="{{hours>=6&&hours<12}}" src="/images/index/morning.png"></image>
+<image class="icon" wx:elif="{{hours>=12&&hours<19}}" src="/images/index/afternoon.png"></image>
+<image class="icon" wx:else src="/images/index/evening.png"></image>
+<view class="date">
+  {{date}}
+</view>
+</view>
+</view>
+</view>
+<view class="blog" style="display: flex;flex-direction: column;height: 85%;">
+  <view class="desc" style="display: flex;flex-direction: row;align-items: center;justify-content: center;">
+    <image class="icon"  src="/images/blog/blog3.jpeg" style="height: 30rpx;width: 30rpx;"></image>
+    <input placeholder="简述" type="text" value="{{blog.description}}" bindblur="input_descr"  style="font-size: 25rpx; margin-left: 10rpx;"/>
+  </view>
+  <view class="note" style="overflow-y:scroll;">
+    <view class="items" wx:for="{{blog.personalItemDtoList}}" wx:key="index" >
+        <l-card l-class="card"
+                type="cover" 
+                plaintext="{{true}}"
+                full="{{true}}"
+                l-title-class="tt"
+            title="{{blog.personalItemDtoList[index].content}}"
+              >
+        <!-- 此处为content -->
+        <view class="content" style="font-size: 30rpx;">
+        <rich-text nodes="{{blog.personalItemDtoList[index].itemNote.content}}">
+        </rich-text>
+        </view>
+     </l-card>
+    </view>
+  </view>
+</view>
+</view>
+</view>
+</view>

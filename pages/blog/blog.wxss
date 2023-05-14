@@ -1,0 +1,71 @@
+/* pages/blog.wxss */
+.containert{
+  padding: 10rpx 0;
+  box-sizing: border-box;
+  height: 100vh;
+  width: 100%;
+  background-image: url("http://m.qpic.cn/psc?/V50yJ2q22oR1YT3uoyRS1JxPwJ3Q3Y82/ruAMsa53pVQWN7FLK88i5kShiFH3Tsl10VF*UV1EEeaRiKELy.IuR2k6F17jT0sCr0EcAhzukkSIHSCQvd4UyGVnKnH8BfodVO2MNouKhQU!/b&bo=oAU4BAAAAAABB7k!&rf=viewer_4");
+  background-size:100% 100%;
+  background-position: center;
+}
+.overlay {
+  position: absolute; /* 使用绝对定位 */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  background-color: rgba(255, 255, 255, 0.6); /* 白色蒙版，透明度 50% */
+}
+.all{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  z-index: 2;
+  position: relative;
+}
+.day{
+  display: flex;
+  flex-direction: column;
+  height: 98vh;
+  width: 700rpx;
+  background-color: rgba(256, 256,256, 0.7);
+  border-radius: 30rpx;
+  box-shadow: 3rpx 4rpx 6rpx rgba(0, 0,0, 0.3);
+}
+.icon_date{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.icon{
+  width: 50rpx;
+  height: 50rpx;
+}
+.date
+{
+  display: flex;
+  flex-direction: row;
+  opacity: 0.5;
+}
+.tt{
+  font-size: 50rpx;
+  font-style: italic;
+}
+.note{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.items{
+  margin-top: 10rpx;
+  margin-bottom: 10rpx;
+  border-radius: 35rpx;
+  width: 90%;
+  box-shadow: 3rpx 4rpx 6rpx rgba(0, 0,0, 0.3);
+}
+.card{
+  border-radius: 35rpx;
+}
+@import 'blog-wxa-auto-dark.wxss'
