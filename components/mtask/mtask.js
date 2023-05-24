@@ -34,6 +34,10 @@ Component({
     "type":{
       "type":Number,
       "value":0
+    },
+    "groupid":{
+      "type":Number,
+      "value":0
     }
   },
   attached: function () {
@@ -291,21 +295,43 @@ Component({
       }
     },
     insertimg(){
+      let that =this
             wx.chooseMedia({
               count: 1,
             sizeType: ['original', 'compressed'],
             sourceType: ['album', 'camera'],
             success: (res) => {
               const imagePath = res.tempFiles[0].tempFilePath;
-              this.data.EditorContext.insertImage({
-                src: imagePath,
-                success: () => {
-                  console.log('插入图片成功');
-                },
-                fail: (error) => {
-                  console.error('插入图片失败：', error);
-                }
-            })}})
+              wx.getStorage({
+                key:'token',
+                success(res){
+                  wx.uploadFile({
+                    filePath: imagePath,
+                    url: getApp().globalData.apiUrl+'/note/file/'+that.data.task.itemNote.id,
+                    name:'files',
+                    method:'POST',
+                    header: {
+                      'Accept': '*/*',
+                      'Content-Type':'application/x-www-form-urlencoded',
+                      'token':res.data
+                    },
+                    success(res){
+                      let tmp=JSON.parse(res.data)
+                      const path=tmp.data.urls
+                      console.log(path)
+                      that.data.EditorContext.insertImage({
+                        src: getApp().globalData.apiUrl+path,
+                        success: () => {
+                          console.log('插入图片成功');
+                        },
+                        fail: (error) => {
+                          console.error('插入图片失败：', error);
+                        }
+                    })  
+                    }
+                  })
+                }})
+              }})
     },
     blogready(e){
       let that=this
@@ -347,8 +373,9 @@ Component({
       wx.getStorage({
         key:'token',
         success(res){
-         wx.request({
-           url: getApp().globalData.apiUrl+'/item/personal/',
+          if(that.data.type==0)
+         {wx.request({
+           url: getApp().globalData.apiUrl+'/item/personal',
            method:"POST",
            header: {
              'Accept': '*/*',
@@ -363,7 +390,28 @@ Component({
            success(res){
               console.log("创建成功")
               that.triggerEvent('build')
-           }})
+           }})}
+           else{
+            wx.request({
+              url: getApp().globalData.apiUrl+'/item/group',
+              method:"POST",
+              header: {
+                'Accept': '*/*',
+                'Content-Type': 'application/json',
+                'token':res.data
+              },
+              data:{
+                "content":that.data.task.content,
+                "scheduledTime":that.data.task.scheduledTime,
+                "isToday":that.data.task.isToday,
+                "groupId":that.data.groupid,
+                "type":"1"
+              },
+              success(res){
+                 console.log("创建成功")
+                 that.triggerEvent('build')
+              }})
+           }
         }})
     },
     hidemask(){

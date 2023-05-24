@@ -23,7 +23,7 @@
 </view>
 <view class="unfinish">
   <view class="items" wx:for="{{alllist}}" wx:key="index" >
-    <task task="{{alllist[index]}}" index="{{index}}" wx:if="{{!alllist[index].isDone}}" bind:finishchanged="finishchange" bind:changed="change" bind:deleted="delete"></task>
+    <task task="{{alllist[index]}}" index="{{index}}" wx:if="{{!alllist[index].isDone}}" bind:finishchanged="finishchange" bind:changed="change" bind:deleted="delete"groupid="{{group.id}}"></task>
   </view>
 </view>
 <view class="finished">
@@ -31,7 +31,7 @@
 <l-collapse-item title="已完成">
 <view class="finished_item">
   <view class="items" wx:for="{{alllist}}" wx:key="index" >
-    <task task="{{alllist[index]}}" index="{{index}}"wx:if="{{alllist[index].isDone}}" bind:finishchanged="finishchange" bind:changed="change" bind:deleted="delete"></task>
+    <task task="{{alllist[index]}}" index="{{index}}"wx:if="{{alllist[index].isDone}}" bind:finishchanged="finishchange" bind:changed="change" bind:deleted="delete" groupid="{{group.id}}"></task>
   </view>
   </view>
 </l-collapse-item>
@@ -40,4 +40,9 @@
           <button class = "finishbtn"bindtap="hidemask" style="margin-top: 20rpx;margin-bottom: 20rpx;"> 完成</button>
 </view>
     </view>
+    </l-mask>
+    <l-mask show="{{show}}" opacity="0.3" style="display: flex;flex-direction: column;align-items: center;justify-content: center;align-content: center;justify-items: center;">
+      <view class="moreset">
+      <mtask wx:if="{{show}}"  isadd="{{true}}" bind:close="finishied" bind:build="pushback" type='1' groupid="{{group.id}}"></mtask>
+      </view>
     </l-mask>

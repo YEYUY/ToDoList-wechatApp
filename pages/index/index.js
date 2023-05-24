@@ -4,16 +4,28 @@ const app = getApp()
 
 Page({
   data: {
-    userInfo: {},
-    hasUserInfo: false,
-    canIUseGetUserProfile: false,
+    useravatar: "",
+    usernickName:"微信用户"
   },
   onLoad() {
-    if (wx.getUserProfile) {
-      this.setData({
-        canIUseGetUserProfile: true
-      })
-    }
+    let that=this
+    wx.getStorage(({
+      key:"avatar",
+      success(res){
+        that.setData({
+          useravatar:getApp().globalData.apiUrl+res.data
+        })
+      }
+      }))
+      wx.getStorage(({
+        key:"wxName",
+        success(res){
+          if(res.data!=null){
+          that.setData({
+            usernickName:res.data
+          })}
+        }
+        }))
   },
   onShow() {
     if (typeof this.getTabBar === 'function' &&
@@ -24,14 +36,59 @@ Page({
     }
 },
   // 事件处理函数
-  getUserProfile(e) {
-    wx.getUserProfile({
-      desc: '用于获取头像和用户数据', // 声明获取用户个人信息后的用途，后续会展示在弹窗中，请谨慎填写
-      success: (res) => {
-        this.setData({
-          userInfo: res.userInfo,
-          hasUserInfo: true
+  chooseavatar(e){
+    let that=this
+    wx.getStorage({
+      key:'token',
+      success(res){
+        wx.uploadFile({
+          filePath: e.detail.avatarUrl,
+          name: 'avatar',
+          url: getApp().globalData.apiUrl+"/user/avatar",
+          method:'POST',
+          header: {
+            'Accept': '*/*',
+            'Content-Type':'multipart/form-data',
+            'token':res.data
+          },
+          success(res){
+            console.log(res)
+            let tmp=JSON.parse(res.data)
+            if(tmp.success==true)
+            {that.setData({
+              useravatar:e.detail.avatarUrl
+            })}
+            else{
+              wx.showToast({
+                title: tmp.message,
+              })
+            }
+          }
         })
-      }
-    })}
+       
+      }})
+  },
+  bindchange(e){
+    let that=this
+    wx.getStorage({
+      key:'token',
+      success(res){
+        wx.request({
+          url: getApp().globalData.apiUrl+'/user/nickname',
+          method:"POST",
+          header: {
+            'Accept': '*/*',
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'token':res.data
+          },
+          data:{
+           "nickName":e.detail.value
+          },
+          success(res){
+            that.setData({
+              usernickName:e.detail.value
+            })
+          }})
+      }})
+  },
 })

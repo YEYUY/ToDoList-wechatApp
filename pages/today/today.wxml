@@ -3,25 +3,31 @@
 <view class="overlay"></view>
 <view class="all">
 <view class="day">
+<!--页面上端显示-->
 <view style="display: flex;flex-direction: row;border-bottom: 2rpx solid #ccd8eb;  padding-bottom: 10rpx;"> 
 <view>
 <view style="font-size: 50rpx;color:#7FAFC3;margin-left: 30rpx;">我的一天</view>
 <view class="icon_date" style="margin-left: 60rpx;">
+<!--与时间相关的小图标展示-->
 <image class="icon" wx:if="{{hours>=6&&hours<12}}" src="/images/index/morning.png"></image>
 <image class="icon" wx:elif="{{hours>=12&&hours<19}}" src="/images/index/afternoon.png"></image>
 <image class="icon" wx:else src="/images/index/evening.png"></image>
+<!--日期显示-->
 <view class="date">
   {{date}}
 </view>
 </view>
 </view>
+<!--添加图标以及点击事件-->
 <image src="/images/list/add.png" style="width: 60rpx; height: 60rpx; margin-block-start: 40rpx;margin-left: 250rpx;" bindtap="add"></image>
 </view>
+<!--未完成事项：列表渲染-->
 <view class="unfinish">
   <view class="items" wx:for="{{alllist}}" wx:key="index" >
     <task task="{{alllist[index]}}" index="{{index}}" wx:if="{{!alllist[index].isDone}}" bind:finishchanged="finishchange" bind:changed="change" bind:deleted="delete"></task>
   </view>
 </view>
+<!--已完成事项：列表渲染（采用折叠框架）-->
 <view class="finished">
 <l-collapse>
 <l-collapse-item title="已完成">
@@ -35,6 +41,7 @@
 </view>
 </view>
 </view>
+<!--添加事项页面显示-->
 <l-mask show="{{show}}" opacity="0.3" style="display: flex;flex-direction: column;align-items: center;justify-content: center;align-content: center;justify-items: center;">
       <view class="moreset">
       <mtask wx:if="{{show}}"  isadd="{{true}}" bind:close="finishied" bind:build="pushback"type='0'></mtask>

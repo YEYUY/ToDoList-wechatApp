@@ -1,0 +1,22 @@
+<!--components/task.wxml-->
+<view class="it" >
+      <image wx:if="{{!finished}}" class="icon" mode="heightFix" src="/images/list/listDetail/circle.png" bindtap="tapFinish"  ></image>
+      <image wx:else class="icon" mode="heightFix" src="/images/finish.png" bindtap="tapCancel" ></image>
+    <view class="input">
+            <input placeholder="任务名称" type="text" value="{{text}}" bindblur="input_name"  style="font-size: 40rpx; opacity: {{!finished ? '1':'0.4'}};width: 250rpx;text-decoration: {{!finished? 'none':'line-through'}};"/>
+            <picker wx:if="{{hasdate}}"  bindtap="showdate" bindchange="onDateChange" mode="date" value="{{date}}" start="{{mindate}}">
+            <view class="date">
+            <image class="icon-1"  src="/images/task/calendar.png" ></image>
+            <view style="display: flex;align-items: center;font-size: 30rpx;margin: 10rpx;">{{date}}</view>
+            <image wx:if="{{task.type==1}}"class="icon-1"  src="/images/list/listDetail/type.png" ></image>
+            </view>
+            </picker>
+    </view>
+    <text style="font-size: 50rpx; margin-left: 10rpx;color: #7FAFC3;" bindtap="showmask">···</text>
+    <l-mask show="{{show}}" opacity="0.3" style="display: flex;flex-direction: column;align-items: center;justify-content: center;align-content: center;justify-items: center;">
+      <view class="moreset">
+      <mtask wx:if="{{show}}" task="{{task}}" isadd="{{!true}}" bind:change="maskchange" bind:delete="maskdelete" type="1"></mtask>
+        <button class = "finish"bindtap="hidemask" > 完成</button>
+      </view>
+    </l-mask>
+</view>

@@ -2,9 +2,10 @@
   "component": true,
   "usingComponents": {
     "l-mask":"/miniprogram_npm/lin-ui/mask/index",
-    "task":"/components/task",
+    "task":"/components/grtask/task",
     "l-collapse":"/miniprogram_npm/lin-ui/collapse",
     "l-collapse-item":"/miniprogram_npm/lin-ui/collapse-item",
-    "l-icon":"/miniprogram_npm/lin-ui/icon"
+    "l-icon":"/miniprogram_npm/lin-ui/icon",
+    "mtask":"/components/mtask/mtask"
   }
 }

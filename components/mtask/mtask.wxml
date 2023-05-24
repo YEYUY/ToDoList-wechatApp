@@ -18,7 +18,7 @@
             <switch class="datechoose" checked="{{hasdate}}" color="#7FAFC3"  bindchange="changehasdate"
             ></switch>
           </view>
-          <view class="dateall" wx:if="{{!isadd}}">
+          <view class="dateall" wx:if="{{!isadd}}"wx:if="{{type==0}}">
     <view class="date" >
             <image class="icon-1" wx:if="{{task.visibility==0}}" src="/images/list/createman.png" ></image>
             <text wx:if="{{task.visibility==0}}" style="width:470rpx;opacity: 0.3;margin-block-start: 5rpx;">不公开</text>

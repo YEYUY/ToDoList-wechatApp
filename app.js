@@ -2,6 +2,7 @@
 App({
   globalData:{
     apiUrl:"http://124.70.195.38:996"
+    //apiUrl:"https://blog-and-todo-50123-9-1318285875.sh.run.tcloudbase.com"
   },
 
   onLaunch() {
@@ -22,7 +23,15 @@ App({
               key:"token",
               data:res.data.data.token
             })
-            console.log(res.data.data.token)
+            wx.setStorage({
+              key:"avatar",
+              data:res.data.data.user.avatar
+            })
+            wx.setStorage({
+              key:"wxName",
+              data:res.data.data.user.wxName
+            })
+            console.log(res.data.data)
             // wx.getStorage({
             //   key:'token',
             //   success(res){

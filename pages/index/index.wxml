@@ -2,12 +2,14 @@
 <view class="container">
   <view class="overlay"></view>
   <view class="name">
-    <block wx:if="{{!hasUserInfo}}">
-      <l-button width="200" height="100" shape="circle" bg-color="#4a86e8" wx:if="{{canIUseGetUserProfile}}" bindtap="getUserProfile"> 头像昵称填写 </l-button>
-    </block>
-    <block wx:else>
-      <l-avatar size="130" shape="square" src="{{userInfo.avatarUrl}}" />
-      <text class="userinfo-nickname">{{userInfo.nickName}}</text>
+    <block >
+    <button open-type="chooseAvatar" bindchooseavatar="chooseavatar" 
+     style="background-color: transparent;">
+      <l-avatar size="130" shape="square" src="{{useravatar}}" />
+      </button>
+      <input type="nickname" class="userinfo-nickname" value="{{usernickName}}"  placeholder="输入昵称"
+      bindchange="bindchange"
+			style="text-align: center;"/>
   </block>
   </view>
   <block class="setting">
